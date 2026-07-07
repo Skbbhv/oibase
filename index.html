@@ -224,8 +224,8 @@
         <input id="am-bedrijf" name="Bedrijf" placeholder="Bedrijfsnaam">
         <input id="am-email" name="E-mail" type="email" required placeholder="E-mailadres *">
         <input id="am-tel" name="Telefoon" placeholder="Telefoon (optioneel)">
-        <select name="Branche"><option>Beveiliging</option><option>Horeca</option><option>Retail</option><option>Zorg</option><option>Logistiek</option><option>Evenementen</option><option>Overig</option></select>
-        <select name="Abonnement"><option>Premium</option><option>Basis</option><option>Enterprise</option><option>Weet ik nog niet</option></select>
+        <select id="am-branche" name="Branche"></select>
+        <select id="am-abo" name="Abonnement"></select>
       </div>
       <textarea id="am-bericht" name="Bericht" rows="2" placeholder="Vragen of opmerkingen? (optioneel)"></textarea>
       <button id="am-knop" class="btn btn-p" type="submit" style="width:100%;font-size:15px;padding:13px">📩 Zet mij op de lijst</button>
@@ -2047,6 +2047,35 @@ function updateTaal(){
     $("am-knop").innerHTML="📩 "+T("Zet mij op de lijst","Put me on the list","Setz mich auf die Liste","Ajoutez-moi à la liste","Ponme en la lista","Coloque-me na lista");
     $("am-privacy").textContent=T("Je gegevens gaan rechtstreeks naar abonnement@oibase.nl en worden alleen gebruikt voor de lanceringsmail (AVG).","Your details go straight to abonnement@oibase.nl and are only used for the launch e-mail (GDPR).","Deine Daten gehen direkt an abonnement@oibase.nl und werden nur für die Start-Mail verwendet (DSGVO).","Vos données vont directement à abonnement@oibase.nl et ne servent qu’au mail de lancement (RGPD).","Tus datos van directamente a abonnement@oibase.nl y solo se usan para el correo de lanzamiento (RGPD).","Os seus dados vão diretamente para abonnement@oibase.nl e servem apenas para o e-mail de lançamento (RGPD).");
     $("am-dank").innerHTML="✅ "+T("Je staat op de lijst! Je hoort van ons via abonnement@oibase.nl zodra we live zijn.","You are on the list! You will hear from us via abonnement@oibase.nl as soon as we are live.","Du stehst auf der Liste! Du hörst von uns über abonnement@oibase.nl, sobald wir live sind.","Vous êtes sur la liste ! Vous aurez de nos nouvelles via abonnement@oibase.nl dès le lancement.","¡Estás en la lista! Sabrás de nosotros vía abonnement@oibase.nl en cuanto estemos en vivo.","Está na lista! Terá notícias nossas via abonnement@oibase.nl assim que estivermos no ar.");
+    // Branche-opties (waarde blijft NL voor de e-mail, label vertaald)
+    const branchesOpt=[
+      ["Beveiliging","Security","Sicherheit","Sécurité","Seguridad","Segurança"],
+      ["Horeca","Hospitality","Gastronomie","Restauration","Hostelería","Restauração"],
+      ["Retail","Retail","Einzelhandel","Commerce","Comercio","Retalho"],
+      ["Zorg","Healthcare","Pflege","Santé","Sanidad","Saúde"],
+      ["Logistiek","Logistics","Logistik","Logistique","Logística","Logística"],
+      ["Evenementen","Events","Veranstaltungen","Événements","Eventos","Eventos"],
+      ["Overig","Other","Sonstige","Autre","Otro","Outro"]];
+    if($("am-branche")){
+      const huidig=$("am-branche").value;
+      $("am-branche").innerHTML=branchesOpt.map(o=>`<option value="${o[0]}">${T(o[0],o[1],o[2],o[3],o[4],o[5])}</option>`).join("");
+      if(huidig)$("am-branche").value=huidig;
+    }
+    const aboOpt=[
+      ["Premium","Premium","Premium","Premium","Premium","Premium"],
+      ["Basis",T("Basis","Basic","Basis","Basique","Básico","Basic"),0,0,0,0],
+      ["Enterprise","Enterprise","Enterprise","Enterprise","Enterprise","Enterprise"],
+      ["Weet ik nog niet","Not sure yet","Noch unsicher","Je ne sais pas encore","Aún no lo sé","Ainda não sei"]];
+    if($("am-abo")){
+      const huidigA=$("am-abo").value;
+      $("am-abo").innerHTML=[
+        `<option value="Premium">Premium</option>`,
+        `<option value="Basis">${T("Basis","Basic","Basis","Basique","Básico","Basic")}</option>`,
+        `<option value="Enterprise">Enterprise</option>`,
+        `<option value="Weet ik nog niet">${T("Weet ik nog niet","Not sure yet","Noch unsicher","Je ne sais pas encore","Aún no lo sé","Ainda não sei")}</option>`
+      ].join("");
+      if(huidigA)$("am-abo").value=huidigA;
+    }
   }
   if(document.querySelector(".lrol"))try{zetLoginRol(loginRol)}catch(e){}
   $("uitlog-knop").textContent=T("Uitloggen","Log out","Abmelden","Déconnexion","Cerrar sesión","Terminar sessão");
