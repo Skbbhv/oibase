@@ -2135,15 +2135,15 @@ function tekenBetaal(klaar){
   if(klaar){
     $("betaal-inhoud").innerHTML=`<div style="text-align:center">
       <div style="font-size:44px;margin-bottom:10px">🎉<\/div>
-      <div style="font-weight:800;font-size:20px;margin-bottom:8px">${T("Welkom bij Oibase!","Welcome to Oibase!")}<\/div>
+      <div style="font-weight:800;font-size:20px;margin-bottom:8px">${T("Welkom bij Oibase!","Welcome to Oibase!","Willkommen bei Oibase!","Bienvenue chez Oibase !","¡Bienvenido a Oibase!","Bem-vindo ao Oibase!")}<\/div>
       <div style="font-size:13px;color:var(--soft);line-height:1.6;margin-bottom:14px">
-        ${T("Je proefperiode van 14 dagen is gestart met het","Your 14-day trial has started with the")} <strong>${pn(p)}<\/strong>${T("-plan in","plan in")} ${l.vlag} ${l.naam}
-        (${jaarlijks?geldToon(rond2(geldLandNum(p.basis)*12*0.9))+T("/jaar","/yr"):geldToon(geldLandNum(p.basis))+T("/mnd","/mo")} ${T("excl. btw na de proefperiode; medewerkers maandelijks automatisch verrekend","excl. VAT after the trial; employees settled monthly automatically")}).<\/div>
+        ${T("Je proefperiode van 14 dagen is gestart met het","Your 14-day trial has started with the","Deine 14-tägige Testphase hat begonnen mit dem","Votre essai de 14 jours a commencé avec le","Tu prueba de 14 días ha comenzado con el","O seu teste de 14 dias começou com o")} <strong>${pn(p)}<\/strong>${T("-plan in","plan in","-Plan in","plan en","plan en","plano em")} ${l.vlag} ${l.naam}
+        (${jaarlijks?geldToon(rond2(geldLandNum(p.basis)*12*0.9))+T("/jaar","/yr","/Jahr","/an","/año","/ano"):geldToon(geldLandNum(p.basis))+T("/mnd","/mo","/Mon","/mois","/mes","/mês")} ${T("excl. btw na de proefperiode; medewerkers maandelijks automatisch verrekend","excl. VAT after the trial; employees settled monthly automatically","zzgl. MwSt. nach der Testphase; Mitarbeiter monatlich automatisch abgerechnet","hors TVA après l’essai ; employés régularisés automatiquement chaque mois","sin IVA tras la prueba; empleados regularizados automáticamente cada mes","sem IVA após o teste; colaboradores acertados automaticamente todos os meses")}).<\/div>
       ${eigenAccount?`<div style="background:var(--brand-l);border-radius:10px;padding:12px;font-size:13px;text-align:left;line-height:1.8;margin-bottom:14px">
-        <strong>${T("Jouw inloggegevens (werkgever):","Your login details (employer):")}<\/strong><br>
+        <strong>${T("Jouw inloggegevens (werkgever):","Your login details (employer):","Deine Zugangsdaten (Arbeitgeber):","Vos identifiants (employeur) :","Tus datos de acceso (empleador):","Os seus dados de acesso (empregador):")}<\/strong><br>
         E-mail: <code>${esc(eigenAccount.email)}<\/code><br>
-        ${T("Wachtwoord: het wachtwoord dat je zojuist zelf hebt bedacht","Password: the password you just created")}<br>
-        ${T("Bedrijf:","Company:")} ${esc(eigenAccount.bedrijf)}<\/div>`:""}
+        ${T("Wachtwoord: het wachtwoord dat je zojuist zelf hebt bedacht","Password: the password you just created","Passwort: das Passwort, das du gerade gewählt hast","Mot de passe : celui que vous venez de choisir","Contraseña: la que acabas de elegir","Palavra-passe: a que acabou de escolher")}<br>
+        ${T("Bedrijf:","Company:","Firma:","Entreprise :","Empresa:","Empresa:")} ${esc(eigenAccount.bedrijf)}<\/div>`:""}
       <div style="font-size:11px;color:var(--soft);background:var(--brand-l);border-radius:10px;padding:9px 12px;margin-bottom:10px">${T(
   "Door je abonnement te starten ga je ermee akkoord dat onderaan elke factuur die je met Oibase maakt de vermelding \u2018Gemaakt met oibase.nl\u2019 staat.",
   "By starting your subscription you agree that every invoice you create with Oibase carries the note \u2018Made with oibase.nl\u2019 at the bottom.",
@@ -2151,17 +2151,17 @@ function tekenBetaal(klaar){
   "En démarrant votre abonnement, vous acceptez que chaque facture créée avec Oibase porte la mention \u2018Réalisé avec oibase.nl\u2019.",
   "Al iniciar tu suscripción aceptas que cada factura creada con Oibase lleve la nota \u2018Hecho con oibase.nl\u2019.",
   "Ao iniciar a subscrição concorda que cada fatura criada com o Oibase inclua a nota \u2018Feito com oibase.nl\u2019.")}<\/div>
-      <button class="btn btn-p" onclick="sluitBetaal()">${T("Sluiten","Close")}<\/button>
-      <div style="font-size:11px;color:var(--soft);margin-top:12px">${T("Demo — er is niets echt betaald.","Demo — nothing was actually paid.")}<\/div><\/div>`;
+      <button class="btn btn-p" onclick="sluitBetaal()">${T("Sluiten","Close","Schließen","Fermer","Cerrar","Fechar")}<\/button>
+      <div style="font-size:11px;color:var(--soft);margin-top:12px">${T("Demo — er is niets echt betaald.","Demo — nothing was actually paid.","Demo — es wurde nichts wirklich bezahlt.","Démo — rien n’a réellement été payé.","Demo — no se ha pagado nada realmente.","Demo — nada foi realmente pago.")}<\/div><\/div>`;
     return;
   }
   const basisN=geldLandNum(p.basis),perN=geldLandNum(p.perMw),jaarN=rond2(basisN*12*0.9);
   const btwPct=l.btw||21,grond=jaarlijks?jaarN:basisN,btwN=rond2(grond*btwPct/100),inclN=rond2(grond+btwN);
   $("betaal-inhoud").innerHTML=`
     <div style="font-weight:800;font-size:19px;margin-bottom:4px">Oibase ${pn(p)} · ${l.vlag} ${l.naam}<\/div>
-    <div style="font-size:13px;color:var(--soft);margin-bottom:8px">${jaarlijks?T("Eerst 14 dagen gratis, daarna per jaar (10% korting verrekend):","First 14 days free, then per year (10% discount applied):"):T("Eerst 14 dagen gratis, daarna per maand:","First 14 days free, then per month:")}<\/div>
+    <div style="font-size:13px;color:var(--soft);margin-bottom:8px">${jaarlijks?T("Eerst 14 dagen gratis, daarna per jaar (10% korting verrekend):","First 14 days free, then per year (10% discount applied):","Erst 14 Tage gratis, danach pro Jahr (10% Rabatt):","14 jours gratuits, puis par an (remise de 10%) :","Primeros 14 días gratis, luego por año (10% de descuento):","Primeiros 14 dias grátis, depois por ano (10% de desconto):"):T("Eerst 14 dagen gratis, daarna per maand:","First 14 days free, then per month:","Erst 14 Tage gratis, danach pro Monat:","14 jours gratuits, puis par mois :","Primeros 14 días gratis, luego por mes:","Primeiros 14 dias grátis, depois por mês:")}<\/div>
     <div style="background:var(--brand-l);border-radius:10px;padding:10px 14px;font-size:13px;margin-bottom:10px">
-      <div style="display:flex;justify-content:space-between;padding:2px 0"><span>${T("Basisbedrag","Base fee","Grundbetrag","Forfait de base","Cuota base")} ${pn(p)}<\/span><span>${geldToon(basisN)}<\/span><\/div>
+      <div style="display:flex;justify-content:space-between;padding:2px 0"><span>${T("Basisbedrag","Base fee","Grundbetrag","Forfait de base","Cuota base","Valor base")} ${pn(p)}<\/span><span>${geldToon(basisN)}<\/span><\/div>
       ${jaarlijks?`<div style="display:flex;justify-content:space-between;padding:4px 0"><span>${T("Abonnement per jaar (−10%, excl. btw)","Subscription per year (−10%, excl. VAT)","Abo pro Jahr (−10%, exkl. MwSt.)","Abonnement par an (−10%, HT)","Suscripción al año (−10%, sin IVA)","Subscrição por ano (−10%, sem IVA)")}<\/span><span>${geldToon(jaarN)}<\/span><\/div>`:""}
       <div style="display:flex;justify-content:space-between;padding:4px 0;border-top:1px dashed var(--line);color:var(--soft)"><span>+ ${T("per actieve medewerker","per active employee","pro aktivem Mitarbeiter","par employé actif","por empleado activo","por funcionário ativo")}<\/span><span>${geldToon(perN)} ${T("p/mnd","/mo","/Mon.","/mois","/mes","/mês")}<\/span><\/div>
       <div style="font-size:11px;color:var(--soft);padding:2px 0 6px">${T("Medewerkers worden aan het einde van elke maand automatisch afgeschreven op basis van je actieve team (excl. btw, aparte incasso).","Employees are charged automatically at month-end based on your active team (excl. VAT, separate debit).","Mitarbeiter werden am Monatsende automatisch abgebucht (exkl. MwSt., separate Lastschrift).","Prélèvement automatique en fin de mois selon l’équipe active (HT, prélèvement séparé).","Cargo automático a fin de mes según el equipo activo (sin IVA, adeudo separado).","Débito automático no fim do mês com base na equipa ativa (sem IVA, débito separado).")}<\/div>
@@ -2175,24 +2175,24 @@ function tekenBetaal(klaar){
       "Taux de TVA de votre pays d'établissement. Les entreprises de l'UE hors Pays-Bas avec un numéro de TVA valide paient 0% (autoliquidation) — géré automatiquement.",
       "Tipo de IVA de tu país de establecimiento. Las empresas de la UE fuera de Países Bajos con NIF-IVA válido pagan 0% (inversión del sujeto pasivo) — automático.",
       "Taxa de IVA do país de estabelecimento. Empresas da UE fora dos Países Baixos com NIF válido pagam 0% (autoliquidação) — tratado automaticamente.")}<\/div>
-    <div style="font-size:12px;color:var(--soft);margin-bottom:10px">${jaarlijks?T("Jaarlijkse betaling in één keer; je abonnement loopt aan het einde van het jaar gewoon af tenzij je verlengt. Het aantal medewerkers wordt jaarlijks herrekend.","Yearly payment in one go; your subscription simply ends after the year unless you renew. The employee count is recalculated yearly."):T("Maandelijks opzegbaar. Het aantal medewerkers beweegt automatisch mee met je team.","Cancel monthly. The employee count automatically follows your team.")}<\/div>
-    <div style="font-size:12px;color:var(--groen);font-weight:700;margin-bottom:14px">✓ ${T("Vandaag betaal je","Today you pay")} ${geldLand(0)}<\/div>
-    <div style="font-size:13px;font-weight:700;margin-bottom:8px">${T("Maak je eigen account aan","Create your own account")}<\/div>
-    <input id="s-bedrijf" placeholder="${T('Bedrijfsnaam','Company name')}">
+    <div style="font-size:12px;color:var(--soft);margin-bottom:10px">${jaarlijks?T("Jaarlijkse betaling in één keer; je abonnement loopt aan het einde van het jaar gewoon af tenzij je verlengt. Het aantal medewerkers wordt jaarlijks herrekend.","Yearly payment in one go; your subscription simply ends after the year unless you renew. The employee count is recalculated yearly.","Jährliche Zahlung auf einmal; dein Abo endet nach dem Jahr, sofern du nicht verlängerst. Die Mitarbeiterzahl wird jährlich neu berechnet.","Paiement annuel en une fois ; votre abonnement se termine après l’année sauf renouvellement. Le nombre d’employés est recalculé chaque année.","Pago anual de una vez; tu suscripción termina tras el año salvo que renueves. El número de empleados se recalcula cada año.","Pagamento anual de uma só vez; a sua subscrição termina no fim do ano, exceto se renovar. O número de colaboradores é recalculado anualmente."):T("Maandelijks opzegbaar. Het aantal medewerkers beweegt automatisch mee met je team.","Cancel monthly. The employee count automatically follows your team.","Monatlich kündbar. Die Mitarbeiterzahl folgt automatisch deinem Team.","Résiliable chaque mois. Le nombre d’employés suit automatiquement votre équipe.","Cancelable mensualmente. El número de empleados sigue automáticamente a tu equipo.","Cancelável mensalmente. O número de colaboradores acompanha automaticamente a sua equipa.")}<\/div>
+    <div style="font-size:12px;color:var(--groen);font-weight:700;margin-bottom:14px">✓ ${T("Vandaag betaal je","Today you pay","Heute zahlst du","Aujourd’hui vous payez","Hoy pagas","Hoje paga")} ${geldLand(0)}<\/div>
+    <div style="font-size:13px;font-weight:700;margin-bottom:8px">${T("Maak je eigen account aan","Create your own account","Erstelle dein eigenes Konto","Créez votre compte","Crea tu propia cuenta","Crie a sua conta")}<\/div>
+    <input id="s-bedrijf" placeholder="${T('Bedrijfsnaam','Company name','Firmenname','Nom d’entreprise','Nombre de empresa','Nome da empresa')}">
     <div style="font-size:12px;color:var(--soft);margin-bottom:4px">${T("Land van vestiging (KvK-/btw-registratie)","Country of establishment (company/VAT registration)","Land der Niederlassung (Handelsregister/USt.)","Pays d'établissement (registre/TVA)","País de establecimiento (registro/IVA)","País de estabelecimento (registo/IVA)")}<\/div>
     <select id="s-land">${Object.entries(landen).map(([code,x])=>`<option value="${code}" ${code===land?"selected":""}>${x.vlag} ${x.naam}<\/option>`).join("")}<\/select>
-    <div style="font-size:12px;color:var(--soft);margin-bottom:4px">${T("In welke branche werk je? (we passen je omgeving erop aan)","Which industry are you in? (we adapt your workspace)")}<\/div>
-    <select id="s-branche">${Object.keys(BRANCHES).map(b=>`<option ${b===branche?"selected":""}>${b}<\/option>`).join("")}<\/select>
-    <input id="s-email" type="email" placeholder="${T('E-mailadres (hiermee log je straks in)','E-mail address (you will log in with this)')}">
-    <input id="s-ww" type="password" placeholder="${T('Bedenk een wachtwoord (min. 6 tekens)','Choose a password (min. 6 characters)')}">
-    <input id="s-ww2" type="password" placeholder="${T('Herhaal je wachtwoord','Repeat your password')}">
+    <div style="font-size:12px;color:var(--soft);margin-bottom:4px">${T("In welke branche werk je? (we passen je omgeving erop aan)","Which industry are you in? (we adapt your workspace)","In welcher Branche bist du tätig? (wir passen deine Umgebung an)","Dans quel secteur travaillez-vous ? (nous adaptons votre espace)","¿En qué sector trabajas? (adaptamos tu espacio)","Em que setor trabalha? (adaptamos o seu ambiente)")}<\/div>
+    <select id="s-branche">${Object.keys(BRANCHES).map(b=>`<option value="${b}" ${b===branche?"selected":""}>${brancheLabel(b)}<\/option>`).join("")}<\/select>
+    <input id="s-email" type="email" placeholder="${T('E-mailadres (hiermee log je straks in)','E-mail address (you will log in with this)','E-Mail-Adresse (damit meldest du dich an)','Adresse e-mail (pour vous connecter)','Correo electrónico (con esto iniciarás sesión)','Endereço de e-mail (usará para entrar)')}">
+    <input id="s-ww" type="password" placeholder="${T('Bedenk een wachtwoord (min. 6 tekens)','Choose a password (min. 6 characters)','Wähle ein Passwort (mind. 6 Zeichen)','Choisissez un mot de passe (min. 6 caractères)','Elige una contraseña (mín. 6 caracteres)','Escolha uma palavra-passe (mín. 6 caracteres)')}">
+    <input id="s-ww2" type="password" placeholder="${T('Herhaal je wachtwoord','Repeat your password','Passwort wiederholen','Répétez le mot de passe','Repite la contraseña','Repita a palavra-passe')}">
     <div id="s-fout" style="color:var(--rood);font-size:13px;margin-bottom:8px"><\/div>
-    <div style="font-size:13px;font-weight:700;margin:4px 0 8px">${T("Betaalwijze","Payment method")} (${l.naam})<\/div>
+    <div style="font-size:13px;font-weight:700;margin:4px 0 8px">${T("Betaalwijze","Payment method","Zahlungsart","Mode de paiement","Método de pago","Método de pagamento")} (${l.naam})<\/div>
     ${l.betaal.map((naam,i)=>`<button onclick="bewaarSignup();betaalKeuze=${i};tekenBetaal()" style="display:block;width:100%;text-align:left;padding:12px 14px;margin-bottom:8px;border-radius:10px;cursor:pointer;font-size:14px;font-weight:600;font-family:inherit;color:var(--ink);border:${betaalKeuze===i?"2px solid var(--brand)":"1px solid var(--line)"};background:${betaalKeuze===i?"var(--brand-l)":"#fff"}">${naam}<\/button>`).join("")}
-    ${betaalKeuze===0&&l.banken?`<select><option>${T("Kies je bank…","Choose your bank…")}<\/option>${l.banken.map(b=>`<option>${b}<\/option>`).join("")}<\/select>`:""}
+    ${betaalKeuze===0&&l.banken?`<select><option>${T("Kies je bank…","Choose your bank…","Wähle deine Bank…","Choisissez votre banque…","Elige tu banco…","Escolha o seu banco…")}<\/option>${l.banken.map(b=>`<option>${b}<\/option>`).join("")}<\/select>`:""}
     ${l.betaal[betaalKeuze].includes("Creditcard")?`<input placeholder="Kaartnummer"><div style="display:flex;gap:8px"><input placeholder="MM/JJ"><input placeholder="CVC"><\/div>`:""}
     ${l.betaal[betaalKeuze].includes("SEPA")||l.betaal[betaalKeuze].includes("incasso")||l.betaal[betaalKeuze].includes("Lastschrift")?`<input placeholder="IBAN">`:""}
-    <button class="btn btn-p" style="width:100%;margin-top:6px" onclick="rondSignupAf()">${T("Start gratis proefperiode","Start free trial")}<\/button>
+    <button class="btn btn-p" style="width:100%;margin-top:6px" onclick="rondSignupAf()">${T("Start gratis proefperiode","Start free trial","Kostenlose Testphase starten","Démarrer l’essai gratuit","Iniciar prueba gratuita","Iniciar teste gratuito")}<\/button>
     <div style="font-size:11px;color:var(--soft);text-align:center;margin-top:8px">${T(
       "Prijzen gelden voor het land waar je bedrijf gevestigd is. Bij betaling verifiëren we dit via je btw-/KvK-nummer en betaalgegevens; bij een afwijking wordt de prijs automatisch gecorrigeerd.",
       "Prices apply to the country where your company is established. At payment we verify this via your VAT/registration number and payment details; mismatches are corrected automatically.",
@@ -2214,7 +2214,7 @@ function tekenBetaal(klaar){
       "Les tarifs sont indexés automatiquement chaque 1er janvier (correction d'inflation) ; vous recevez les nouveaux tarifs au plus tard le 1er décembre. Les abonnements annuels gardent leur prix jusqu'au renouvellement.",
       "Los precios se indexan automáticamente cada 1 de enero (corrección por inflación); recibirás los nuevos precios antes del 1 de diciembre. Los planes anuales mantienen su precio hasta la próxima renovación.",
       "Os preços são indexados automaticamente a 1 de janeiro (correção da inflação); recebe os novos preços até 1 de dezembro. Os planos anuais mantêm o preço até à próxima renovação.")}<\/div>
-    <div style="font-size:11px;color:var(--soft);text-align:center;margin-top:6px">🔒 ${T("Demo-omgeving — er wordt niets afgeschreven.","Demo environment — nothing will be charged.")}<\/div>`;
+    <div style="font-size:11px;color:var(--soft);text-align:center;margin-top:6px">🔒 ${T("Demo-omgeving — er wordt niets afgeschreven.","Demo environment — nothing will be charged.","Demo-Umgebung — es wird nichts abgebucht.","Environnement démo — rien ne sera débité.","Entorno de demostración — no se cobrará nada.","Ambiente de demonstração — nada será cobrado.")}<\/div>`;
   if(signupTmp){["s-bedrijf","s-email","s-ww","s-ww2","s-land"].forEach(id=>{if($(id)&&signupTmp[id]!==undefined)$(id).value=signupTmp[id]});}
 }
 let signupTmp=null;
@@ -2225,10 +2225,10 @@ function bewaarSignup(){
 function rondSignupAf(){
   const bedrijf=$("s-bedrijf").value.trim(),email=$("s-email").value.trim().toLowerCase(),
         ww=$("s-ww").value,ww2=$("s-ww2").value,fout=$("s-fout");
-  if(!bedrijf){fout.textContent=T("Vul je bedrijfsnaam in.","Enter your company name.");return}
-  if(!email.includes("@")||!email.includes(".")){fout.textContent=T("Vul een geldig e-mailadres in.","Enter a valid e-mail address.");return}
-  if(ww.length<6){fout.textContent=T("Kies een wachtwoord van minimaal 6 tekens.","Choose a password of at least 6 characters.");return}
-  if(ww!==ww2){fout.textContent=T("De wachtwoorden komen niet overeen.","The passwords do not match.");return}
+  if(!bedrijf){fout.textContent=T("Vul je bedrijfsnaam in.","Enter your company name.","Gib deinen Firmennamen ein.","Saisissez le nom de votre entreprise.","Introduce el nombre de tu empresa.","Introduza o nome da empresa.");return}
+  if(!email.includes("@")||!email.includes(".")){fout.textContent=T("Vul een geldig e-mailadres in.","Enter a valid e-mail address.","Gib eine gültige E-Mail-Adresse ein.","Saisissez une adresse e-mail valide.","Introduce un correo válido.","Introduza um e-mail válido.");return}
+  if(ww.length<6){fout.textContent=T("Kies een wachtwoord van minimaal 6 tekens.","Choose a password of at least 6 characters.","Wähle ein Passwort mit mindestens 6 Zeichen.","Choisissez un mot de passe d’au moins 6 caractères.","Elige una contraseña de al menos 6 caracteres.","Escolha uma palavra-passe de pelo menos 6 caracteres.");return}
+  if(ww!==ww2){fout.textContent=T("De wachtwoorden komen niet overeen.","The passwords do not match.","Die Passwörter stimmen nicht überein.","Les mots de passe ne correspondent pas.","Las contraseñas no coinciden.","As palavras-passe não coincidem.");return}
   const sLand=$("s-land").value;
   if(sLand!==land){
     land=sLand;betaalKeuze=0;bewaarSignup();tekenLandSelect();tekenPlannen();tekenBetaal();
@@ -2422,6 +2422,16 @@ if(!Object.values){Object.values=function(o){return Object.keys(o).map(function(
 if(!Object.entries){Object.entries=function(o){return Object.keys(o).map(function(k){return[k,o[k]]})}}
 if(!Number.isFinite){Number.isFinite=function(v){return typeof v==="number"&&isFinite(v)}}
 function qsa(sel){return Array.prototype.slice.call(document.querySelectorAll(sel))}
+const BRANCHE_LABEL={
+ "Beveiliging":["Beveiliging","Security","Sicherheit","Sécurité","Seguridad","Segurança"],
+ "Horeca":["Horeca","Hospitality","Gastronomie","Restauration","Hostelería","Restauração"],
+ "Retail":["Retail","Retail","Einzelhandel","Commerce","Comercio","Retalho"],
+ "Zorg":["Zorg","Healthcare","Pflege","Santé","Sanidad","Saúde"],
+ "Logistiek":["Logistiek","Logistics","Logistik","Logistique","Logística","Logística"],
+ "Evenementen":["Evenementen","Events","Veranstaltungen","Événements","Eventos","Eventos"],
+ "Overig":["Overig","Other","Sonstige","Autre","Otro","Outro"]};
+function brancheLabel(b){const m=BRANCHE_LABEL[b];return m?T.apply(null,m):b;}
+
 const TIDX={nl:0,en:1,de:2,fr:3,es:4,pt:5};
 const T=(...v)=>{const x=v[TIDX[taal]];return x!==undefined?x:(v[1]!==undefined?v[1]:v[0])};
 
@@ -2597,7 +2607,7 @@ function probeerLogin(){
     }
     sessie={rol:"werknemer",medId:m.id};naApp();
   }
-  else $("l-fout").textContent=T("Onjuiste gebruikersnaam of wachtwoord.","Incorrect username or password.");
+  else $("l-fout").textContent=T("Onjuiste gebruikersnaam of wachtwoord.","Incorrect username or password.","Falscher Benutzername oder falsches Passwort.","Nom d’utilisateur ou mot de passe incorrect.","Usuario o contraseña incorrectos.","Nome de utilizador ou palavra-passe incorretos.");
 }
 function toonFactuur(){
   const bedrag=25+3.5*medewerkers.length;
