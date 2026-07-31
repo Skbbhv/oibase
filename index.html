@@ -2618,19 +2618,22 @@ function probeerLogin(){
   if(sb&&loginRol==="medewerker"){const be=(($("l-bedrijf")||{}).value||"").trim();if(be){oibaseMwLogin(be,g,w);return;}}
   $("l-fout").textContent=T("Onjuiste gegevens. Werkgevers loggen in met hun e-mailadres; medewerkers vullen ook de e-mail van hun werkgever in.","Incorrect details. Employers log in with their e-mail; employees also enter their employer's e-mail.","Falsche Angaben. Arbeitgeber melden sich mit ihrer E-Mail an; Mitarbeiter geben auch die E-Mail des Arbeitgebers ein.","Identifiants incorrects. Les employeurs se connectent avec leur e-mail ; les employés saisissent aussi l'e-mail de leur employeur.","Datos incorrectos. Los empleadores inician sesión con su correo; los empleados indican también el correo de su empleador.","Dados incorretos. Os empregadores entram com o seu e-mail; os funcionários indicam também o e-mail do empregador.");
 }
-function toonFactuur(){
+function toonFactuur(reden){
   const bedrag=25+3.5*medewerkers.length;
+  const proef=(reden==="proef");
   $("betaal-inhoud").innerHTML=`
-    <div style="text-align:center;margin-bottom:14px"><div style="font-size:40px">⛔<\/div>
-    <div style="font-weight:800;font-size:19px">Toegang tijdelijk geblokkeerd<\/div><\/div>
+    <div style="text-align:center;margin-bottom:14px"><div style="font-size:40px">${proef?"⏰":"⛔"}<\/div>
+    <div style="font-weight:800;font-size:19px">${proef?"Je proefperiode is afgelopen":"Toegang tijdelijk geblokkeerd"}<\/div><\/div>
     <div style="font-size:13px;color:var(--soft);line-height:1.7;margin-bottom:14px">
-      De maandbetaling van je Oibase-abonnement is niet ontvangen. De toegang voor jou én je medewerkers
+      ${proef?`Je 14 dagen gratis proberen zitten erop — hopelijk beviel het! Je ontvangt van Oibase B.V. een factuur op je factuur-e-mailadres.
+      <strong style="color:var(--ink)">Je gegevens en roosters blijven veilig bewaard.<\/strong>
+      Zodra de betaling binnen is, wordt je account geactiveerd en kun je direct verder waar je gebleven was.`
+      :`De betaling van je Oibase-abonnement is niet ontvangen. De toegang voor jou én je medewerkers
       is daarom tijdelijk geblokkeerd. <strong style="color:var(--ink)">Je gegevens en roosters blijven veilig bewaard<\/strong> —
-      zodra de openstaande factuur is betaald, werkt inloggen direct weer voor iedereen.<\/div>
-    <div style="background:var(--brand-l);border-radius:10px;padding:12px 14px;font-size:13px;margin-bottom:14px">
-      <div style="display:flex;justify-content:space-between;padding:4px 0"><span>Openstaande factuur<\/span><strong>Oibase Premium — deze maand<\/strong><\/div>
-      <div style="display:flex;justify-content:space-between;padding:4px 0"><span>Basisbedrag ${geld(25)} + ${medewerkers.length} medewerkers × ${geld(3.5)}<\/span><strong style="color:var(--brand)">${geld(bedrag)}<\/strong><\/div>
-    <\/div>
+      zodra de openstaande factuur is betaald, werkt inloggen direct weer voor iedereen.`}<\/div>
+    ${proef?"":`<div style="background:var(--brand-l);border-radius:10px;padding:12px 14px;font-size:13px;margin-bottom:14px">
+      <div style="display:flex;justify-content:space-between;padding:4px 0"><span>Openstaande factuur<\/span><strong>Oibase-abonnement<\/strong><\/div>
+    <\/div>`}
     <div style="font-size:12px;color:var(--soft);line-height:1.7;margin-bottom:12px">
       Betaal de openstaande factuur van Oibase B.V. binnen de betalingstermijn van 7 dagen op het rekeningnummer dat op de factuur staat, onder vermelding van het factuurnummer.
       Zodra de betaling binnen is, wordt de toegang direct hersteld. Vragen? Mail naar info@oibase.nl.<\/div>
@@ -4748,9 +4751,24 @@ async function oibaseLogin(email,ww){
     if(row.branche)branche=row.branche;
     if(row.plan)abonnement.plan=row.plan;
     abonnement.status=(row.abonnement_status==="geblokkeerd")?"geblokkeerd":"actief";
+    // Facturatiestatus controleren: proef verlopen of betaling open?
+    let factRij=null;
+    try{
+      const {data:f}=await sb.from("facturatie").select("status,actief_tot").eq("user_id",data.user.id).maybeSingle();
+      factRij=f||null;
+    }catch(e){}
+    if(factRij){
+      const vandaag=new Date().toISOString().slice(0,10);
+      if(factRij.status==="gestopt"||factRij.status==="wacht_op_betaling"){abonnement.status="geblokkeerd";}
+      else if(factRij.status==="proef"&&factRij.actief_tot&&factRij.actief_tot<vandaag){abonnement.status="geblokkeerd";}
+    }
     oibaseLaatsteOpslag=JSON.stringify(oibaseVerzamel());
     fout.textContent="";fout.style.color="var(--rood)";
-    if(abonnement.status==="geblokkeerd"){sluitLogin();toonFactuur();return;}
+    if(abonnement.status==="geblokkeerd"){
+      sluitLogin();
+      toonFactuur(factRij&&factRij.status==="proef"?"proef":undefined);
+      return;
+    }
     sessie={rol:"werkgever",planner:{naam:row.bedrijfsnaam||"Werkgever",hoofd:true}};
     naApp();
   }catch(err){fout.style.color="var(--rood)";fout.textContent="Er ging iets mis: "+err.message;}
