@@ -4100,6 +4100,105 @@ function admAboEur(code,planNaam,mw){
   return (pl.basis+pl.perMw*mw)*landen[code].factor;
 }
 let facturatieLijst=[];
+// ═══════════ FACTUUR-PDF (beheerder) ═══════════
+const OIBASE_BEDRIJF={
+  naam:"Oibase B.V.", adres:"Goordelaan 19", postcode:"9591 CB", plaats:"Onstwedde",
+  land:"Nederland", kvk:"42117378", btw:"NL869807729B01",
+  iban:"NL60INGB0119080214", email:"info@oibase.nl", termijn:7
+};
+function admFactuurNr(r){
+  // Uniek, herleidbaar nummer: jaar + korte hash van klant + maand
+  const d=new Date();
+  const kort=(r.kvk||r.id||"").toString().replace(/\D/g,"").slice(-4)||"0000";
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}${kort}`;
+}
+function admMaakFactuur(id){
+  const r=facturatieLijst.find(x=>x.id===id);
+  if(!r){alert("Klant niet gevonden — vernieuw de lijst.");return;}
+  const B=OIBASE_BEDRIJF;
+  const vandaag=new Date();
+  const verval=new Date(vandaag);verval.setDate(verval.getDate()+B.termijn);
+  const dnl=d=>d.toLocaleDateString("nl-NL",{day:"numeric",month:"long",year:"numeric"});
+  const bedragEx=Number(r.bedrag||0);
+  // Btw: NL-klanten 21%; buitenland met btw-nummer = verlegd (0%)
+  const nlKlant=!r.btw_nummer || /^NL/i.test(r.btw_nummer||"");
+  const btwPct=nlKlant?21:0;
+  const btwBedrag=Math.round(bedragEx*btwPct)/100;
+  const totaal=bedragEx+btwBedrag;
+  const eur=n=>"€ "+n.toFixed(2).replace(".",",");
+  const nr=admFactuurNr(r);
+  const periode=r.ritme==="jaarlijks"?"jaarabonnement (12 maanden)":"maandabonnement";
+  const html=`<!DOCTYPE html><html lang="nl"><head><meta charset="utf-8"><title>Factuur ${nr} — ${esc(r.bedrijfsnaam||"")}</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;color:#1a1a2e;padding:40px;max-width:800px;margin:0 auto;font-size:14px;line-height:1.6}
+    .kop{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:40px;border-bottom:3px solid #0E7C7B;padding-bottom:20px}
+    .logo{font-size:28px;font-weight:800;color:#0E7C7B;letter-spacing:-1px}
+    .afzender{text-align:right;font-size:12px;color:#555;line-height:1.7}
+    .titel{font-size:22px;font-weight:800;margin:10px 0 4px}
+    .meta{display:flex;justify-content:space-between;margin-bottom:30px;gap:40px}
+    .blok h4{font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:#888;margin-bottom:6px}
+    .blok p{font-size:13px;line-height:1.7}
+    table{width:100%;border-collapse:collapse;margin:20px 0}
+    th{text-align:left;background:#f0faf9;padding:10px 12px;font-size:12px;text-transform:uppercase;letter-spacing:.3px;color:#0E7C7B;border-bottom:2px solid #0E7C7B}
+    td{padding:12px;border-bottom:1px solid #eee}
+    .rechts{text-align:right}
+    .totalen{margin-left:auto;width:280px;margin-top:10px}
+    .totalen tr td{border:none;padding:6px 12px}
+    .totrij td{border-top:2px solid #1a1a2e;font-weight:800;font-size:16px;color:#0E7C7B}
+    .betaal{background:#f0faf9;border:1px solid #b8e0dd;border-radius:12px;padding:18px 22px;margin-top:30px;font-size:13px;line-height:1.9}
+    .betaal strong{color:#0E7C7B}
+    .voet{margin-top:30px;font-size:11px;color:#999;text-align:center;border-top:1px solid #eee;padding-top:16px}
+    .knoppen{text-align:center;margin-bottom:20px}
+    .knoppen button{background:#0E7C7B;color:#fff;border:none;padding:12px 28px;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit}
+    @media print{.knoppen{display:none}body{padding:20px}}
+  </style></head><body>
+  <div class="knoppen"><button onclick="window.print()">🖨 Opslaan als PDF / Printen</button></div>
+  <div class="kop">
+    <div><div class="logo">oibase</div><div class="titel">Factuur</div></div>
+    <div class="afzender">
+      <strong>${B.naam}</strong><br>${B.adres}<br>${B.postcode} ${B.plaats}<br>${B.land}<br>
+      KvK ${B.kvk}<br>Btw ${B.btw}<br>${B.email}
+    </div>
+  </div>
+  <div class="meta">
+    <div class="blok">
+      <h4>Factuur aan</h4>
+      <p><strong>${esc(r.bedrijfsnaam||"")}</strong><br>
+      ${esc(r.adres||"")}<br>${esc(r.postcode||"")} ${esc(r.plaats||"")}<br>
+      ${r.kvk?"KvK "+esc(r.kvk)+"<br>":""}${r.btw_nummer?"Btw "+esc(r.btw_nummer)+"<br>":""}
+      ${esc(r.factuur_email||"")}</p>
+    </div>
+    <div class="blok" style="text-align:right">
+      <h4>Gegevens</h4>
+      <p>Factuurnummer: <strong>${nr}</strong><br>
+      Factuurdatum: ${dnl(vandaag)}<br>
+      Vervaldatum: <strong>${dnl(verval)}</strong><br>
+      Betalingstermijn: ${B.termijn} dagen</p>
+    </div>
+  </div>
+  <table>
+    <thead><tr><th>Omschrijving</th><th class="rechts">Bedrag</th></tr></thead>
+    <tbody>
+      <tr><td>Oibase ${esc(r.pakket||"")} — ${periode}</td><td class="rechts">${eur(bedragEx)}</td></tr>
+    </tbody>
+  </table>
+  <table class="totalen">
+    <tr><td>Subtotaal (excl. btw)</td><td class="rechts">${eur(bedragEx)}</td></tr>
+    <tr><td>Btw ${btwPct}%</td><td class="rechts">${eur(btwBedrag)}</td></tr>
+    <tr class="totrij"><td>Te betalen</td><td class="rechts">${eur(totaal)}</td></tr>
+  </table>
+  ${btwPct===0?`<p style="font-size:12px;color:#888;margin-top:8px">Btw verlegd naar de afnemer (intracommunautaire levering, art. 138 btw-richtlijn).</p>`:""}
+  <div class="betaal">
+    Gelieve <strong>${eur(totaal)}</strong> te voldoen binnen <strong>${B.termijn} dagen</strong> na factuurdatum, dus uiterlijk <strong>${dnl(verval)}</strong>,
+    op rekeningnummer <strong>${B.iban}</strong> t.n.v. ${B.naam}, onder vermelding van factuurnummer <strong>${nr}</strong>.
+  </div>
+  <div class="voet">Gemaakt met oibase.nl · ${B.naam} · KvK ${B.kvk} · ${B.iban}</div>
+  </body></html>`;
+  const w=window.open("","_blank");
+  if(!w){alert("Sta pop-ups toe om de factuur te openen.");return;}
+  w.document.write(html);w.document.close();
+}
 async function admZetStatus(id,status,maandenErbij){
   if(!sb)return;
   try{
@@ -4164,7 +4263,8 @@ async function laadFacturatie(){
               <\/span>
             <\/div>
             <div style="display:flex;flex-direction:column;gap:6px;min-width:170px">
-              <a class="btn btn-p btn-klein" style="text-decoration:none;text-align:center" href="mailto:${esc(r.factuur_email||"")}?subject=${encodeURIComponent("Factuur Oibase-abonnement — "+(r.bedrijfsnaam||""))}">✉ Mail factuur<\/a>
+              <button class="btn btn-p btn-klein" onclick="admMaakFactuur('${r.id}')">📄 Maak factuur<\/button>
+              <a class="btn btn-s btn-klein" style="text-decoration:none;text-align:center" href="mailto:${esc(r.factuur_email||"")}?subject=${encodeURIComponent("Factuur Oibase-abonnement — "+(r.bedrijfsnaam||""))}">✉ Mail<\/a>
               <button class="btn btn-s btn-klein" onclick="admZetStatus('${r.id}','actief',${r.ritme==="jaarlijks"?12:1})">✓ Betaald — activeer ${r.ritme==="jaarlijks"?"+1 jaar":"+1 mnd"}<\/button>
               ${r.status!=="wacht_op_betaling"?`<button class="btn btn-stil btn-klein" onclick="admZetStatus('${r.id}','wacht_op_betaling')">⏸ Zet op wachten<\/button>`:""}
               <button class="btn btn-stil btn-klein" style="color:var(--rood)" onclick="if(confirm('${esc((r.bedrijfsnaam||"").replace(/'/g,""))} op gestopt zetten?'))admZetStatus('${r.id}','gestopt')">✕ Gestopt<\/button>
@@ -4188,6 +4288,7 @@ async function laadFacturatie(){
         <td style="padding:6px 8px;border-bottom:1px solid var(--line)">${esc(r.status||"")}<\/td>
         <td style="padding:6px 8px;border-bottom:1px solid var(--line)">${esc(r.actief_tot||"")}<\/td>
         <td style="padding:6px 8px;border-bottom:1px solid var(--line);white-space:nowrap">
+          <button class="btn btn-p btn-klein" style="padding:3px 8px;font-size:11px" onclick="admMaakFactuur('${r.id}')">📄<\/button>
           ${r.status!=="actief"?`<button class="btn btn-s btn-klein" style="padding:3px 8px;font-size:11px" onclick="admZetStatus('${r.id}','actief',${r.ritme==="jaarlijks"?12:1})">✓ Activeer<\/button>`:`<button class="btn btn-s btn-klein" style="padding:3px 8px;font-size:11px" onclick="admZetStatus('${r.id}','actief',${r.ritme==="jaarlijks"?12:1})">+ Verleng<\/button>`}
           <button class="btn btn-stil btn-klein" style="padding:3px 8px;font-size:11px" onclick="admZetStatus('${r.id}','wacht_op_betaling')">⏸<\/button>
           <button class="btn btn-stil btn-klein" style="padding:3px 8px;font-size:11px;color:var(--rood)" onclick="if(confirm('Op gestopt zetten?'))admZetStatus('${r.id}','gestopt')">✕<\/button>
