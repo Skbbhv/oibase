@@ -4087,6 +4087,33 @@ function admAboEur(code,planNaam,mw){
   return (pl.basis+pl.perMw*mw)*landen[code].factor;
 }
 let facturatieLijst=[];
+async function admZetStatus(id,status,maandenErbij){
+  if(!sb)return;
+  try{
+    const upd={status:status};
+    if(maandenErbij){
+      const rij=facturatieLijst.find(r=>r.id===id);
+      // Verleng vanaf vandaag of vanaf huidige actief_tot als die in de toekomst ligt
+      const vandaag=new Date();
+      let basis=vandaag;
+      if(rij&&rij.actief_tot){const a=new Date(rij.actief_tot);if(a>vandaag)basis=a;}
+      const nieuw=new Date(basis);nieuw.setMonth(nieuw.getMonth()+maandenErbij);
+      upd.actief_tot=nieuw.toISOString().slice(0,10);
+      upd.laatst_gefactureerd=vandaag.toISOString().slice(0,10);
+    }
+    const {error}=await sb.from("facturatie").update(upd).eq("id",id);
+    if(error){alert("Wijzigen mislukt: "+error.message);return;}
+    // Bedrijven-tabel meebewegen: blokkeren/deblokkeren voor medewerkers
+    try{
+      const rij=facturatieLijst.find(r=>r.id===id);
+      if(rij&&rij.user_id){
+        const abStatus=(status==="wacht_op_betaling"||status==="gestopt")?"geblokkeerd":"actief";
+        await sb.from("bedrijven").update({abonnement_status:abStatus}).eq("eigenaar",rij.user_id);
+      }
+    }catch(e){}
+    laadFacturatie();
+  }catch(e){alert("Er ging iets mis: "+e.message)}
+}
 async function laadFacturatie(){
   const doel=$("adm-facturatie");
   if(!doel)return;
@@ -4123,8 +4150,11 @@ async function laadFacturatie(){
                 📧 <strong>${esc(r.factuur_email||"")}<\/strong> · ${esc(r.pakket||"")} · ${esc(r.ritme||"")} · ${r.bedrag!=null?geld(Number(r.bedrag)):"–"} excl. btw · termijn 7 dagen
               <\/span>
             <\/div>
-            <div style="display:flex;flex-direction:column;gap:6px">
+            <div style="display:flex;flex-direction:column;gap:6px;min-width:170px">
               <a class="btn btn-p btn-klein" style="text-decoration:none;text-align:center" href="mailto:${esc(r.factuur_email||"")}?subject=${encodeURIComponent("Factuur Oibase-abonnement — "+(r.bedrijfsnaam||""))}">✉ Mail factuur<\/a>
+              <button class="btn btn-s btn-klein" onclick="admZetStatus('${r.id}','actief',${r.ritme==="jaarlijks"?12:1})">✓ Betaald — activeer ${r.ritme==="jaarlijks"?"+1 jaar":"+1 mnd"}<\/button>
+              ${r.status!=="wacht_op_betaling"?`<button class="btn btn-stil btn-klein" onclick="admZetStatus('${r.id}','wacht_op_betaling')">⏸ Zet op wachten<\/button>`:""}
+              <button class="btn btn-stil btn-klein" style="color:var(--rood)" onclick="if(confirm('${esc((r.bedrijfsnaam||"").replace(/'/g,""))} op gestopt zetten?'))admZetStatus('${r.id}','gestopt')">✕ Gestopt<\/button>
             <\/div>
           <\/div>
         <\/div>`).join("")
@@ -4132,7 +4162,7 @@ async function laadFacturatie(){
     }
     // Volledige tabel
     doel.innerHTML=facturatieLijst.length?`<div style="overflow-x:auto"><table style="min-width:760px;border-collapse:collapse;font-size:12px">
-      <thead><tr>${["Bedrijf","KvK","Btw","Adres","Factuur-e-mail","Ritme","Pakket","Bedrag","Status","Actief tot"].map(h=>`<th style="text-align:left;padding:6px 8px;border-bottom:2px solid var(--line)">${h}<\/th>`).join("")}<\/tr><\/thead><tbody>
+      <thead><tr>${["Bedrijf","KvK","Btw","Adres","Factuur-e-mail","Ritme","Pakket","Bedrag","Status","Actief tot","Acties"].map(h=>`<th style="text-align:left;padding:6px 8px;border-bottom:2px solid var(--line)">${h}<\/th>`).join("")}<\/tr><\/thead><tbody>
       ${facturatieLijst.map(r=>`<tr>
         <td style="padding:6px 8px;border-bottom:1px solid var(--line)">${esc(r.bedrijfsnaam||"")}<\/td>
         <td style="padding:6px 8px;border-bottom:1px solid var(--line)">${esc(r.kvk||"")}<\/td>
@@ -4143,7 +4173,12 @@ async function laadFacturatie(){
         <td style="padding:6px 8px;border-bottom:1px solid var(--line)">${esc(r.pakket||"")}<\/td>
         <td style="padding:6px 8px;border-bottom:1px solid var(--line)">${r.bedrag!=null?geld(Number(r.bedrag)):"\u2013"}<\/td>
         <td style="padding:6px 8px;border-bottom:1px solid var(--line)">${esc(r.status||"")}<\/td>
-        <td style="padding:6px 8px;border-bottom:1px solid var(--line)">${esc(r.actief_tot||"")}<\/td><\/tr>`).join("")}
+        <td style="padding:6px 8px;border-bottom:1px solid var(--line)">${esc(r.actief_tot||"")}<\/td>
+        <td style="padding:6px 8px;border-bottom:1px solid var(--line);white-space:nowrap">
+          ${r.status!=="actief"?`<button class="btn btn-s btn-klein" style="padding:3px 8px;font-size:11px" onclick="admZetStatus('${r.id}','actief',${r.ritme==="jaarlijks"?12:1})">✓ Activeer<\/button>`:`<button class="btn btn-s btn-klein" style="padding:3px 8px;font-size:11px" onclick="admZetStatus('${r.id}','actief',${r.ritme==="jaarlijks"?12:1})">+ Verleng<\/button>`}
+          <button class="btn btn-stil btn-klein" style="padding:3px 8px;font-size:11px" onclick="admZetStatus('${r.id}','wacht_op_betaling')">⏸<\/button>
+          <button class="btn btn-stil btn-klein" style="padding:3px 8px;font-size:11px;color:var(--rood)" onclick="if(confirm('Op gestopt zetten?'))admZetStatus('${r.id}','gestopt')">✕<\/button>
+        <\/td><\/tr>`).join("")}
       <\/tbody><\/table><\/div>`:"Nog geen klanten aangemeld. Zodra iemand zich registreert via de prijzenpagina, verschijnt hij hier.";
   }catch(e){doel.textContent="Er ging iets mis: "+e.message}
 }
