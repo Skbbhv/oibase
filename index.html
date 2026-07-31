@@ -1981,7 +1981,17 @@ const rond2=x=>Math.round(x*100)/100;
 function tekenLandSelect(){
   $("land-select").innerHTML=Object.entries(landen).map(([code,l])=>`<option value="${code}" ${code===land?"selected":""}>${l.vlag} ${l.naam} (${l.munt})<\/option>`).join("");
 }
-function zetLand(c){land=c;tekenPlannen()}
+// Map van land naar taal
+const landTaalMap={NL:"nl",BE:"nl",DE:"de",AT:"de",FR:"fr",ES:"es",IT:"en",PT:"pt",GR:"en",PL:"en",CZ:"en",SE:"en",DK:"en",FI:"en",IE:"en"};
+function zetLand(c){
+  land=c;
+  const taalNieuw=landTaalMap[c]||"nl";
+  if(taal!==taalNieuw){
+    zetTaalKeuze(taalNieuw);
+  }else{
+    tekenPlannen();
+  }
+}
 function tekenPlannen(){
   const l=L();
   $("plannen").innerHTML=plannen.map((p,i)=>{
