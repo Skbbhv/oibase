@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Oibase Admin Dashboard</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #f5f6fa;
+      color: #1c2333;
+    }
+    
+    header {
+      background: #fff;
+      border-bottom: 1px solid #e3e6ee;
+      padding: 20px 40px;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+    
+    .header-content {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .logo { font-size: 24px; font-weight: 800; }
+    
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 40px;
+    }
+    
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+    
+    .stat-card {
+      background: #fff;
+      border: 1px solid #e3e6ee;
+      border-radius: 12px;
+      padding: 24px;
+      text-align: center;
+    }
+    
+    .stat-number {
+      font-size: 36px;
+      font-weight: 800;
+      color: #1288f4;
+      margin: 12px 0;
+    }
+    
+    .stat-label {
+      font-size: 13px;
+      color: #5a6478;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    h2 {
+      font-size: 24px;
+      margin: 0 0 20px;
+      font-weight: 800;
+    }
+    
+    .klanten-tabel {
+      background: #fff;
+      border: 1px solid #e3e6ee;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    
+    th {
+      background: #f9fafb;
+      padding: 14px 16px;
+      text-align: left;
+      font-size: 12px;
+      font-weight: 700;
+      color: #5a6478;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      border-bottom: 1px solid #e3e6ee;
+    }
+    
+    td {
+      padding: 16px;
+      border-bottom: 1px solid #e3e6ee;
+      font-size: 14px;
+    }
+    
+    tr:last-child td {
+      border-bottom: none;
+    }
+    
+    tr:hover {
+      background: #f9fafb;
+    }
+    
+    .btn {
+      border: none;
+      border-radius: 8px;
+      padding: 10px 16px;
+      font-weight: 700;
+      font-size: 13px;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.15s;
+    }
+    
+    .btn-primary {
+      background: linear-gradient(135deg, #1288f4 0%, #0b6bd4 100%);
+      color: #fff;
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 14px rgba(18, 136, 244, 0.35);
+    }
+    
+    .btn-primary:active {
+      transform: translateY(0);
+    }
+    
+    .btn-secondary {
+      background: #f5f6fa;
+      color: #1c2333;
+      border: 1px solid #e3e6ee;
+    }
+    
+    .btn-secondary:hover {
+      background: #e3e6ee;
+    }
+    
+    .status {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    
+    .status-active {
+      background: #d1fae5;
+      color: #065f46;
+    }
+    
+    .status-pending {
+      background: #fef3c7;
+      color: #92400e;
+    }
+    
+    .status-processing {
+      background: #dbeafe;
+      color: #1e40af;
+    }
+    
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .modal.open {
+      display: flex;
+    }
+    
+    .modal-content {
+      background: #fff;
+      border-radius: 12px;
+      padding: 32px;
+      max-width: 500px;
+      width: 90%;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+    
+    .modal h3 {
+      margin-top: 0;
+      font-size: 20px;
+    }
+    
+    .modal-actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 24px;
+    }
+    
+    .loading {
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+      border: 2px solid #e3e6ee;
+      border-top-color: #1288f4;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    
+    .alert {
+      padding: 12px 16px;
+      border-radius: 8px;
+      margin-bottom: 16px;
+      font-size: 13px;
+    }
+    
+    .alert-success {
+      background: #d1fae5;
+      color: #065f46;
+      border: 1px solid #a7f3d0;
+    }
+    
+    .alert-error {
+      background: #fee2e2;
+      color: #991b1b;
+      border: 1px solid #fecaca;
+    }
+    
+    .details {
+      background: #f9fafb;
+      border-left: 3px solid #1288f4;
+      padding: 12px;
+      margin: 16px 0;
+      border-radius: 4px;
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-content">
+      <div class="logo">📊 Oibase Admin</div>
+      <div>
+        <button class="btn btn-secondary" onclick="logout()">Uitloggen</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-label">Actieve Medewerkers</div>
+        <div class="stat-number" id="stat-medewerkers">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Loonstroken Deze Maand</div>
+        <div class="stat-number" id="stat-loonstroken">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Pending Facturen</div>
+        <div class="stat-number" id="stat-facturen">0</div>
+      </div>
+    </div>
+
+    <div>
+      <h2>Klanten & Verwerking</h2>
+      <div class="klanten-tabel">
+        <table id="klanten-table">
+          <thead>
+            <tr>
+              <th>Bedrijf</th>
+              <th>E-mail</th>
+              <th>Medewerkers</th>
+              <th>Loonstroken</th>
+              <th>Status</th>
+              <th>Actie</th>
+            </tr>
+          </thead>
+          <tbody id="table-body">
+            <tr>
+              <td colspan="6" style="text-align: center; padding: 40px;">
+                Bezig met laden...
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Verwerking Modal -->
+  <div class="modal" id="verwerking-modal">
+    <div class="modal-content">
+      <h3 id="modal-title">Factuur & Loonstroken Verwerking</h3>
+      <div id="modal-body"></div>
+      <div class="modal-actions">
+        <button class="btn btn-secondary" onclick="sluitModal()">Annuleren</button>
+        <button class="btn btn-primary" id="modal-confirm-btn" onclick="bevestigVerwerking()">
+          Verwerken
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const SUPABASE_URL = 'https://wjubzvvcabybmymrdntl.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind...';
+    
+    let data = {
+      klanten: [],
+      medewerkers: [],
+      loonstroken: []
+    };
+    
+    let huidigeKlant = null;
+
+    // Init
+    async function init() {
+      await laadData();
+      toonStats();
+      toonKlanten();
+    }
+
+    async function laadData() {
+      try {
+        // Mock data (in productie: fetch from Supabase)
+        data = {
+          klanten: [
+            { id: 1, naam: 'SecureGuard BV', email: 'admin@secureguard.nl', plan: 'Premium', status: 'actief' },
+            { id: 2, naam: 'CleanPro Services', email: 'info@cleanpro.nl', plan: 'Basic', status: 'actief' },
+            { id: 3, naam: 'SouthGuard Solutions', email: 'contact@southguard.nl', plan: 'Enterprise', status: 'pending' }
+          ],
+          medewerkers: [
+            { klant_id: 1, naam: 'Jan Pieterzoon', email: 'jan@secureguard.nl' },
+            { klant_id: 1, naam: 'Maria Santos', email: 'maria@secureguard.nl' },
+            { klant_id: 2, naam: 'Anna Dubois', email: 'anna@cleanpro.nl' },
+            { klant_id: 2, naam: 'Tom Leeuwen', email: 'tom@cleanpro.nl' },
+            { klant_id: 2, naam: 'Lisa Knoops', email: 'lisa@cleanpro.nl' },
+            { klant_id: 3, naam: 'Rob Hendrix', email: 'rob@southguard.nl' }
+          ],
+          loonstroken: [
+            { klant_id: 1, medewerker_id: 1, maand: '2024-07', status: 'verzonden' },
+            { klant_id: 1, medewerker_id: 2, maand: '2024-07', status: 'verzonden' },
+            { klant_id: 2, medewerker_id: 3, maand: '2024-07', status: 'concept' },
+            { klant_id: 2, medewerker_id: 4, maand: '2024-07', status: 'concept' },
+            { klant_id: 2, medewerker_id: 5, maand: '2024-07', status: 'concept' },
+            { klant_id: 3, medewerker_id: 6, maand: '2024-07', status: 'concept' }
+          ]
+        };
+      } catch (e) {
+        console.error('Laden mislukt:', e);
+      }
+    }
+
+    function toonStats() {
+      const aantalMedewerkers = data.medewerkers.length;
+      const aantalLoonstroken = data.loonstroken.filter(l => l.maand === '2024-07').length;
+      const aantalPending = data.loonstroken.filter(l => l.status === 'concept').length;
+      
+      document.getElementById('stat-medewerkers').textContent = aantalMedewerkers;
+      document.getElementById('stat-loonstroken').textContent = aantalLoonstroken;
+      document.getElementById('stat-facturen').textContent = aantalPending;
+    }
+
+    function toonKlanten() {
+      const tbody = document.getElementById('table-body');
+      tbody.innerHTML = data.klanten.map(klant => {
+        const mw = data.medewerkers.filter(m => m.klant_id === klant.id).length;
+        const ls = data.loonstroken.filter(l => l.klant_id === klant.id && l.maand === '2024-07').length;
+        const lsVerzonden = data.loonstroken.filter(l => l.klant_id === klant.id && l.maand === '2024-07' && l.status === 'verzonden').length;
+        
+        const statusTekst = lsVerzonden === ls ? 'Afgehandeld' : 'In Behandeling';
+        const statusKlasse = lsVerzonden === ls ? 'status-active' : (lsVerzonden > 0 ? 'status-processing' : 'status-pending');
+        
+        return `
+          <tr>
+            <td><strong>${klant.naam}</strong></td>
+            <td>${klant.email}</td>
+            <td>${mw}</td>
+            <td>${lsVerzonden}/${ls}</td>
+            <td><span class="status ${statusKlasse}">${statusTekst}</span></td>
+            <td>
+              <button class="btn btn-primary" onclick="openVerwerking(${klant.id}, '${klant.naam}')">
+                Verwerken
+              </button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function openVerwerking(klantId, klantNaam) {
+      huidigeKlant = klantId;
+      const klant = data.klanten.find(k => k.id === klantId);
+      const mw = data.medewerkers.filter(m => m.klant_id === klantId);
+      const ls = data.loonstroken.filter(l => l.klant_id === klantId && l.maand === '2024-07');
+      const lsTeSenden = ls.filter(l => l.status === 'concept');
+      
+      let html = `
+        <div class="alert alert-error" style="display: none;" id="modal-error"></div>
+        
+        <h4>Samenvatting</h4>
+        <div class="details">
+          <strong>Bedrijf:</strong> ${klantNaam}<br>
+          <strong>Plan:</strong> ${klant.plan}<br>
+          <strong>Medewerkers:</strong> ${mw.length}<br>
+          <strong>Loonstroken deze maand:</strong> ${ls.length}
+        </div>
+        
+        <h4>Acties</h4>
+        <div class="details" style="border-left-color: #16a34a;">
+          ✓ <strong>Loonstroken genereren & verzenden:</strong> ${lsTeSenden.length} stroken<br>
+          ✓ <strong>Factuur samenstellen:</strong> Inclusief alle kosten<br>
+          ✓ <strong>Status markeren:</strong> Afgehandeld
+        </div>
+        
+        <h4>Details</h4>
+        <div style="background: #f9fafb; padding: 12px; border-radius: 6px; font-size: 12px;">
+          <strong>Te verzenden naar:</strong><br>
+      `;
+      
+      lsTeSenden.forEach(ls => {
+        const mw = data.medewerkers.find(m => m.id === ls.medewerker_id);
+        html += `${mw?.naam} (${mw?.email})<br>`;
+      });
+      
+      html += `</div>`;
+      
+      document.getElementById('modal-title').textContent = `Verwerking: ${klantNaam}`;
+      document.getElementById('modal-body').innerHTML = html;
+      document.getElementById('verwerking-modal').classList.add('open');
+    }
+
+    async function bevestigVerwerking() {
+      const btn = document.getElementById('modal-confirm-btn');
+      const errorEl = document.getElementById('modal-error');
+      
+      btn.disabled = true;
+      btn.innerHTML = '<span class="loading"></span> Verwerken...';
+      
+      try {
+        // Simuleer verwerking
+        await new Promise(r => setTimeout(r, 2000));
+        
+        // Update status
+        const klantId = huidigeKlant;
+        data.loonstroken.forEach(l => {
+          if (l.klant_id === klantId && l.maand === '2024-07' && l.status === 'concept') {
+            l.status = 'verzonden';
+          }
+        });
+        
+        // Success
+        errorEl.classList.remove('alert-error');
+        errorEl.classList.add('alert-success');
+        errorEl.textContent = '✓ Loonstroken verzonden en factuur gegenereerd!';
+        errorEl.style.display = 'block';
+        
+        setTimeout(() => {
+          sluitModal();
+          toonStats();
+          toonKlanten();
+        }, 2000);
+      } catch (e) {
+        errorEl.style.display = 'block';
+        errorEl.textContent = '❌ Fout: ' + e.message;
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = 'Verwerken';
+      }
+    }
+
+    function sluitModal() {
+      document.getElementById('verwerking-modal').classList.remove('open');
+      huidigeKlant = null;
+    }
+
+    function logout() {
+      if (confirm('Zeker weten?')) {
+        // Redirect to login
+        window.location.href = '/';
+      }
+    }
+
+    // Start
+    init();
+  </script>
+</body>
+</html>
