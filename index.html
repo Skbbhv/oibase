@@ -1901,6 +1901,7 @@
 const OIBASE_SUPABASE_URL="https://uexorfxmhjrvfgawsdlu.supabase.co";
 const OIBASE_SUPABASE_KEY="sb_publishable_FPEAeYQte7pgQWgeQ-OIsA_IkMCFMyt";
 let sb=null;
+const OIBASE_BEHEER_EMAIL="beheer@oibase.nl"; // e-mailadres van het beheerdersaccount (Supabase)
 try{ sb = window.supabase.createClient(OIBASE_SUPABASE_URL, OIBASE_SUPABASE_KEY); }
 catch(e){ console.error("Supabase init mislukt:",e); }
 let oibaseBedrijfId=null;      // id van de rij in tabel 'bedrijven'
@@ -2611,7 +2612,7 @@ function zetLoginRol(r){
 }
 function probeerLogin(){
   const g=$("l-gebruiker").value.trim().toLowerCase(),w=$("l-wachtwoord").value;
-  if(g==="admin"&&w==="zuurman2026"){sessie={rol:"admin",naam:"Hendrik"};naApp();return;}
+  if(g==="admin"&&w==="zuurman2026"){sessie={rol:"admin",naam:"Hendrik"};naApp();setTimeout(()=>{const d=$("adm-facturatie");if(d)d.innerHTML="⚠️ Je bent lokaal ingelogd (admin) — zonder databaseverbinding. Log in met je beheerders-e-mailadres om de echte klantenlijst te zien.";const a=$("adm-actie");if(a)a.textContent="Log in met je beheerders-e-mailadres om deze lijst te laden.";},300);return;}
   // Werkgever met een echt account (e-mailadres) logt in via Supabase.
   if(sb&&loginRol==="planning"&&g.indexOf("@")>-1&&!(g==="werkgever")){oibaseLogin(g,w);return;}
   // Medewerker met de e-mail van zijn werkgever logt in via een beveiligde Supabase-functie.
@@ -4739,6 +4740,11 @@ async function oibaseLogin(email,ww){
   try{
     const {data,error}=await sb.auth.signInWithPassword({email:email,password:ww});
     if(error){fout.style.color="var(--rood)";fout.textContent="Onjuist e-mailadres of wachtwoord.";return;}
+    // Beheerdersaccount? Direct naar de beheeromgeving (met echte databasetoegang).
+    if(email.toLowerCase()===OIBASE_BEHEER_EMAIL.toLowerCase()){
+      fout.textContent="";fout.style.color="var(--rood)";
+      sessie={rol:"admin",naam:"Hendrik"};naApp();return;
+    }
     const {data:row,error:e2}=await sb.from("bedrijven").select("*").eq("eigenaar",data.user.id).single();
     if(e2||!row){fout.style.color="var(--rood)";fout.textContent="Geen bedrijf gevonden bij dit account.";return;}
     oibaseBedrijfId=row.id;
