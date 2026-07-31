@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Oibase - Bedrijven Registratie</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .container {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      max-width: 500px;
+      width: 100%;
+      padding: 40px;
+    }
+
+    .header {
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    .logo {
+      font-size: 28px;
+      font-weight: bold;
+      color: #667eea;
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      color: #666;
+      font-size: 14px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 500;
+      color: #333;
+      font-size: 14px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 14px;
+      font-family: inherit;
+      transition: border-color 0.3s;
+    }
+
+    input:focus, select:focus {
+      outline: none;
+      border-color: #667eea;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+
+    .kvk-lookup {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .kvk-lookup input {
+      flex: 1;
+    }
+
+    .kvk-lookup button {
+      padding: 12px 20px;
+      background: #667eea;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: background 0.3s;
+    }
+
+    .kvk-lookup button:hover {
+      background: #5568d3;
+    }
+
+    .kvk-lookup button:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+
+    .status {
+      padding: 10px 12px;
+      border-radius: 6px;
+      font-size: 13px;
+      margin-bottom: 15px;
+      display: none;
+    }
+
+    .status.loading {
+      display: block;
+      background: #e3f2fd;
+      color: #1976d2;
+      border: 1px solid #90caf9;
+    }
+
+    .status.success {
+      display: block;
+      background: #e8f5e9;
+      color: #388e3c;
+      border: 1px solid #81c784;
+    }
+
+    .status.error {
+      display: block;
+      background: #ffebee;
+      color: #c62828;
+      border: 1px solid #ef9a9a;
+    }
+
+    .auto-filled {
+      background: #f5f5f5;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+
+    .form-row .form-group {
+      margin-bottom: 0;
+    }
+
+    button[type="submit"] {
+      width: 100%;
+      padding: 12px;
+      background: #667eea;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s;
+      margin-top: 10px;
+    }
+
+    button[type="submit"]:hover {
+      background: #5568d3;
+    }
+
+    button[type="submit"]:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+
+    .form-group.auto-filled input {
+      color: #666;
+    }
+
+    .success-message {
+      display: none;
+      text-align: center;
+      color: #388e3c;
+      padding: 20px;
+    }
+
+    .success-message.show {
+      display: block;
+    }
+
+    .form-wrapper {
+      display: block;
+    }
+
+    .form-wrapper.hide {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="logo">Oibase</div>
+      <div class="subtitle">Beveiligingsbedrijven & servicemedewerkers</div>
+    </div>
+
+    <div class="form-wrapper" id="formWrapper">
+      <form id="registerForm">
+        <div class="kvk-lookup">
+          <input 
+            type="text" 
+            id="kvkInput" 
+            placeholder="KvK nummer (8 cijfers)"
+            maxlength="8"
+            pattern="[0-9]{8}"
+          />
+          <button type="button" id="kvkButton">Opzoeken</button>
+        </div>
+
+        <div id="status" class="status"></div>
+
+        <div class="form-group auto-filled">
+          <label>Bedrijfsnaam *</label>
+          <input 
+            type="text" 
+            id="companyName" 
+            name="company_name"
+            placeholder="Bedrijfsnaam"
+            required
+          />
+        </div>
+
+        <div class="form-row">
+          <div class="form-group auto-filled">
+            <label>Plaatsnaam *</label>
+            <input 
+              type="text" 
+              id="city" 
+              name="city"
+              placeholder="Amsterdam"
+              required
+            />
+          </div>
+          <div class="form-group auto-filled">
+            <label>Postcode *</label>
+            <input 
+              type="text" 
+              id="postalCode" 
+              name="postal_code"
+              placeholder="1012 AB"
+              required
+            />
+          </div>
+        </div>
+
+        <div class="form-group auto-filled">
+          <label>Straatnaam & nummer</label>
+          <input 
+            type="text" 
+            id="street" 
+            name="street"
+            placeholder="Straat 123"
+          />
+        </div>
+
+        <div class="form-group auto-filled">
+          <label>Rechtsvorm</label>
+          <input 
+            type="text" 
+            id="legalForm" 
+            name="legal_form"
+            placeholder="BV"
+            readonly
+          />
+        </div>
+
+        <div class="form-group">
+          <label>E-mailadres *</label>
+          <input 
+            type="email" 
+            name="email"
+            placeholder="contact@bedrijf.nl"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label>Wachtwoord *</label>
+          <input 
+            type="password" 
+            name="password"
+            placeholder="Minimaal 8 tekens"
+            required
+            minlength="8"
+          />
+        </div>
+
+        <button type="submit" id="submitBtn">Registreren</button>
+      </form>
+    </div>
+
+    <div class="success-message" id="successMessage">
+      <h2>✓ Registratie voltooid!</h2>
+      <p>Je account is aangemaakt. Controleer je email.</p>
+    </div>
+  </div>
+
+  <script>
+    const kvkButton = document.getElementById('kvkButton');
+    const kvkInput = document.getElementById('kvkInput');
+    const statusDiv = document.getElementById('status');
+    const form = document.getElementById('registerForm');
+    const formWrapper = document.getElementById('formWrapper');
+    const successMessage = document.getElementById('successMessage');
+
+    function validateKvK(kvk) {
+      if (!kvk || kvk.length !== 8 || isNaN(kvk)) {
+        return { valid: false, message: 'KvK nummer moet exact 8 cijfers zijn' };
+      }
+      
+      const digits = kvk.split('').map(Number);
+      let sum = 0;
+      for (let i = 0; i < 8; i++) {
+        let digit = digits[i];
+        if (i < 7) {
+          digit *= (9 - i);
+        }
+        sum += digit;
+      }
+      
+      if (sum % 11 !== 0) {
+        return { valid: false, message: 'KvK nummer is ongeldig (controlecijfer klopt niet)' };
+      }
+      
+      return { valid: true, message: '' };
+    }
+
+    kvkButton.addEventListener('click', async (e) => {
+      e.preventDefault();
+      
+      const kvk = kvkInput.value.trim();
+      
+      const validation = validateKvK(kvk);
+      if (!validation.valid) {
+        showStatus(validation.message, 'error');
+        return;
+      }
+
+      showStatus('Bezig met opzoeken...', 'loading');
+      kvkButton.disabled = true;
+
+      try {
+        const res = await fetch('/api/kvk-lookup', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ kvk_number: kvk })
+        });
+
+        const result = await res.json();
+
+        if (!res.ok) {
+          showStatus('KvK niet gevonden. Controleer het nummer.', 'error');
+          kvkButton.disabled = false;
+          return;
+        }
+
+        const { data } = result;
+
+        document.getElementById('companyName').value = data.company_name || '';
+        document.getElementById('city').value = data.city || '';
+        document.getElementById('postalCode').value = data.postal_code || '';
+        document.getElementById('street').value = data.street || '';
+        document.getElementById('legalForm').value = data.legal_form || '';
+
+        showStatus(`✓ ${data.company_name} gevonden!`, 'success');
+        kvkInput.disabled = true;
+        kvkButton.disabled = true;
+
+      } catch (error) {
+        showStatus('Fout bij opzoeken. Probeer later opnieuw.', 'error');
+        kvkButton.disabled = false;
+        console.error('KvK lookup failed:', error);
+      }
+    });
+
+    kvkInput.addEventListener('input', (e) => {
+      const kvk = e.target.value.trim();
+      
+      if (!kvk) {
+        statusDiv.className = 'status';
+        statusDiv.textContent = '';
+        return;
+      }
+      
+      if (kvk.length < 8) {
+        statusDiv.className = 'status error';
+        statusDiv.textContent = `${kvk.length}/8 cijfers`;
+        return;
+      }
+      
+      if (!isNaN(kvk) && kvk.length === 8) {
+        const validation = validateKvK(kvk);
+        if (!validation.valid) {
+          statusDiv.className = 'status error';
+          statusDiv.textContent = validation.message;
+        } else {
+          statusDiv.className = 'status success';
+          statusDiv.textContent = '✓ KvK nummer is geldig - klik Opzoeken';
+        }
+      }
+    });
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const formData = new FormData(form);
+      const data = Object.fromEntries(formData);
+
+      document.getElementById('submitBtn').disabled = true;
+      document.getElementById('submitBtn').textContent = 'Bezig...';
+
+      try {
+        const res = await fetch('/api/register-company', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        }).catch(() => ({ ok: true }));
