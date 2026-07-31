@@ -4677,6 +4677,14 @@ function tInstellingen(){
     ${heeftFacturatie()?`<div style="font-size:12px;color:var(--soft);margin-bottom:12px">Instellingen voor de automatische loonstroken. De heffing is indicatief — echte loonheffingstabellen komen via de loonpakket-koppeling.<\/div>
     <label style="font-size:12px;color:var(--soft)">Loonheffing indicatief (%)<\/label>
     <input type="number" step="0.1" min="0" max="60" value="${loonInst.heffingPct}" onchange="loonInst.heffingPct=Number(this.value)||0;tekenApp()">
+    <label style="font-size:12px;color:var(--soft)">Arbeidskorting indicatief (%)<\/label>
+    <input type="number" step="0.1" min="0" max="30" value="${loonInst.akPct}" onchange="loonInst.akPct=Number(this.value)||0;tekenApp()">
+    <label style="font-size:12px;color:var(--soft)">SV-premie indicatief (% — informatief op de strook)<\/label>
+    <input type="number" step="0.01" min="0" max="40" value="${loonInst.svPct}" onchange="loonInst.svPct=Number(this.value)||0;tekenApp()">
+    <label style="display:flex;align-items:center;gap:8px;font-size:13px;margin:6px 0 10px;cursor:pointer">
+      <input type="checkbox" ${loonInst.loonheffkorting?"checked":""} onchange="loonInst.loonheffkorting=this.checked;tekenApp()" style="width:auto;margin:0">
+      Loonheffingskorting toepassen (arbeidskorting verrekenen)
+    <\/label>
     <label style="font-size:12px;color:var(--soft)">Wettelijk minimumloon per uur (21+)<\/label>
     <input type="number" step="0.01" min="0" value="${loonInst.minUur}" onchange="loonInst.minUur=Number(this.value)||0;tekenApp()">
     <label style="font-size:12px;color:var(--soft)">Uitbetaaldag van de maand<\/label>
@@ -4839,7 +4847,7 @@ function oibaseSchoneState(){
     klokActief:{}, klokLog:[], noShows:[], klanten:[],
     bedrijfsProfiel:{naam:(eigenAccount?eigenAccount.bedrijf:""),adres:"",postcode:"",plaats:"",kvk:"",btwNr:"",iban:"",email:(eigenAccount?eigenAccount.email:"")},
     postvak:[], loonVerstuurd:0,
-    loonInst:{heffingPct:36,minUur:14.71,uitbetaalDag:25},
+    loonInst:{heffingPct:36,minUur:14.71,uitbetaalDag:25,svPct:27.65,akPct:8,loonheffkorting:true},
     reisInst:{aan:true,perKm:0.25,retour:true},
     facturen:[], factuurNr:2026001,
     ruilAanbod:[], ruilLog:[], beschikbaar:{}, prikbord:[],
