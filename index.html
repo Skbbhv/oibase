@@ -4088,14 +4088,50 @@ function admAboEur(code,planNaam,mw){
 let facturatieLijst=[];
 async function laadFacturatie(){
   const doel=$("adm-facturatie");
+  if(!doel)return;
   if(!sb){doel.textContent="Geen verbinding met Supabase.";return}
   doel.textContent="Bezig met ophalen\u2026";
   try{
     const {data,error}=await sb.from("facturatie").select("*").order("aangemaakt_op",{ascending:false});
     if(error){doel.textContent="Ophalen mislukt: "+error.message;return}
     facturatieLijst=data||[];
+    const vandaag=new Date().toISOString().slice(0,10);
+    const isVerlopenProef=r=>r.status==="proef"&&r.actief_tot&&r.actief_tot<vandaag;
+    const actie=facturatieLijst.filter(r=>isVerlopenProef(r)||r.status==="wacht_op_betaling");
+    // KPI's
+    const aant=facturatieLijst.length,
+          proef=facturatieLijst.filter(r=>r.status==="proef"&&!isVerlopenProef(r)).length,
+          actief=facturatieLijst.filter(r=>r.status==="actief").length,
+          mrr=facturatieLijst.filter(r=>r.status==="actief").reduce((t,r)=>t+(r.ritme==="jaarlijks"?Number(r.bedrag||0)/12:Number(r.bedrag||0)),0);
+    if($("adm-kpi-totaal"))$("adm-kpi-totaal").textContent=aant;
+    if($("adm-kpi-proef"))$("adm-kpi-proef").textContent=proef;
+    if($("adm-kpi-actief"))$("adm-kpi-actief").textContent=actief;
+    if($("adm-kpi-open"))$("adm-kpi-open").textContent=actie.length;
+    if($("adm-kpi-mrr"))$("adm-kpi-mrr").textContent=geld(Math.round(mrr*100)/100);
+    // Actielijst: naar wie moet een factuur?
+    const actieDoel=$("adm-actie");
+    if(actieDoel){
+      actieDoel.innerHTML=actie.length?actie.map(r=>`
+        <div style="border:1px solid #FCA5A5;background:#FEF2F2;border-radius:12px;padding:12px 14px;margin-bottom:10px">
+          <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px">
+            <div>
+              <strong style="font-size:14px">${esc(r.bedrijfsnaam||"")}<\/strong>
+              <span style="background:${r.status==="wacht_op_betaling"?"#FEE2E2;color:#B91C1C":"#FEF3C7;color:#92400E"};border-radius:10px;padding:1px 8px;font-size:10px;font-weight:800;margin-left:6px">${r.status==="wacht_op_betaling"?"WACHT OP BETALING":"PROEF VERLOPEN "+esc(r.actief_tot||"")}<\/span><br>
+              <span style="font-size:12px;color:var(--soft)">
+                ${esc((r.adres||"")+", "+(r.postcode||"")+" "+(r.plaats||""))} · KvK ${esc(r.kvk||"–")}${r.btw_nummer?" · Btw "+esc(r.btw_nummer):""}<br>
+                📧 <strong>${esc(r.factuur_email||"")}<\/strong> · ${esc(r.pakket||"")} · ${esc(r.ritme||"")} · ${r.bedrag!=null?geld(Number(r.bedrag)):"–"} excl. btw · termijn 7 dagen
+              <\/span>
+            <\/div>
+            <div style="display:flex;flex-direction:column;gap:6px">
+              <a class="btn btn-p btn-klein" style="text-decoration:none;text-align:center" href="mailto:${esc(r.factuur_email||"")}?subject=${encodeURIComponent("Factuur Oibase-abonnement — "+(r.bedrijfsnaam||""))}">✉ Mail factuur<\/a>
+            <\/div>
+          <\/div>
+        <\/div>`).join("")
+      :`<div style="color:var(--groen);font-weight:700">✓ Niemand wacht op een factuur.<\/div>`;
+    }
+    // Volledige tabel
     doel.innerHTML=facturatieLijst.length?`<div style="overflow-x:auto"><table style="min-width:760px;border-collapse:collapse;font-size:12px">
-      <thead><tr>${["Bedrijf","KvK","Btw","Adres","Factuur-e-mail","Ritme","Pakket","Bedrag","Status"].map(h=>`<th style="text-align:left;padding:6px 8px;border-bottom:2px solid var(--line)">${h}<\/th>`).join("")}<\/tr><\/thead><tbody>
+      <thead><tr>${["Bedrijf","KvK","Btw","Adres","Factuur-e-mail","Ritme","Pakket","Bedrag","Status","Actief tot"].map(h=>`<th style="text-align:left;padding:6px 8px;border-bottom:2px solid var(--line)">${h}<\/th>`).join("")}<\/tr><\/thead><tbody>
       ${facturatieLijst.map(r=>`<tr>
         <td style="padding:6px 8px;border-bottom:1px solid var(--line)">${esc(r.bedrijfsnaam||"")}<\/td>
         <td style="padding:6px 8px;border-bottom:1px solid var(--line)">${esc(r.kvk||"")}<\/td>
@@ -4105,8 +4141,9 @@ async function laadFacturatie(){
         <td style="padding:6px 8px;border-bottom:1px solid var(--line)">${esc(r.ritme||"")}<\/td>
         <td style="padding:6px 8px;border-bottom:1px solid var(--line)">${esc(r.pakket||"")}<\/td>
         <td style="padding:6px 8px;border-bottom:1px solid var(--line)">${r.bedrag!=null?geld(Number(r.bedrag)):"\u2013"}<\/td>
-        <td style="padding:6px 8px;border-bottom:1px solid var(--line)">${esc(r.status||"")}<\/td><\/tr>`).join("")}
-      <\/tbody><\/table><\/div>`:"Nog geen facturatiegegevens.";
+        <td style="padding:6px 8px;border-bottom:1px solid var(--line)">${esc(r.status||"")}<\/td>
+        <td style="padding:6px 8px;border-bottom:1px solid var(--line)">${esc(r.actief_tot||"")}<\/td><\/tr>`).join("")}
+      <\/tbody><\/table><\/div>`:"Nog geen klanten aangemeld. Zodra iemand zich registreert via de prijzenpagina, verschijnt hij hier.";
   }catch(e){doel.textContent="Er ging iets mis: "+e.message}
 }
 function downloadFacturatieCSV(){
@@ -4122,72 +4159,30 @@ function downloadFacturatieCSV(){
   a.download="oibase-facturatie.csv";a.click();
 }
 function tAdmin(){
-  const mrr=ADM.abos.reduce((t,[c,pl,mw])=>t+admAboEur(c,pl,mw),0);
-  const perPlan={};ADM.abos.forEach(([c,pl])=>perPlan[pl]=(perPlan[pl]||0)+1);
-  const perLand={};ADM.abos.forEach(([c])=>perLand[c]=(perLand[c]||0)+1);
-  const maxBez=Math.max(...ADM.bezoekers);
-  const vandaag=ADM.bezoekers[ADM.bezoekers.length-1],gisteren=ADM.bezoekers[ADM.bezoekers.length-2];
-  const groei=Math.round((vandaag-gisteren)/gisteren*100);
-  const kpi=(l,w,sub)=>`<div class="kaart" style="text-align:center;padding:16px 10px">
-    <div style="font-size:26px;font-weight:800;color:var(--brand)">${w}<\/div>
-    <div style="font-size:12px;font-weight:700;margin-top:2px">${l}<\/div>
-    ${sub?`<div style="font-size:11px;color:var(--soft);margin-top:2px">${sub}<\/div>`:""}<\/div>`;
+  // Direct de echte klantenlijst laden zodra het beheerscherm opent
+  setTimeout(()=>{laadFacturatie();},50);
   return `
-  <div style="background:#FEF3C7;border:1px solid #FCD34D;border-radius:10px;padding:9px 14px;margin-bottom:14px;font-size:12px">
-    🔐 <strong>Beheeromgeving<\/strong> — deze cijfers zijn demo-data. Zodra de backend live is, komen hier de echte abonnementen (uit de database) en bezoekers (via analytics).<\/div>
+  <div style="background:#DCFCE7;border:1px solid #86EFAC;border-radius:10px;padding:9px 14px;margin-bottom:14px;font-size:12px">
+    🔐 <strong>Beheeromgeving<\/strong> — live gegevens uit de database. Hier zie je wie zich heeft aangemeld en naar wie je een factuur stuurt.<\/div>
+  <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(140px,1fr));margin-bottom:14px" id="adm-kpis">
+    <div class="kaart" style="text-align:center;padding:16px 10px"><div style="font-size:26px;font-weight:800;color:var(--brand)" id="adm-kpi-totaal">–<\/div><div style="font-size:12px;font-weight:700;margin-top:2px">Klanten totaal<\/div><\/div>
+    <div class="kaart" style="text-align:center;padding:16px 10px"><div style="font-size:26px;font-weight:800;color:var(--brand)" id="adm-kpi-proef">–<\/div><div style="font-size:12px;font-weight:700;margin-top:2px">In proefperiode<\/div><\/div>
+    <div class="kaart" style="text-align:center;padding:16px 10px"><div style="font-size:26px;font-weight:800;color:var(--groen)" id="adm-kpi-actief">–<\/div><div style="font-size:12px;font-weight:700;margin-top:2px">Actief (betaald)<\/div><\/div>
+    <div class="kaart" style="text-align:center;padding:16px 10px"><div style="font-size:26px;font-weight:800;color:var(--rood)" id="adm-kpi-open">–<\/div><div style="font-size:12px;font-weight:700;margin-top:2px">Factuur versturen<\/div><div style="font-size:11px;color:var(--soft);margin-top:2px">proef verlopen<\/div><\/div>
+    <div class="kaart" style="text-align:center;padding:16px 10px"><div style="font-size:26px;font-weight:800;color:var(--brand)" id="adm-kpi-mrr">–<\/div><div style="font-size:12px;font-weight:700;margin-top:2px">Omzet p/mnd<\/div><div style="font-size:11px;color:var(--soft);margin-top:2px">basisbedragen<\/div><\/div>
+  <\/div>
+  <div class="kaart" style="margin-bottom:14px" id="adm-actie-kaart">
+    <div style="font-weight:800;font-size:15px;margin-bottom:4px">📮 Factuur versturen naar<\/div>
+    <div style="font-size:12px;color:var(--soft);margin-bottom:8px">Klanten van wie de proefperiode is verlopen of die op \u201cwacht op betaling\u201d staan — deze mensen wachten op jouw factuur.<\/div>
+    <div id="adm-actie" style="font-size:13px;color:var(--soft)">Bezig met laden\u2026<\/div>
+  <\/div>
   <div class="kaart" style="margin-bottom:14px">
-    <div style="font-weight:800;font-size:15px;margin-bottom:4px">📄 Facturatie — klanten & gegevens<\/div>
-    <div style="font-size:12px;color:var(--soft);margin-bottom:8px">Alle aangemelde bedrijven met hun factuurgegevens (live uit de database). Download als CSV en maak de facturen in je boekhouding.<\/div>
+    <div style="font-weight:800;font-size:15px;margin-bottom:4px">📄 Alle klanten & factuurgegevens<\/div>
     <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px">
-      <button class="btn btn-p btn-klein" onclick="laadFacturatie()">🔄 Ophalen<\/button>
+      <button class="btn btn-p btn-klein" onclick="laadFacturatie()">🔄 Vernieuwen<\/button>
       <button class="btn btn-s btn-klein" onclick="downloadFacturatieCSV()">⬇ Download CSV<\/button>
     <\/div>
-    <div id="adm-facturatie" style="font-size:13px;color:var(--soft)">Klik op \u201cOphalen\u201d om de lijst te laden.<\/div>
-  <\/div>
-  <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(140px,1fr));margin-bottom:14px">
-    ${kpi("Actieve abonnementen",ADM.abos.length,"in "+Object.keys(perLand).length+" landen")}
-    ${kpi("Maandomzet (MRR)",geld(mrr),"≈ "+geld(mrr*12)+" per jaar")}
-    ${kpi("Proefperiodes lopend",ADM.proeven,"laatste 14 dagen")}
-    ${kpi("Bezoekers vandaag",vandaag,(groei>=0?"+":"")+groei+"% t.o.v. gisteren")}
-    ${kpi("Opzeggingen deze maand",ADM.opzeggingen,"churn "+(ADM.opzeggingen/ADM.abos.length*100).toFixed(1).replace(".",",")+"%")}
-  <\/div>
-  <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(300px,1fr));align-items:start">
-    <div class="kaart">
-      <div style="font-weight:800;font-size:15px;margin-bottom:12px">📈 Bezoekers per dag — laatste 14 dagen<\/div>
-      <div style="display:flex;align-items:flex-end;gap:4px;height:130px">
-        ${ADM.bezoekers.map((b,i)=>`<div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;height:100%">
-          <div style="font-size:9px;color:var(--soft)">${b}<\/div>
-          <div style="width:100%;height:${Math.round(b/maxBez*100)}%;background:${i===ADM.bezoekers.length-1?"var(--brand)":"var(--brand-l)"};border:1px solid var(--brand);border-radius:4px 4px 0 0"><\/div>
-        <\/div>`).join("")}
-      <\/div>
-      <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--soft);margin-top:4px"><span>14 dagen geleden<\/span><span>vandaag<\/span><\/div>
-      <div style="font-size:12px;color:var(--groen);font-weight:700;margin-top:8px">↗ Totaal deze 2 weken: ${ADM.bezoekers.reduce((a,b)=>a+b,0)} bezoekers — stijgende lijn sinds de teasers<\/div>
-    <\/div>
-    <div class="kaart">
-      <div style="font-weight:800;font-size:15px;margin-bottom:12px">📦 Abonnementen per plan<\/div>
-      ${Object.entries(perPlan).map(([pl,n])=>`<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;font-size:13px">
-        <span style="width:86px">${pl}<\/span>
-        <span style="flex:1;height:10px;background:var(--line);border-radius:5px;overflow:hidden"><span style="display:block;height:100%;width:${Math.round(n/ADM.abos.length*100)}%;background:var(--brand);border-radius:5px"><\/span><\/span>
-        <strong style="width:26px;text-align:right">${n}<\/strong><\/div>`).join("")}
-      <div style="font-weight:800;font-size:15px;margin:16px 0 12px">🌍 Abonnementen per land<\/div>
-      ${Object.entries(perLand).sort((a,b)=>b[1]-a[1]).map(([c,n])=>`<div style="display:flex;align-items:center;gap:8px;margin-bottom:7px;font-size:13px">
-        <span style="width:86px">${landen[c].vlag} ${landen[c].naam.slice(0,10)}<\/span>
-        <span style="flex:1;height:10px;background:var(--line);border-radius:5px;overflow:hidden"><span style="display:block;height:100%;width:${Math.round(n/ADM.abos.length*100)}%;background:var(--groen);border-radius:5px"><\/span><\/span>
-        <strong style="width:26px;text-align:right">${n}<\/strong><\/div>`).join("")}
-    <\/div>
-    <div class="kaart">
-      <div style="font-weight:800;font-size:15px;margin-bottom:12px">🆕 Recente aanmeldingen<\/div>
-      ${(eigenAccount?[`<div style="padding:8px 0;border-bottom:1px solid var(--line);font-size:13px"><strong>${esc(eigenAccount.bedrijf)}<\/strong> <span style="background:var(--brand-l);color:var(--brand);border-radius:10px;padding:1px 8px;font-size:10px;font-weight:800">ZOJUIST · DEZE SESSIE<\/span><br><span style="font-size:12px;color:var(--soft)">${esc(eigenAccount.land||"Nederland")} · ${abonnement.plan} · proefperiode gestart<\/span><\/div>`]:[]).join("")}
-      ${[["Beveiligingsgroep Oost B.V.","🇳🇱 Nederland","Premium · 15 mw","vandaag"],
-         ["Hotel Miradouro","🇵🇹 Portugal","Basis · 6 mw","gisteren"],
-         ["Café De Brug","🇳🇱 Nederland","Basis · 4 mw","gisteren"],
-         ["Lagerhaus Schmidt GmbH","🇩🇪 Duitsland","Premium · 18 mw","2 dagen geleden"],
-         ["Zorgteam Twente","🇳🇱 Nederland","Premium · 11 mw","3 dagen geleden"],
-         ["Event Crew Brussel","🇧🇪 België","Basis · 8 mw","4 dagen geleden"]].map(([b,l,pl,d])=>
-        `<div style="padding:8px 0;border-bottom:1px solid var(--line);font-size:13px"><strong>${b}<\/strong><br>
-        <span style="font-size:12px;color:var(--soft)">${l} · ${pl} · ${d}<\/span><\/div>`).join("")}
-      <div style="font-size:11px;color:var(--soft);margin-top:8px">Meld je in deze sessie zelf aan via de prijzenpagina — dan verschijnt je eigen bedrijf hier bovenaan.<\/div>
-    <\/div>
+    <div id="adm-facturatie" style="font-size:13px;color:var(--soft)">Bezig met laden\u2026<\/div>
   <\/div>`;
 }
 function tFacturen(){
