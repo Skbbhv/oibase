@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Oibase — Personeelsplanning</title>
+  <meta name="description" content="Roosters, loonstroken, facturen. Alles onder één dak.">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #F5F6FA; color: #1C2333; }
+    .wrap { max-width: 1060px; margin: 0 auto; padding: 0 16px; }
+    header { background: rgba(255,255,255,.95); padding: 14px 0; border-bottom: 1px solid #E3E6EE; position: sticky; top: 0; }
+    .nav { display: flex; align-items: center; gap: 20px; }
+    .logo { font-weight: 800; font-size: 18px; }
+    .hero { padding: 80px 0; text-align: center; }
+    h1 { font-size: clamp(32px, 5vw, 48px); margin-bottom: 20px; line-height: 1.2; }
+    p { font-size: 16px; color: #5A6478; max-width: 600px; margin: 0 auto 30px; line-height: 1.6; }
+    .btn { display: inline-block; padding: 14px 26px; background: linear-gradient(135deg, #1288F4 0%, #0B6BD4 100%); color: white; text-decoration: none; border-radius: 12px; font-weight: 700; cursor: pointer; border: none; font-family: inherit; font-size: 15px; }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(18,136,244,.45); }
+    .subtext { font-size: 12px; color: #5A6478; margin-top: 12px; }
+    section { padding: 60px 0; }
+    h2 { font-size: 28px; margin-bottom: 30px; text-align: center; }
+    .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+    .feature h3 { font-size: 16px; margin-bottom: 10px; }
+    .feature p { font-size: 13px; color: #5A6478; margin: 0; }
+    .cta { text-align: center; padding: 60px 0; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <div class="logo">🚀 Oibase</div>
+    <div style="flex:1"></div>
+    <a href="#" style="color:#5A6478; text-decoration: none;">Features</a>
+    <a href="/register" class="btn" style="padding: 8px 16px; font-size: 13px;">Start</a>
+  </div>
+</header>
+
+<div class="hero wrap">
+  <h1>Personeelsplanning<br>zonder gedoe</h1>
+  <p>Roosters, loonstroken, facturen — alles in één plek. Medewerkers ruilen diensten onderling, jij kijkt alleen mee.</p>
+  <a href="/register" class="btn">Probeer 14 dagen gratis</a>
+  <div class="subtext">Geen creditcard nodig · Opzegbaar wanneer je wilt</div>
+</div>
+
+<section class="wrap">
+  <h2>Wat krijg je</h2>
+  <div class="features">
+    <div class="feature">
+      <h3>📅 Roostering</h3>
+      <p>Rooster in minuten. Kopieër vorige week, pas aan, klaar. Geen Excel meer.</p>
+    </div>
+    <div class="feature">
+      <h3>🔄 Ruilen</h3>
+      <p>Medewerkers bieden diensten aan, anderen pikken ze op. Jouw rooster klopt vanzelf.</p>
+    </div>
+    <div class="feature">
+      <h3>💰 Facturatie</h3>
+      <p>Urenstaat en factuur in één klik — incl. toeslagen, btw, correct tot op de cent.</p>
+    </div>
+    <div class="feature">
+      <h3>📊 Dashboard</h3>
+      <p>Overzicht van kosten, bezetting, wie wanneer werkt. Altijd up-to-date.</p>
+    </div>
+  </div>
+</section>
+
+<div class="cta wrap">
+  <h2>Klaar?</h2>
+  <a href="/register" class="btn">Start je proefperiode</a>
+  <p style="color:#5A6478; margin-top: 20px; font-size: 13px;">14 dagen gratis • Geen betaalgegevens nodig • Binnen 10 minuten aan de slag</p>
+</div>
+
+</body>
+</html>
