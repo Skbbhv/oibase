@@ -2930,9 +2930,9 @@ function tMedewerkers(){
         :`if(confirm('${esc(m.naam)} blokkeren? Deze medewerker kan dan niet meer inloggen totdat je de blokkade opheft. Diensten en gegevens blijven bewaard.')){med(${m.id}).geblokkeerd=true;tekenApp()}`}">${m.geblokkeerd?"Deblokkeer":"Blokkeer"}<\/button>
       <button class="btn btn-rood btn-klein" onclick="if(confirm('${esc(m.naam)} verwijderen?')){medewerkers=medewerkers.filter(x=>x.id!==${m.id});diensten=diensten.filter(d=>d.medId!==${m.id});tekenApp()}">✕<\/button><\/div>
     <div style="margin-top:10px;padding:8px 12px;background:var(--brand-l);border-radius:8px;font-size:12px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px">
-      <span><strong>Inlog:<\/strong> ${m.gebruiker} / ${toonWw[m.id]?m.wachtwoord:"••••••"}<\/span>
+      <span><strong>Inlog:<\/strong> ${m.gebruiker} / ${toonWw[m.id]&&m.wachtwoord?m.wachtwoord:(m.wachtwoord?"••••••":"<span style=\'color:var(--soft)\'>versleuteld — gebruik \'Nieuw ww\'<\/span>")}<\/span>
       <span><button class="btn btn-stil btn-klein" onclick="toonWw[${m.id}]=!toonWw[${m.id}];tekenApp()">${toonWw[m.id]?"Verberg":"Toon"}<\/button>
-      <button class="btn btn-stil btn-klein" onclick="med(${m.id}).wachtwoord=Math.random().toString(36).slice(2,8);toonWw[${m.id}]=true;tekenApp()">Nieuw ww<\/button>
+      <button class="btn btn-stil btn-klein" onclick="const nw=Math.random().toString(36).slice(2,8);med(${m.id}).wachtwoord=nw;toonWw[${m.id}]=true;mwAccountOpslaan(med(${m.id}).gebruiker,nw,${m.id});tekenApp()">Nieuw ww<\/button>
       <button class="btn ${toonNaw[m.id]?"btn-p":"btn-stil"} btn-klein" onclick="toonNaw[${m.id}]=!toonNaw[${m.id}];tekenApp()">NAW<\/button><\/span><\/div>
     ${toonNaw[m.id]?`<div style="margin-top:10px;padding:12px;border:1px solid var(--line);border-radius:8px">
       <div style="font-weight:700;font-size:13px;margin-bottom:8px">NAW-gegevens — wijzigingen worden direct opgeslagen<\/div>
@@ -2986,15 +2986,28 @@ function tMedewerkers(){
 function voegMedToe(){
   const naam=$("nm-naam").value.trim();if(!naam)return;
   const kleuren=["#0E7C7B","#B45309","#7C3AED","#BE185D","#15803D","#0369A1"];
-  medewerkers.push({id:Date.now(),naam,pnr:volgendPnr(),cao:(branche==="Beveiliging"?nmCao:"regulier"),functie:$("nm-functie").value.trim()||"Medewerker",
+  const nieuwId=Date.now();
+  const gebruikerN=naam.split(" ")[0].toLowerCase()+Math.floor(Math.random()*90+10);
+  const wwN=Math.random().toString(36).slice(2,8);
+  medewerkers.push({id:nieuwId,naam,pnr:volgendPnr(),cao:(branche==="Beveiliging"?nmCao:"regulier"),functie:$("nm-functie").value.trim()||"Medewerker",
     contract:Number($("nm-contract").value)||0,uurloon:Number($("nm-loon").value)||13,
     saldo:Number($("nm-saldo").value)||0,einde:$("nm-einde").value||null,
     naw:{adres:$("nm-adres").value.trim(),postcode:$("nm-postcode").value.trim(),plaats:$("nm-plaats").value.trim(),
       tel:$("nm-tel").value.trim(),email:$("nm-email").value.trim(),geb:"",iban:""},
     kleur:kleuren[medewerkers.length%kleuren.length],
-    gebruiker:naam.split(" ")[0].toLowerCase()+Math.floor(Math.random()*90+10),
-    wachtwoord:Math.random().toString(36).slice(2,8)});
+    gebruiker:gebruikerN,
+    wachtwoord:wwN});          // alleen in het geheugen, wordt NIET opgeslagen in de blob
+  toonWw[nieuwId]=true;         // toon het ww eenmalig zodat de werkgever het kan doorgeven
+  mwAccountOpslaan(gebruikerN,wwN,nieuwId);
   tekenApp();
+}
+// Stuur een medewerker-login (gehasht) naar de database.
+async function mwAccountOpslaan(gebruiker,wachtwoord,medId){
+  if(!sb||!oibaseBedrijfId)return;   // offline/demo: blijft in het geheugen
+  try{
+    const {error}=await sb.rpc("mw_account",{p_bedrijf_id:oibaseBedrijfId,p_gebruiker:gebruiker,p_wachtwoord:wachtwoord,p_med_id:medId});
+    if(error)console.error("Login opslaan mislukt:",error.message);
+  }catch(e){console.error("Login opslaan fout:",e);}
 }
 
 // ── Verlof ──
@@ -4649,10 +4662,14 @@ function oibaseSchoneState(){
 }
 // Alle bedrijfsgegevens samen in één object (de "state-blob").
 function oibaseVerzamel(){
-  return {medewerkers,opdrachten,diensten,verlof,ziek,klokActief,klokLog,noShows,
+  // Wachtwoorden NOOIT meenemen in de opslag-blob — die staan gehasht in mw_login_gegevens.
+  const mwSchoon=medewerkers.map(m=>{const {wachtwoord,...rest}=m;return rest;});
+  const plannersSchoon=planners.map(p=>{const {wachtwoord,...rest}=p;return rest;});
+  const hrSchoon=hrAccounts.map(h=>{const {wachtwoord,...rest}=h;return rest;});
+  return {medewerkers:mwSchoon,opdrachten,diensten,verlof,ziek,klokActief,klokLog,noShows,
     klanten,bedrijfsProfiel,postvak,loonVerstuurd,loonInst,reisInst,facturen,factuurNr,
     ruilAanbod,ruilLog,beschikbaar,prikbord,instellingen,abonnement,branche,
-    hrAccounts,planners,contracten,bedrijfsLogo};
+    hrAccounts:hrSchoon,planners:plannersSchoon,contracten,bedrijfsLogo};
 }
 // Zet een geladen blob terug in de globale variabelen.
 function oibaseHerstel(s){
