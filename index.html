@@ -2367,7 +2367,7 @@ let planners=[{id:1,naam:"Hendrik (hoofdplanner)",gebruiker:"werkgever",wachtwoo
 let postvak=[]; let pvSel={bekijk:null};
 const LOONSTROOK_PRIJS=1.5; // € per verstuurde loonstrook, verrekend met de abonnementsfactuur
 let loonVerstuurd=0; // aantal verstuurde loonstroken deze maand
-let loonInst={heffingPct:36,minUur:14.71,uitbetaalDag:25};
+let loonInst={heffingPct:36,minUur:14.71,uitbetaalDag:25,svPct:27.65,akPct:8,loonheffkorting:true};
 let reisInst={aan:true,perKm:0.25,retour:true}; // standaard €0,25 per km
 const DEMO_KM={Hengelo:{Hengelo:4,Almelo:15,Enschede:9,Borne:6},Almelo:{Hengelo:15,Almelo:4,Enschede:20,Borne:12},
 Enschede:{Hengelo:9,Almelo:20,Enschede:4,Borne:14},Borne:{Hengelo:6,Almelo:12,Enschede:14,Borne:3}};
@@ -2956,7 +2956,9 @@ function tMedewerkers(){
       <label style="font-size:11px;color:var(--soft)">E-mailadres<\/label>
       <input type="email" value="${esc(m.naw.email)}" onchange="med(${m.id}).naw.email=this.value">
       <label style="font-size:11px;color:var(--soft)">IBAN (voor loonbetaling)<\/label>
-      <input value="${esc(m.naw.iban)}" onchange="med(${m.id}).naw.iban=this.value" style="margin-bottom:0">
+      <input value="${esc(m.naw.iban)}" onchange="med(${m.id}).naw.iban=this.value">
+      <label style="font-size:11px;color:var(--soft)">BSN (voor de salarisstrook)<\/label>
+      <input value="${esc(m.naw.bsn||"")}" onchange="med(${m.id}).naw.bsn=this.value" placeholder="123456789" style="margin-bottom:0">
     <\/div>`:""}
   <\/div>`}).join("")}<\/div>
   <div class="kaart" style="align-self:start">
@@ -3755,41 +3757,100 @@ function loonData(medId,weeks){
   const ortB=ortRegels.reduce((t,r)=>t+r.bedrag,0);
   const overB=instellingen.toeslagOveruren>0?overU*m.uurloon*instellingen.toeslagOveruren/100:0;
   const bruto=basis+ortB+overB;
-  const heffing=bruto*loonInst.heffingPct/100;
+  // ── Nederlandse loonopbouw (indicatief) ──
+  // SV-loon = brutoloon (vereenvoudigd; geen pensioenaftrek in deze indicatieve versie)
+  const svLoon=bruto;
+  // Loonheffing = tabelheffing minus arbeidskorting/loonheffingskorting (indicatief %)
+  const tabelHeffing=svLoon*loonInst.heffingPct/100;
+  const arbeidskorting=loonInst.loonheffkorting?svLoon*(loonInst.akPct||0)/100:0;
+  const heffing=Math.max(0,rond2(tabelHeffing-arbeidskorting));
   const reis=reisData(medId,weeks);
   const kledingInh=m.kledingInhouding||0;
-  return {m,normU,ortRegels,basis,ortB,overU,overB,bruto,heffing,netto:bruto-heffing,vakGeld:bruto*0.08,reis,kledingInh,uitbetalen:rond2(bruto-heffing+reis.bedrag-kledingInh)};
+  const vakGeld=rond2(bruto*0.08);
+  const netto=rond2(bruto-heffing);
+  const uitbetalen=rond2(netto+reis.bedrag-kledingInh);
+  // Cumulatieven (jaartotalen) — indicatief opgebouwd o.b.v. het aantal verstreken maanden
+  const maandNr=7; // juli = 7e maand (demo-periode)
+  const cum={bruto:rond2(bruto*maandNr),heffing:rond2(heffing*maandNr),netto:rond2(netto*maandNr),
+             sv:rond2(svLoon*maandNr),vakGeld:rond2(vakGeld*maandNr),arbeidskorting:rond2(arbeidskorting*maandNr)};
+  return {m,normU,ortRegels,basis,ortB,overU,overB,bruto,svLoon,tabelHeffing,arbeidskorting,heffing,
+          netto,vakGeld,reis,kledingInh,uitbetalen,cum};
 }
 function loonstrookHTML(d,label){
   const B=bp();
-  const rij=(l,r,vet)=>`<div style="display:flex;justify-content:space-between;padding:3px 0;${vet?"font-weight:800;border-top:2px solid var(--ink);padding-top:6px":""};font-size:13px"><span>${l}<\/span><span>${r}<\/span><\/div>`;
-  return `<div>
-    <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap">
-      <div><img src="${bedrijfsLogo||LOGO}" alt="" style="height:48px;object-fit:contain;border-radius:8px"><br>
-        <strong style="font-size:15px">${esc(B.naam)}<\/strong><br><span style="font-size:11px;color:var(--soft);line-height:1.6">${B.adres?esc(B.adres)+", "+esc(B.postcode)+" "+esc(B.plaats)+"<br>":""}${B.kvk?"KvK "+esc(B.kvk)+" · ":""}Gemaakt met Oibase<\/span><\/div>
-      <div style="text-align:right"><div style="font-size:20px;font-weight:800;letter-spacing:2px">LOONSTROOK<\/div>
-        <div style="font-size:12px">Periode: <strong>${label}<\/strong><br>Opgesteld: ${dNL(new Date())}<br>Uitbetaling: de ${loonInst.uitbetaalDag}e<\/div><\/div>
+  const m=d.m;
+  const eur=n=>geld(n);
+  const rij=(l,r,opt={})=>`<div style="display:flex;justify-content:space-between;padding:${opt.vet?"6px 0":"3px 0"};font-size:13px;${opt.vet?"font-weight:800;border-top:2px solid var(--ink);margin-top:4px":""};${opt.min?"color:#B91C1C":""}">
+    <span>${l}<\/span><span style="font-variant-numeric:tabular-nums">${r}<\/span><\/div>`;
+  const kop=t=>`<div style="font-weight:800;font-size:12px;text-transform:uppercase;letter-spacing:.4px;color:var(--brand);margin:14px 0 4px;padding-bottom:3px;border-bottom:1px solid var(--line)">${t}<\/div>`;
+  // Geboortedatum → leeftijd voor minimumloon-check
+  return `<div style="font-size:13px;line-height:1.5">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;border-bottom:3px solid var(--brand);padding-bottom:12px">
+      <div><img src="${bedrijfsLogo||LOGO}" alt="" style="height:44px;object-fit:contain;border-radius:8px"><br>
+        <strong style="font-size:15px">${esc(B.naam)}<\/strong><br>
+        <span style="font-size:11px;color:var(--soft);line-height:1.6">${B.adres?esc(B.adres)+"<br>"+esc(B.postcode)+" "+esc(B.plaats)+"<br>":""}${B.kvk?"KvK "+esc(B.kvk):""}${B.btwNr?" · Btw "+esc(B.btwNr):""}<\/span><\/div>
+      <div style="text-align:right"><div style="font-size:19px;font-weight:800;letter-spacing:2px;color:var(--brand)">SALARISSTROOK<\/div>
+        <div style="font-size:12px;line-height:1.7">Periode: <strong>${label}<\/strong><br>Opgesteld: ${dNL(new Date())}<br>Uitbetaling: de ${loonInst.uitbetaalDag}e van de maand<\/div><\/div>
     <\/div>
-    <div style="margin:12px 0;padding:9px 13px;background:var(--brand-l);border-radius:10px;font-size:12.5px;line-height:1.8">
-      <strong>${esc(d.m.naam)}<\/strong> · Personeelsnr: <strong>${esc(d.m.pnr||"—")}<\/strong> · Functie: ${esc(d.m.functie)} · Contract: ${d.m.contract} u/week · Cao: ${esc(medCao(d.m))} · Bruto-uurloon: ${geld(d.m.uurloon)}<br>
-      Wettelijk brutominimumloon (21+): ${geld(loonInst.minUur)} p/u — dit uurloon voldoet ${d.m.uurloon>=loonInst.minUur?"✓":"⚠ NIET — pas het uurloon aan!"}
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px 20px;margin:12px 0;padding:10px 14px;background:var(--brand-l);border-radius:10px;font-size:12px;line-height:1.7">
+      <div><span style="color:var(--soft)">Werknemer<\/span><br><strong>${esc(m.naam)}<\/strong><\/div>
+      <div><span style="color:var(--soft)">Personeelsnummer<\/span><br><strong>${esc(m.pnr||"—")}<\/strong><\/div>
+      <div><span style="color:var(--soft)">Functie<\/span><br>${esc(m.functie)}<\/div>
+      <div><span style="color:var(--soft)">Cao<\/span><br>${esc(medCao(m))}<\/div>
+      <div><span style="color:var(--soft)">BSN<\/span><br>${esc(m.bsn||m.naw&&m.naw.bsn||"—")}<\/div>
+      <div><span style="color:var(--soft)">IBAN (uitbetaling)<\/span><br>${esc(m.naw&&m.naw.iban||"—")}<\/div>
+      <div><span style="color:var(--soft)">Contract<\/span><br>${m.contract} uur/week<\/div>
+      <div><span style="color:var(--soft)">Bruto-uurloon<\/span><br>${eur(m.uurloon)}<\/div>
+      <div><span style="color:var(--soft)">Loonheffingskorting<\/span><br>${loonInst.loonheffkorting?"toegepast":"niet toegepast"}<\/div>
+      <div><span style="color:var(--soft)">Geboortedatum<\/span><br>${esc(m.naw&&m.naw.geb||"—")}<\/div>
     <\/div>
-    <div style="font-weight:800;font-size:13px;margin-bottom:2px">Bruto<\/div>
-    ${rij(`Normale uren: ${d.normU.toFixed(1).replace(".",",")} u × ${geld(d.m.uurloon)}`,geld(d.basis))}
-    ${d.ortRegels.map(r=>rij(`${r.naam}: ${r.uren.toFixed(1).replace(".",",")} u × ${geld(d.m.uurloon)} × ${r.pct}%`,geld(r.bedrag))).join("")}
-    ${d.overB>0?rij(`Overuren-toeslag: ${d.overU.toFixed(1).replace(".",",")} u boven contract × ${instellingen.toeslagOveruren}%`,geld(d.overB)):""}
-    ${rij("Brutoloon deze periode",geld(d.bruto),true)}
-    <div style="font-weight:800;font-size:13px;margin:12px 0 2px">Inhoudingen<\/div>
-    ${rij(`Loonheffing (indicatief, ${loonInst.heffingPct}% — incl. premies volksverzekeringen)`,"− "+geld(d.heffing))}
-    ${rij("Netto loon",geld(d.netto))}
-    ${d.reis&&d.reis.bedrag>0?rij(`Reiskostenvergoeding (onbelast) · ${d.reis.km} km × ${geld(reisInst.perKm)} — huisadres → werkadres`,geld(d.reis.bedrag)):""}
-    ${d.kledingInh>0?rij("Inhouding borg bedrijfskleding (niet ingeleverd bij einde samenwerking)","− "+geld(d.kledingInh)):""}
-    ${rij("TOTAAL uit te betalen",geld(d.uitbetalen!==undefined?d.uitbetalen:d.netto),true)}
-    <div style="margin-top:12px;padding:8px 12px;background:#F8FAFC;border:1px solid var(--line);border-radius:10px;font-size:11.5px;color:var(--soft);line-height:1.8">
-      Reservering vakantiegeld (8% van bruto): ${geld(d.vakGeld)} — uitbetaling in mei · Verlofsaldo: ${d.m.saldo} uur (± ${Math.round(d.m.saldo/8)} dagen)<br>
-      ⚠ <strong>Indicatieve loonstrook.<\/strong> De loonheffing is berekend met een instelbaar percentage. Officiële loonstroken vereisen de
-      loonheffingstabellen van de Belastingdienst en land-specifieke regels — in de echte versie via een koppeling met je loonpakket of accountant.
-    <\/div><\/div>`;
+
+    ${kop("Bruto salaris")}
+    ${rij(`Normale uren: ${d.normU.toFixed(1).replace(".",",")} u × ${eur(m.uurloon)}`,eur(d.basis))}
+    ${d.ortRegels.map(r=>rij(`${r.naam}: ${r.uren.toFixed(1).replace(".",",")} u × ${r.pct}%`,eur(r.bedrag))).join("")}
+    ${d.overB>0?rij(`Overurentoeslag: ${d.overU.toFixed(1).replace(".",",")} u × ${instellingen.toeslagOveruren}%`,eur(d.overB)):""}
+    ${rij("Totaal bruto",eur(d.bruto),{vet:true})}
+
+    ${kop("Loonheffing")}
+    ${rij("Grondslag loonheffing (SV-loon)",eur(d.svLoon))}
+    ${rij(`Loonbelasting/premie volksverz. (${loonInst.heffingPct}%)`,"− "+eur(d.tabelHeffing),{min:true})}
+    ${d.arbeidskorting>0?rij(`Arbeidskorting (${loonInst.akPct}%)`,"+ "+eur(d.arbeidskorting)):""}
+    ${rij("Ingehouden loonheffing",eur(d.heffing),{vet:true})}
+
+    ${kop("Netto")}
+    ${rij("Bruto",eur(d.bruto))}
+    ${rij("Af: loonheffing","− "+eur(d.heffing),{min:true})}
+    ${rij("Nettoloon",eur(d.netto),{vet:true})}
+
+    ${(d.reis&&d.reis.bedrag>0)||d.kledingInh>0?kop("Overige posten"):""}
+    ${d.reis&&d.reis.bedrag>0?rij(`Reiskosten onbelast · ${d.reis.km} km × ${eur(reisInst.perKm)}`,"+ "+eur(d.reis.bedrag)):""}
+    ${d.kledingInh>0?rij("Inhouding borg bedrijfskleding","− "+eur(d.kledingInh),{min:true}):""}
+    ${rij("TE ONTVANGEN OP REKENING",eur(d.uitbetalen),{vet:true})}
+
+    ${kop("Reserveringen & saldo")}
+    ${rij("Reservering vakantiegeld deze periode (8%)",eur(d.vakGeld))}
+    <div style="font-size:11px;color:var(--soft);padding:2px 0">Vakantiegeld wordt jaarlijks in mei uitbetaald · Verlofsaldo: ${m.saldo} uur (± ${Math.round(m.saldo/8)} dagen)<\/div>
+
+    ${kop("Cumulatieven dit jaar (t/m deze periode)")}
+    <div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:12px">
+      <thead><tr>
+        <th style="text-align:left;padding:5px 8px;background:#f0faf9;border-bottom:1px solid var(--line)">Omschrijving<\/th>
+        <th style="text-align:right;padding:5px 8px;background:#f0faf9;border-bottom:1px solid var(--line)">Bedrag<\/th>
+      <\/tr><\/thead><tbody>
+        <tr><td style="padding:5px 8px;border-bottom:1px solid var(--line)">Bruto loon<\/td><td style="text-align:right;padding:5px 8px;border-bottom:1px solid var(--line)">${eur(d.cum.bruto)}<\/td><\/tr>
+        <tr><td style="padding:5px 8px;border-bottom:1px solid var(--line)">SV-loon<\/td><td style="text-align:right;padding:5px 8px;border-bottom:1px solid var(--line)">${eur(d.cum.sv)}<\/td><\/tr>
+        <tr><td style="padding:5px 8px;border-bottom:1px solid var(--line)">Ingehouden loonheffing<\/td><td style="text-align:right;padding:5px 8px;border-bottom:1px solid var(--line)">${eur(d.cum.heffing)}<\/td><\/tr>
+        <tr><td style="padding:5px 8px;border-bottom:1px solid var(--line)">Arbeidskorting<\/td><td style="text-align:right;padding:5px 8px;border-bottom:1px solid var(--line)">${eur(d.cum.arbeidskorting)}<\/td><\/tr>
+        <tr><td style="padding:5px 8px;border-bottom:1px solid var(--line)">Netto loon<\/td><td style="text-align:right;padding:5px 8px;border-bottom:1px solid var(--line)">${eur(d.cum.netto)}<\/td><\/tr>
+        <tr><td style="padding:5px 8px">Gereserveerd vakantiegeld<\/td><td style="text-align:right;padding:5px 8px">${eur(d.cum.vakGeld)}<\/td><\/tr>
+      <\/tbody><\/table><\/div>
+
+    <div style="margin-top:14px;padding:8px 12px;background:#F8FAFC;border:1px solid var(--line);border-radius:10px;font-size:11px;color:var(--soft);line-height:1.7">
+      Wettelijk brutominimumloon (21+): ${eur(loonInst.minUur)}/uur — dit uurloon voldoet ${m.uurloon>=loonInst.minUur?"✓":"⚠ NIET — pas het uurloon aan!"}<br>
+      ⚠ <strong>Indicatieve salarisstrook.<\/strong> Loonheffing en arbeidskorting zijn berekend met vaste percentages. Een officiële strook gebruikt de loonheffingstabellen van de Belastingdienst en de premiepercentages van het lopende jaar — die komen uit een gekoppeld loonpakket of van je accountant.
+    <\/div>
+  <\/div>`;
 }
 function printLoonstrook(medId){
   const weeks=loonSel.periode==="maand"?[0,1,2,3]:[loonSel.week];
