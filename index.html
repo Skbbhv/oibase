@@ -4273,6 +4273,27 @@ async function laadFacturatie(){
         <\/div>`).join("")
       :`<div style="color:var(--groen);font-weight:700">✓ Niemand wacht op een factuur.<\/div>`;
     }
+    // Deze week aflopende proefperiodes
+    const overWeek=new Date();overWeek.setDate(overWeek.getDate()+7);
+    const overWeekStr=overWeek.toISOString().slice(0,10);
+    const aflopend=facturatieLijst.filter(r=>r.status==="proef"&&r.actief_tot&&r.actief_tot>=vandaag&&r.actief_tot<=overWeekStr)
+      .sort((a,b)=>(a.actief_tot||"").localeCompare(b.actief_tot||""));
+    const aflDoel=$("adm-aflopend");
+    if(aflDoel){
+      aflDoel.innerHTML=aflopend.length?aflopend.map(r=>{
+        const dagen=Math.max(0,Math.round((new Date(r.actief_tot)-new Date(vandaag))/86400000));
+        return `<div style="border:1px solid #FDE68A;background:#FFFBEB;border-radius:12px;padding:12px 14px;margin-bottom:10px">
+          <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;align-items:center">
+            <div>
+              <strong style="font-size:14px">${esc(r.bedrijfsnaam||"")}<\/strong>
+              <span style="background:#FEF3C7;color:#92400E;border-radius:10px;padding:1px 8px;font-size:10px;font-weight:800;margin-left:6px">${dagen===0?"LOOPT VANDAAG AF":"NOG "+dagen+" DAG"+(dagen===1?"":"EN")}<\/span><br>
+              <span style="font-size:12px;color:var(--soft)">Proef eindigt ${esc(r.actief_tot||"")} · ${esc(r.pakket||"")} · ${r.bedrag!=null?geld(Number(r.bedrag)):"–"} · 📧 ${esc(r.factuur_email||"")}<\/span>
+            <\/div>
+            <button class="btn btn-p btn-klein" onclick="admMaakFactuur('${r.id}')">📄 Maak factuur<\/button>
+          <\/div>
+        <\/div>`;}).join("")
+      :`<div style="color:var(--groen);font-weight:700">✓ Geen proefperiodes die deze week aflopen.<\/div>`;
+    }
     // Volledige tabel
     doel.innerHTML=facturatieLijst.length?`<div style="overflow-x:auto"><table style="min-width:760px;border-collapse:collapse;font-size:12px">
       <thead><tr>${["Bedrijf","KvK","Btw","Adres","Factuur-e-mail","Ritme","Pakket","Bedrag","Status","Actief tot","Acties"].map(h=>`<th style="text-align:left;padding:6px 8px;border-bottom:2px solid var(--line)">${h}<\/th>`).join("")}<\/tr><\/thead><tbody>
@@ -4320,6 +4341,11 @@ function tAdmin(){
     <div class="kaart" style="text-align:center;padding:16px 10px"><div style="font-size:26px;font-weight:800;color:var(--groen)" id="adm-kpi-actief">–<\/div><div style="font-size:12px;font-weight:700;margin-top:2px">Actief (betaald)<\/div><\/div>
     <div class="kaart" style="text-align:center;padding:16px 10px"><div style="font-size:26px;font-weight:800;color:var(--rood)" id="adm-kpi-open">–<\/div><div style="font-size:12px;font-weight:700;margin-top:2px">Factuur versturen<\/div><div style="font-size:11px;color:var(--soft);margin-top:2px">proef verlopen<\/div><\/div>
     <div class="kaart" style="text-align:center;padding:16px 10px"><div style="font-size:26px;font-weight:800;color:var(--brand)" id="adm-kpi-mrr">–<\/div><div style="font-size:12px;font-weight:700;margin-top:2px">Omzet p/mnd<\/div><div style="font-size:11px;color:var(--soft);margin-top:2px">basisbedragen<\/div><\/div>
+  <\/div>
+  <div class="kaart" style="margin-bottom:14px" id="adm-aflopend-kaart">
+    <div style="font-weight:800;font-size:15px;margin-bottom:4px">⏰ Proefperiode loopt deze week af<\/div>
+    <div style="font-size:12px;color:var(--soft);margin-bottom:8px">Klanten van wie de gratis proef binnen 7 dagen eindigt — maak nu vast hun factuur klaar, dan staat die klaar zodra de proef verloopt.<\/div>
+    <div id="adm-aflopend" style="font-size:13px;color:var(--soft)">Bezig met laden\u2026<\/div>
   <\/div>
   <div class="kaart" style="margin-bottom:14px" id="adm-actie-kaart">
     <div style="font-weight:800;font-size:15px;margin-bottom:4px">📮 Factuur versturen naar<\/div>
