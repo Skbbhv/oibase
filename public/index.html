@@ -2478,18 +2478,6 @@ const klantTarief=(k,d)=>d.dag>=5?k.tarieven.weekend:d.type==="Nacht"?k.tarieven
 const tariefCat=d=>d.dag>=5?"Weekend":d.type==="Nacht"?"Nacht":d.type==="Avond"?"Avond":"Dag";
 // Demo-KvK-register: zoeken op naam en gegevens overnemen.
 // De echte koppeling met de KvK-API (Handelsregister) bouwen we in de backend — die vereist een API-sleutel.
-const KVK_DEMO=[
-  {naam:"Retail Groep B.V.",kvk:"27312152",adres:"Winkelplein 12",postcode:"1012 AB",plaats:"Amsterdam"},
-  {naam:"Logistiek Nederland B.V.",kvk:"39082747",adres:"Havenweg 8",postcode:"3011 XZ",plaats:"Rotterdam"},
-  {naam:"Veilig Object Bewaking B.V.",kvk:"54021873",adres:"Industrieweg 44",postcode:"9723 BM",plaats:"Groningen"},
-  {naam:"Hotel De Zwaan B.V.",kvk:"61234598",adres:"Marktstraat 3",postcode:"8011 LM",plaats:"Zwolle"},
-  {naam:"Bouwbedrijf Timmermans B.V.",kvk:"33245617",adres:"Ambachtsweg 19",postcode:"5651 GH",plaats:"Eindhoven"},
-  {naam:"Supermarkt Plus Jansen",kvk:"70981234",adres:"Winkelhof 2",postcode:"6511 KL",plaats:"Nijmegen"},
-  {naam:"Evenementen Service Noord B.V.",kvk:"58347621",adres:"Expolaan 100",postcode:"9727 KA",plaats:"Groningen"},
-  {naam:"Zorggroep Samen",kvk:"41209876",adres:"Zorgplein 7",postcode:"7511 JD",plaats:"Enschede"},
-  {naam:"Schoonmaak Totaal B.V.",kvk:"66120945",adres:"Poetsstraat 21",postcode:"1043 BP",plaats:"Amsterdam"},
-  {naam:"Transport Van Dijk B.V.",kvk:"29876540",adres:"Snelweg 15",postcode:"4131 NJ",plaats:"Vianen"},
-];
 let bedrijfsProfiel={naam:"",adres:"",postcode:"",plaats:"",kvk:"",btwNr:"",iban:"",email:""};
 const bp=()=>Object.assign({},bedrijfsProfiel,{naam:bedrijfsProfiel.naam||(eigenAccount?eigenAccount.bedrijf:"Jouw Bedrijf B.V.")});
 function bpVeld(veld,w){bedrijfsProfiel[veld]=w;}
@@ -4151,25 +4139,7 @@ function tLoonstroken(){
 function klantVeld(id,veld,w){const k=klantVan(id);if(!k)return;
   if(veld.startsWith("tarieven.")){k.tarieven[veld.split(".")[1]]=Number(w)||0;return}
   k[veld]=(veld==="termijn")?Number(w)||0:w;}
-function zoekKvK(){
-  const q=$("kvk-zoek").value.trim().toLowerCase();
-  const res=$("kvk-res");
-  if(q.length<2){res.innerHTML='<div style="font-size:12px;color:var(--soft)">Typ minimaal 2 letters van de bedrijfsnaam.<\/div>';return}
-  const hits=KVK_DEMO.filter(r=>r.naam.toLowerCase().includes(q));
-  res.innerHTML=hits.length?hits.map((r,i)=>{
-    const idx=KVK_DEMO.indexOf(r);
-    return `<div style="display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 10px;border:1px solid var(--line);border-radius:10px;margin-top:6px">
-      <div style="font-size:13px"><strong>${esc(r.naam)}<\/strong><br><span style="color:var(--soft);font-size:12px">KvK ${r.kvk} · ${esc(r.adres)}, ${esc(r.plaats)}<\/span><\/div>
-      <button class="btn btn-p btn-klein" onclick="kvkOvernemen(${idx})">Overnemen<\/button><\/div>`;
-  }).join(""):'<div style="font-size:12px;color:var(--soft);margin-top:6px">Geen bedrijf gevonden.<\/div>';
-}
-function kvkOvernemen(i){
-  const r=KVK_DEMO[i];
-  if(klanten.some(k=>k.kvk===r.kvk)){alert("Deze opdrachtgever staat er al in.");return}
-  klanten.push({id:Date.now(),naam:r.naam,kvk:r.kvk,adres:r.adres,postcode:r.postcode,plaats:r.plaats,email:"",termijn:30,tarieven:{dag:25,avond:27.5,nacht:32,weekend:30}});
-  fSel.klantId=klanten[klanten.length-1].id;
-  tekenApp();
-}
+
 function factuurRegels(klantId,weeks){
   const k=klantVan(klantId);
   return diensten
@@ -4609,14 +4579,8 @@ function tFacturen(){
           <input type="number" step="0.5" min="0" value="${k.tarieven[veld]}" style="margin:0" onchange="klantVeld(${k.id},'tarieven.${veld}',this.value)"><\/div>`).join("")}
         <\/div><\/div>`).join("")}
       <div style="border-top:1px solid var(--line);padding-top:12px;margin-top:4px">
-        <div style="font-weight:700;font-size:13px;margin-bottom:6px">➕ Nieuwe opdrachtgever — zoek op naam (KvK)<\/div>
-        <div style="display:flex;gap:8px"><input id="kvk-zoek" placeholder="Bijv. Hotel, Bouw, Zorg…" style="margin-bottom:0" onkeydown="if(event.key==='Enter')zoekKvK()">
-        <button class="btn btn-p" onclick="zoekKvK()">Zoek<\/button><\/div>
-        <div id="kvk-res"><\/div>
-        <div style="font-size:11px;color:var(--soft);margin-top:8px">🔎 Zoek opdrachtgevers op naam in het KvK-Handelsregister.<\/div>
-        <div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--line)">
-          <button class="btn btn-stil" style="width:100%;justify-content:center" onclick="toonHandmatigModal()">✏️ Of voeg handmatig toe<\/button>
-        <\/div>
+        <div style="font-weight:700;font-size:13px;margin-bottom:6px">➕ Nieuwe opdrachtgever<\/div>
+        <button class="btn btn-p" style="width:100%;" onclick="toonHandmatigModal()">✏️ Voeg toe<\/button>
       <\/div>
     <\/div>
     <div class="kaart">
