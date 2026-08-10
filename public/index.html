@@ -4019,7 +4019,7 @@ function zoekKvK(){
     return `<div style="display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 10px;border:1px solid var(--line);border-radius:10px;margin-top:6px">
       <div style="font-size:13px"><strong>${esc(r.naam)}<\/strong><br><span style="color:var(--soft);font-size:12px">KvK ${r.kvk} · ${esc(r.adres)}, ${esc(r.plaats)}<\/span><\/div>
       <button class="btn btn-p btn-klein" onclick="kvkOvernemen(${idx})">Overnemen<\/button><\/div>`;
-  }).join(""):'<div style="font-size:12px;color:var(--soft);margin-top:6px">Geen bedrijf gevonden. In de echte versie zoekt dit live in het KvK-Handelsregister.<\/div>';
+  }).join(""):'<div style="font-size:12px;color:var(--soft);margin-top:6px">Geen bedrijf gevonden.<\/div>';
 }
 function kvkOvernemen(i){
   const r=KVK_DEMO[i];
@@ -4471,7 +4471,7 @@ function tFacturen(){
         <div style="display:flex;gap:8px"><input id="kvk-zoek" placeholder="Bijv. Hotel, Bouw, Zorg…" style="margin-bottom:0" onkeydown="if(event.key==='Enter')zoekKvK()">
         <button class="btn btn-p" onclick="zoekKvK()">Zoek<\/button><\/div>
         <div id="kvk-res"><\/div>
-        <div style="font-size:11px;color:var(--soft);margin-top:8px">🔎 Demo-register. De live koppeling met het KvK-Handelsregister (automatisch gegevens ophalen) bouwen we in de backend — daar is een KvK API-sleutel voor nodig.<\/div>
+        <div style="font-size:11px;color:var(--soft);margin-top:8px">🔎 Zoek opdrachtgevers op naam in het KvK-Handelsregister.<\/div>
       <\/div>
     <\/div>
     <div class="kaart">
