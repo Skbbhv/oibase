@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta property="og:title" content="Oibase — Personeelsplanning zonder gedoe">
-<meta property="og:description" content="Roosters, loonstroken, facturen, contracten en een AI-assistent die elke cao kent. Alles onder één dak, voor elke branche. Probeer 14 dagen gratis.">
+<meta property="og:description" content="Roosters, loonstroken, facturen en contracten voor beveiligings- en servicebedrijven. Alles onder één dak, voor elke branche. Probeer 14 dagen gratis.">
 <meta property="og:url" content="https://oibase.nl">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="nl_NL">
@@ -171,6 +171,8 @@
     .rij{gap:8px}
     .grid{gap:12px}
   }
+.ai-only{display:none!important}
+body.ai-aan .ai-only{display:revert!important}
 </style>
 </head>
 <body>
@@ -292,7 +294,7 @@
       </div>
     </div>
   </section>
-  <section class="wrap" style="padding-top:0">
+  <section class="wrap ai-only" style="padding-top:0">
     <div class="kaart" style="background:linear-gradient(135deg,#0B1220 0%,#152A52 100%);color:#fff;border:none;padding:36px 26px">
       <div style="max-width:680px;margin:0 auto;text-align:center">
         <div style="font-size:12px;font-weight:800;color:#FFC93C;letter-spacing:2px;margin-bottom:8px">NIEUW · JOUW JURIDISCHE COLLEGA</div>
@@ -342,11 +344,11 @@
     </div>
   </section>
   <section class="wrap" style="padding-top:0">
-    <div class="sec-kop"><h2>NIEUW: Loonstroken, Postvak & AI-assistent</h2><p>Van rooster tot netto salaris — zonder losse systemen</p></div>
+    <div class="sec-kop"><h2>NIEUW: Loonstroken & Postvak</h2><p>Van rooster tot netto salaris — zonder losse systemen</p></div>
     <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr))">
       <div class="kaart functie"><div class="functie-icoon">💰</div><h3>Automatische loonstroken</h3><p>Elke maand met één klik: normale uren, alle ORT-toeslagen en overuren automatisch berekend, netto onderaan — met de wettelijk verplichte onderdelen erop.</p></div>
       <div class="kaart functie"><div class="functie-icoon">📬</div><h3>Postvak voor je team</h3><p>Verstuur alle loonstroken in één keer — elke medewerker vindt zijn strook in het eigen postvak in de app. Geen losse mails, geen papier, niets kwijt.</p></div>
-      <div class="kaart functie"><div class="functie-icoon">🤖</div><h3>AI-assistent — alleen in Enterprise</h3><p>Vraag alles over cao's, de Arbeidstijdenwet, ziekte en contracten — direct antwoord, midden in je planning. Als een juridische collega die nooit slaapt.</p></div>
+      <div class="kaart functie ai-only"><div class="functie-icoon">🤖</div><h3>AI-assistent — alleen in Enterprise</h3><p>Vraag alles over cao's, de Arbeidstijdenwet, ziekte en contracten — direct antwoord, midden in je planning. Als een juridische collega die nooit slaapt.</p></div>
     </div>
   </section>
   <section class="wrap" style="padding-top:0">
@@ -556,7 +558,7 @@
       <div class="kaart"><h3 style="font-size:15px;margin:0 0 6px">Wat is de Roosterscore™?</h3><p style="font-size:13px;color:var(--soft);margin:0;line-height:1.7">Ons unieke cijfer van 0 tot 100 dat live meet hoe gezond je week is: wettelijkheid (Arbeidstijdenwet), bezetting, eerlijke verdeling van nachten en weekenden, en rust. Inclusief één concrete tip om te stijgen. Geen enkele andere planner meet of je rooster ook eerlijk is.</p></div>
       <div class="kaart"><h3 style="font-size:15px;margin:0 0 6px">Werkt Oibase voor mijn branche?</h3><p style="font-size:13px;color:var(--soft);margin:0;line-height:1.7">Oibase is geboren in de beveiliging — de zwaarste roosterproef die er is — en werkt net zo goed voor horeca, retail, zorg, logistiek en evenementen. Overal waar diensten, toeslagen en opdrachtgevers zijn.</p></div>
       <div class="kaart"><h3 style="font-size:15px;margin:0 0 6px">Hoe zit het met de Arbeidstijdenwet?</h3><p style="font-size:13px;color:var(--soft);margin:0;line-height:1.7">Oibase bewaakt automatisch: minimaal 11 uur rust tussen diensten (14 na een nachtdienst), maximaal 60 uur per week, gemiddelden over 4 en 16 weken, nachtdienst-limieten en de wekelijkse rustdag. Cao's kunnen strenger zijn — check je eigen cao.</p></div>
-      <div class="kaart"><h3 style="font-size:15px;margin:0 0 6px">Kan ik facturen naar mijn opdrachtgevers sturen?</h3><p style="font-size:13px;color:var(--soft);margin:0;line-height:1.7">Ja (vanaf Premium): complete facturen met naam, dagen, tijden, dienst en tarief per dagdeel, btw en betalingstermijn — opgebouwd uit je rooster. Inclusief herinneringen bij te laat betalen, creditnota's en afboeken als oninbaar. Opdrachtgevers zoek je op naam en de KvK-gegevens worden overgenomen.</p></div>
+      <div class="kaart"><h3 style="font-size:15px;margin:0 0 6px">Kan ik facturen naar mijn opdrachtgevers sturen?</h3><p style="font-size:13px;color:var(--soft);margin:0;line-height:1.7">Ja (vanaf Premium): complete facturen met naam, dagen, tijden, dienst en tarief per dagdeel, btw en betalingstermijn — opgebouwd uit je rooster. Inclusief herinneringen bij te laat betalen, creditnota's en afboeken als oninbaar. Opdrachtgevers voeg je eenmalig toe met hun KvK- en adresgegevens.</p></div>
       <div class="kaart"><h3 style="font-size:15px;margin:0 0 6px">Hoe werken pauzes en toeslagen (ORT)?</h3><p style="font-size:13px;color:var(--soft);margin:0;line-height:1.7">Jij bepaalt het: zes instelbare toeslagen (avond, nacht, zaterdag, zondag, feestdag en overuren) en zelf te kiezen of pauzes onbetaald worden afgetrokken — en hoeveel minuten. Alles rekent automatisch door in loonkosten, urenstaten en facturen.</p></div>
       <div class="kaart"><h3 style="font-size:15px;margin:0 0 6px">Wat als mijn team groeit of krimpt?</h3><p style="font-size:13px;color:var(--soft);margin:0;line-height:1.7">De prijs beweegt automatisch mee: je betaalt per actieve medewerker. Zet je iemand op non-actief, dan betaal je die maand erna niet meer voor die persoon.</p></div>
       <div class="kaart"><h3 style="font-size:15px;margin:0 0 6px">Kan ik op elk moment opzeggen?</h3><p style="font-size:13px;color:var(--soft);margin:0;line-height:1.7">Ja, maandelijks opzegbaar zonder opzegtermijn of kleine lettertjes. Bij jaarlijkse betaling loopt je jaar gewoon af.</p></div>
@@ -637,7 +639,7 @@
       </div>
     </div>
   </section>
-  <section class="wrap" style="padding-top:0">
+  <section class="wrap ai-only" style="padding-top:0">
     <div class="kaart" style="background:linear-gradient(135deg,#0B1220 0%,#152A52 100%);color:#fff;border:none;padding:36px 26px">
       <div style="max-width:680px;margin:0 auto;text-align:center">
         <div style="font-size:12px;font-weight:800;color:#FFC93C;letter-spacing:2px;margin-bottom:8px">NEW · YOUR LEGAL COLLEAGUE</div>
@@ -687,11 +689,11 @@
     </div>
   </section>
   <section class="wrap" style="padding-top:0">
-    <div class="sec-kop"><h2>NEW: Payslips, Inbox & AI assistant</h2><p>From schedule to net salary — without separate systems</p></div>
+    <div class="sec-kop"><h2>NEW: Payslips & Inbox</h2><p>From schedule to net salary — without separate systems</p></div>
     <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr))">
       <div class="kaart functie"><div class="functie-icoon">💰</div><h3>Automatic payslips</h3><p>One click per month: regular hours, all surcharges and overtime calculated automatically, net pay at the bottom — with the legally required details included.</p></div>
       <div class="kaart functie"><div class="functie-icoon">📬</div><h3>Inbox for your team</h3><p>Send all payslips in one go — every employee finds theirs in their own in-app inbox. No loose emails, no paper, nothing lost.</p></div>
-      <div class="kaart functie"><div class="functie-icoon">🤖</div><h3>AI assistant — Enterprise only</h3><p>Ask anything about collective agreements, working-time rules, sickness and contracts — answered instantly, right inside your planning. Like a legal colleague who never sleeps.</p></div>
+      <div class="kaart functie ai-only"><div class="functie-icoon">🤖</div><h3>AI assistant — Enterprise only</h3><p>Ask anything about collective agreements, working-time rules, sickness and contracts — answered instantly, right inside your planning. Like a legal colleague who never sleeps.</p></div>
     </div>
   </section>
   <section class="wrap" style="padding-top:0">
@@ -855,7 +857,6 @@
     <div class="kaart" style="margin-bottom:14px"><h3 style="font-size:15px;margin:0 0 8px">Jouw rechten (AVG, EU-breed)</h3><div style="font-size:13px;color:var(--soft);line-height:1.9">Inzage, rectificatie, verwijdering, beperking, dataportabiliteit en bezwaar. Verzoek via info@oibase.nl — reactie binnen 30 dagen. Ook medewerkers van onze klanten kunnen hun rechten uitoefenen; wij verwijzen dan mede naar hun werkgever als verantwoordelijke.</div></div>
     <div class="kaart" style="margin-bottom:14px"><h3 style="font-size:15px;margin:0 0 8px">Beveiliging, subverwerkers & datalekken</h3><div style="font-size:13px;color:var(--soft);line-height:1.9">Gegevens worden versleuteld verzonden (TLS) en opgeslagen binnen de EU. Subverwerkers: hostingprovider (EU-regio). Facturatie en betaling verlopen buiten het platform; wij verwerken daarvoor alleen je factuurgegevens. Datalekken melden we binnen 72 uur aan de toezichthouder en, waar vereist, aan betrokkenen.</div></div>
     <div class="kaart" style="margin-bottom:14px"><h3 style="font-size:15px;margin:0 0 8px">Toezichthouder per land</h3><div style="font-size:13px;color:var(--soft);line-height:1.9">Je hebt altijd het recht een klacht in te dienen bij de toezichthouder van je eigen land:<div style="margin-top:10px"><div style="display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:13px"><span>🇳🇱 Nederland</span><span style="color:var(--soft);text-align:right">Autoriteit Persoonsgegevens (AP)</span></div><div style="display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:13px"><span>🇧🇪 België</span><span style="color:var(--soft);text-align:right">Gegevensbeschermingsautoriteit (GBA/APD)</span></div><div style="display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:13px"><span>🇩🇪 Deutschland</span><span style="color:var(--soft);text-align:right">BfDI / Landesdatenschutzbehörden</span></div><div style="display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:13px"><span>🇫🇷 France</span><span style="color:var(--soft);text-align:right">CNIL</span></div><div style="display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:13px"><span>🇦🇹 Österreich</span><span style="color:var(--soft);text-align:right">Datenschutzbehörde (DSB)</span></div><div style="display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:13px"><span>🇮🇪 Ireland</span><span style="color:var(--soft);text-align:right">Data Protection Commission (DPC)</span></div><div style="display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:13px"><span>🇪🇸 España</span><span style="color:var(--soft);text-align:right">AEPD</span></div><div style="display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:13px"><span>🇮🇹 Italia</span><span style="color:var(--soft);text-align:right">Garante Privacy</span></div><div style="display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:13px"><span>🇵🇹 Portugal</span><span style="color:var(--soft);text-align:right">CNPD</span></div><div style="display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:13px"><span>🇬🇷 Ελλάδα</span><span style="color:var(--soft);text-align:right">HDPA</span></div><div style="display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:13px"><span>🇵🇱 Polska</span><span style="color:var(--soft);text-align:right">UODO</span></div><div style="display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:13px"><span>🇨🇿 Česko</span><span style="color:var(--soft);text-align:right">ÚOOÚ</span></div><div style="display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:13px"><span>🇸🇪 Sverige</span><span style="color:var(--soft);text-align:right">IMY</span></div><div style="display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:13px"><span>🇩🇰 Danmark</span><span style="color:var(--soft);text-align:right">Datatilsynet</span></div><div style="display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:13px"><span>🇫🇮 Suomi</span><span style="color:var(--soft);text-align:right">Tietosuojavaltuutettu</span></div></div><div style="font-size:12px;margin-top:8px">Volledige EU-lijst: <a href="https://edpb.europa.eu" target="_blank" rel="noopener">edpb.europa.eu</a></div></div></div>
-    <div style="background:#FEF3C7;border:1px solid #FCD34D;border-radius:12px;padding:12px 16px;font-size:12.5px;line-height:1.8">⚠ Modelverklaring bij de demo-versie. Vóór de commerciële livegang laten we deze tekst en de verwerkersovereenkomst juridisch toetsen per land.</div>
   </section>
 </div>
 <div class="pagina verborgen" id="pg-en-privacy">
@@ -867,7 +868,6 @@
     <div class="kaart" style="margin-bottom:14px"><h3 style="font-size:15px;margin:0 0 8px">Your rights (GDPR, EU-wide)</h3><div style="font-size:13px;color:var(--soft);line-height:1.9">Access, rectification, erasure, restriction, portability and objection. Request via info@oibase.nl — response within 30 days. Employees of our customers can also exercise their rights.</div></div>
     <div class="kaart" style="margin-bottom:14px"><h3 style="font-size:15px;margin:0 0 8px">Security, sub-processors & breaches</h3><div style="font-size:13px;color:var(--soft);line-height:1.9">Data is transmitted encrypted (TLS) and stored within the EU. Sub-processors: hosting provider (EU region). Invoicing and payment take place outside the platform; we only process your billing details for that purpose. Breaches are reported within 72 hours to the supervisory authority and, where required, to those affected.</div></div>
     <div class="kaart" style="margin-bottom:14px"><h3 style="font-size:15px;margin:0 0 8px">Supervisory authority per country</h3><div style="font-size:13px;color:var(--soft);line-height:1.9">You always have the right to lodge a complaint with the authority of your own country:<div style="margin-top:10px"><div style="display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:13px"><span>🇳🇱 Nederland</span><span style="color:var(--soft);text-align:right">Autoriteit Persoonsgegevens (AP)</span></div><div style="display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:13px"><span>🇧🇪 België</span><span style="color:var(--soft);text-align:right">Gegevensbeschermingsautoriteit (GBA/APD)</span></div><div style="display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:13px"><span>🇩🇪 Deutschland</span><span style="color:var(--soft);text-align:right">BfDI / Landesdatenschutzbehörden</span></div><div style="display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:13px"><span>🇫🇷 France</span><span style="color:var(--soft);text-align:right">CNIL</span></div><div style="display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:13px"><span>🇦🇹 Österreich</span><span style="color:var(--soft);text-align:right">Datenschutzbehörde (DSB)</span></div><div style="display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:13px"><span>🇮🇪 Ireland</span><span style="color:var(--soft);text-align:right">Data Protection Commission (DPC)</span></div><div style="display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:13px"><span>🇪🇸 España</span><span style="color:var(--soft);text-align:right">AEPD</span></div><div style="display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:13px"><span>🇮🇹 Italia</span><span style="color:var(--soft);text-align:right">Garante Privacy</span></div><div style="display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:13px"><span>🇵🇹 Portugal</span><span style="color:var(--soft);text-align:right">CNPD</span></div><div style="display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:13px"><span>🇬🇷 Ελλάδα</span><span style="color:var(--soft);text-align:right">HDPA</span></div><div style="display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:13px"><span>🇵🇱 Polska</span><span style="color:var(--soft);text-align:right">UODO</span></div><div style="display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:13px"><span>🇨🇿 Česko</span><span style="color:var(--soft);text-align:right">ÚOOÚ</span></div><div style="display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:13px"><span>🇸🇪 Sverige</span><span style="color:var(--soft);text-align:right">IMY</span></div><div style="display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:13px"><span>🇩🇰 Danmark</span><span style="color:var(--soft);text-align:right">Datatilsynet</span></div><div style="display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:13px"><span>🇫🇮 Suomi</span><span style="color:var(--soft);text-align:right">Tietosuojavaltuutettu</span></div></div><div style="font-size:12px;margin-top:8px">Full EU list: <a href="https://edpb.europa.eu" target="_blank" rel="noopener">edpb.europa.eu</a></div></div></div>
-    <div style="background:#FEF3C7;border:1px solid #FCD34D;border-radius:12px;padding:12px 16px;font-size:12.5px;line-height:1.8">⚠ Model statement for the demo version. Before commercial launch this text and the processing agreement will be legally reviewed per country.</div>
   </section>
 </div>
 <div class="pagina verborgen" id="pg-de-privacy">
@@ -879,7 +879,6 @@
     <div class="kaart" style="margin-bottom:14px"><h3 style="font-size:15px;margin:0 0 8px">Deine Rechte (DSGVO, EU-weit)</h3><div style="font-size:13px;color:var(--soft);line-height:1.9">Auskunft, Berichtigung, Löschung, Einschränkung, Datenübertragbarkeit und Widerspruch. Anfrage an info@oibase.nl — Antwort binnen 30 Tagen.</div></div>
     <div class="kaart" style="margin-bottom:14px"><h3 style="font-size:15px;margin:0 0 8px">Sicherheit, Subunternehmer & Datenpannen</h3><div style="font-size:13px;color:var(--soft);line-height:1.9">Daten werden verschlüsselt übertragen (TLS) und in der EU gespeichert. Subunternehmer: Hosting (EU). Rechnungsstellung und Zahlung erfolgen außerhalb der Plattform; dafür verarbeiten wir nur deine Rechnungsdaten. Datenpannen melden wir binnen 72 Stunden der Aufsichtsbehörde.</div></div>
     <div class="kaart" style="margin-bottom:14px"><h3 style="font-size:15px;margin:0 0 8px">Aufsichtsbehörde je Land</h3><div style="font-size:13px;color:var(--soft);line-height:1.9">Du hast stets das Recht auf Beschwerde bei der Behörde deines Landes:<div style="margin-top:10px"><div style="display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:13px"><span>🇳🇱 Nederland</span><span style="color:var(--soft);text-align:right">Autoriteit Persoonsgegevens (AP)</span></div><div style="display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:13px"><span>🇧🇪 België</span><span style="color:var(--soft);text-align:right">Gegevensbeschermingsautoriteit (GBA/APD)</span></div><div style="display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:13px"><span>🇩🇪 Deutschland</span><span style="color:var(--soft);text-align:right">BfDI / Landesdatenschutzbehörden</span></div><div style="display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:13px"><span>🇫🇷 France</span><span style="color:var(--soft);text-align:right">CNIL</span></div><div style="display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:13px"><span>🇦🇹 Österreich</span><span style="color:var(--soft);text-align:right">Datenschutzbehörde (DSB)</span></div><div style="display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:13px"><span>🇮🇪 Ireland</span><span style="color:var(--soft);text-align:right">Data Protection Commission (DPC)</span></div><div style="display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:13px"><span>🇪🇸 España</span><span style="color:var(--soft);text-align:right">AEPD</span></div><div style="display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:13px"><span>🇮🇹 Italia</span><span style="color:var(--soft);text-align:right">Garante Privacy</span></div><div style="display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:13px"><span>🇵🇹 Portugal</span><span style="color:var(--soft);text-align:right">CNPD</span></div><div style="display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:13px"><span>🇬🇷 Ελλάδα</span><span style="color:var(--soft);text-align:right">HDPA</span></div><div style="display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:13px"><span>🇵🇱 Polska</span><span style="color:var(--soft);text-align:right">UODO</span></div><div style="display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:13px"><span>🇨🇿 Česko</span><span style="color:var(--soft);text-align:right">ÚOOÚ</span></div><div style="display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:13px"><span>🇸🇪 Sverige</span><span style="color:var(--soft);text-align:right">IMY</span></div><div style="display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:13px"><span>🇩🇰 Danmark</span><span style="color:var(--soft);text-align:right">Datatilsynet</span></div><div style="display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:13px"><span>🇫🇮 Suomi</span><span style="color:var(--soft);text-align:right">Tietosuojavaltuutettu</span></div></div><div style="font-size:12px;margin-top:8px">Vollständige EU-Liste: <a href="https://edpb.europa.eu" target="_blank" rel="noopener">edpb.europa.eu</a></div></div></div>
-    <div style="background:#FEF3C7;border:1px solid #FCD34D;border-radius:12px;padding:12px 16px;font-size:12.5px;line-height:1.8">⚠ Mustererklärung der Demo-Version. Vor dem kommerziellen Start werden Text und AV-Vertrag je Land juristisch geprüft.</div>
   </section>
 </div>
 <div class="pagina verborgen" id="pg-fr-privacy">
@@ -891,7 +890,6 @@
     <div class="kaart" style="margin-bottom:14px"><h3 style="font-size:15px;margin:0 0 8px">Vos droits (RGPD, toute l'UE)</h3><div style="font-size:13px;color:var(--soft);line-height:1.9">Accès, rectification, effacement, limitation, portabilité et opposition. Demande via info@oibase.nl — réponse sous 30 jours.</div></div>
     <div class="kaart" style="margin-bottom:14px"><h3 style="font-size:15px;margin:0 0 8px">Sécurité, sous-traitants & violations</h3><div style="font-size:13px;color:var(--soft);line-height:1.9">Données chiffrées (TLS) et stockées dans l'UE. Sous-traitants : hébergeur (région UE). La facturation et le paiement ont lieu hors de la plateforme ; nous ne traitons que vos données de facturation. Toute violation est signalée sous 72 heures à l'autorité.</div></div>
     <div class="kaart" style="margin-bottom:14px"><h3 style="font-size:15px;margin:0 0 8px">Autorité de contrôle par pays</h3><div style="font-size:13px;color:var(--soft);line-height:1.9">Vous pouvez toujours déposer une réclamation auprès de l'autorité de votre pays :<div style="margin-top:10px"><div style="display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:13px"><span>🇳🇱 Nederland</span><span style="color:var(--soft);text-align:right">Autoriteit Persoonsgegevens (AP)</span></div><div style="display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:13px"><span>🇧🇪 België</span><span style="color:var(--soft);text-align:right">Gegevensbeschermingsautoriteit (GBA/APD)</span></div><div style="display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:13px"><span>🇩🇪 Deutschland</span><span style="color:var(--soft);text-align:right">BfDI / Landesdatenschutzbehörden</span></div><div style="display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:13px"><span>🇫🇷 France</span><span style="color:var(--soft);text-align:right">CNIL</span></div><div style="display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:13px"><span>🇦🇹 Österreich</span><span style="color:var(--soft);text-align:right">Datenschutzbehörde (DSB)</span></div><div style="display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:13px"><span>🇮🇪 Ireland</span><span style="color:var(--soft);text-align:right">Data Protection Commission (DPC)</span></div><div style="display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:13px"><span>🇪🇸 España</span><span style="color:var(--soft);text-align:right">AEPD</span></div><div style="display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:13px"><span>🇮🇹 Italia</span><span style="color:var(--soft);text-align:right">Garante Privacy</span></div><div style="display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:13px"><span>🇵🇹 Portugal</span><span style="color:var(--soft);text-align:right">CNPD</span></div><div style="display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:13px"><span>🇬🇷 Ελλάδα</span><span style="color:var(--soft);text-align:right">HDPA</span></div><div style="display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:13px"><span>🇵🇱 Polska</span><span style="color:var(--soft);text-align:right">UODO</span></div><div style="display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:13px"><span>🇨🇿 Česko</span><span style="color:var(--soft);text-align:right">ÚOOÚ</span></div><div style="display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:13px"><span>🇸🇪 Sverige</span><span style="color:var(--soft);text-align:right">IMY</span></div><div style="display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:13px"><span>🇩🇰 Danmark</span><span style="color:var(--soft);text-align:right">Datatilsynet</span></div><div style="display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:13px"><span>🇫🇮 Suomi</span><span style="color:var(--soft);text-align:right">Tietosuojavaltuutettu</span></div></div><div style="font-size:12px;margin-top:8px">Liste UE complète : <a href="https://edpb.europa.eu" target="_blank" rel="noopener">edpb.europa.eu</a></div></div></div>
-    <div style="background:#FEF3C7;border:1px solid #FCD34D;border-radius:12px;padding:12px 16px;font-size:12.5px;line-height:1.8">⚠ Déclaration type de la version démo. Avant le lancement commercial, ce texte et l'accord de traitement seront vérifiés juridiquement par pays.</div>
   </section>
 </div>
 <div class="pagina verborgen" id="pg-es-privacy">
@@ -903,7 +901,6 @@
     <div class="kaart" style="margin-bottom:14px"><h3 style="font-size:15px;margin:0 0 8px">Tus derechos (RGPD, toda la UE)</h3><div style="font-size:13px;color:var(--soft);line-height:1.9">Acceso, rectificación, supresión, limitación, portabilidad y oposición. Solicitud a info@oibase.nl — respuesta en 30 días.</div></div>
     <div class="kaart" style="margin-bottom:14px"><h3 style="font-size:15px;margin:0 0 8px">Seguridad, encargados y brechas</h3><div style="font-size:13px;color:var(--soft);line-height:1.9">Datos cifrados (TLS) y almacenados en la UE. Encargados: alojamiento (región UE). La facturación y el pago se realizan fuera de la plataforma; solo tratamos tus datos de facturación. Las brechas se notifican en 72 horas a la autoridad.</div></div>
     <div class="kaart" style="margin-bottom:14px"><h3 style="font-size:15px;margin:0 0 8px">Autoridad de control por país</h3><div style="font-size:13px;color:var(--soft);line-height:1.9">Siempre puedes reclamar ante la autoridad de tu país:<div style="margin-top:10px"><div style="display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:13px"><span>🇳🇱 Nederland</span><span style="color:var(--soft);text-align:right">Autoriteit Persoonsgegevens (AP)</span></div><div style="display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:13px"><span>🇧🇪 België</span><span style="color:var(--soft);text-align:right">Gegevensbeschermingsautoriteit (GBA/APD)</span></div><div style="display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:13px"><span>🇩🇪 Deutschland</span><span style="color:var(--soft);text-align:right">BfDI / Landesdatenschutzbehörden</span></div><div style="display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:13px"><span>🇫🇷 France</span><span style="color:var(--soft);text-align:right">CNIL</span></div><div style="display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:13px"><span>🇦🇹 Österreich</span><span style="color:var(--soft);text-align:right">Datenschutzbehörde (DSB)</span></div><div style="display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:13px"><span>🇮🇪 Ireland</span><span style="color:var(--soft);text-align:right">Data Protection Commission (DPC)</span></div><div style="display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:13px"><span>🇪🇸 España</span><span style="color:var(--soft);text-align:right">AEPD</span></div><div style="display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:13px"><span>🇮🇹 Italia</span><span style="color:var(--soft);text-align:right">Garante Privacy</span></div><div style="display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:13px"><span>🇵🇹 Portugal</span><span style="color:var(--soft);text-align:right">CNPD</span></div><div style="display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:13px"><span>🇬🇷 Ελλάδα</span><span style="color:var(--soft);text-align:right">HDPA</span></div><div style="display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:13px"><span>🇵🇱 Polska</span><span style="color:var(--soft);text-align:right">UODO</span></div><div style="display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:13px"><span>🇨🇿 Česko</span><span style="color:var(--soft);text-align:right">ÚOOÚ</span></div><div style="display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:13px"><span>🇸🇪 Sverige</span><span style="color:var(--soft);text-align:right">IMY</span></div><div style="display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:13px"><span>🇩🇰 Danmark</span><span style="color:var(--soft);text-align:right">Datatilsynet</span></div><div style="display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:13px"><span>🇫🇮 Suomi</span><span style="color:var(--soft);text-align:right">Tietosuojavaltuutettu</span></div></div><div style="font-size:12px;margin-top:8px">Lista completa de la UE: <a href="https://edpb.europa.eu" target="_blank" rel="noopener">edpb.europa.eu</a></div></div></div>
-    <div style="background:#FEF3C7;border:1px solid #FCD34D;border-radius:12px;padding:12px 16px;font-size:12.5px;line-height:1.8">⚠ Declaración modelo de la versión demo. Antes del lanzamiento comercial, este texto y el contrato de encargo se revisarán jurídicamente por país.</div>
   </section>
 </div>
 <div class="pagina verborgen" id="pg-pt-privacy">
@@ -915,7 +912,6 @@
     <div class="kaart" style="margin-bottom:14px"><h3 style="font-size:15px;margin:0 0 8px">Os seus direitos (RGPD, toda a UE)</h3><div style="font-size:13px;color:var(--soft);line-height:1.9">Acesso, retificação, apagamento, limitação, portabilidade e oposição. Pedido para info@oibase.nl — resposta em 30 dias.</div></div>
     <div class="kaart" style="margin-bottom:14px"><h3 style="font-size:15px;margin:0 0 8px">Segurança, subcontratantes e violações</h3><div style="font-size:13px;color:var(--soft);line-height:1.9">Dados cifrados (TLS) e armazenados na UE. Subcontratantes: alojamento (região UE). A faturação e o pagamento decorrem fora da plataforma; tratamos apenas os seus dados de faturação. Violações são comunicadas em 72 horas à autoridade.</div></div>
     <div class="kaart" style="margin-bottom:14px"><h3 style="font-size:15px;margin:0 0 8px">Autoridade de controlo por país</h3><div style="font-size:13px;color:var(--soft);line-height:1.9">Pode sempre apresentar queixa à autoridade do seu país:<div style="margin-top:10px"><div style="display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:13px"><span>🇳🇱 Nederland</span><span style="color:var(--soft);text-align:right">Autoriteit Persoonsgegevens (AP)</span></div><div style="display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:13px"><span>🇧🇪 België</span><span style="color:var(--soft);text-align:right">Gegevensbeschermingsautoriteit (GBA/APD)</span></div><div style="display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:13px"><span>🇩🇪 Deutschland</span><span style="color:var(--soft);text-align:right">BfDI / Landesdatenschutzbehörden</span></div><div style="display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:13px"><span>🇫🇷 France</span><span style="color:var(--soft);text-align:right">CNIL</span></div><div style="display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:13px"><span>🇦🇹 Österreich</span><span style="color:var(--soft);text-align:right">Datenschutzbehörde (DSB)</span></div><div style="display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:13px"><span>🇮🇪 Ireland</span><span style="color:var(--soft);text-align:right">Data Protection Commission (DPC)</span></div><div style="display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:13px"><span>🇪🇸 España</span><span style="color:var(--soft);text-align:right">AEPD</span></div><div style="display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:13px"><span>🇮🇹 Italia</span><span style="color:var(--soft);text-align:right">Garante Privacy</span></div><div style="display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:13px"><span>🇵🇹 Portugal</span><span style="color:var(--soft);text-align:right">CNPD</span></div><div style="display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:13px"><span>🇬🇷 Ελλάδα</span><span style="color:var(--soft);text-align:right">HDPA</span></div><div style="display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:13px"><span>🇵🇱 Polska</span><span style="color:var(--soft);text-align:right">UODO</span></div><div style="display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:13px"><span>🇨🇿 Česko</span><span style="color:var(--soft);text-align:right">ÚOOÚ</span></div><div style="display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:13px"><span>🇸🇪 Sverige</span><span style="color:var(--soft);text-align:right">IMY</span></div><div style="display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:13px"><span>🇩🇰 Danmark</span><span style="color:var(--soft);text-align:right">Datatilsynet</span></div><div style="display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:13px"><span>🇫🇮 Suomi</span><span style="color:var(--soft);text-align:right">Tietosuojavaltuutettu</span></div></div><div style="font-size:12px;margin-top:8px">Lista completa da UE: <a href="https://edpb.europa.eu" target="_blank" rel="noopener">edpb.europa.eu</a></div></div></div>
-    <div style="background:#FEF3C7;border:1px solid #FCD34D;border-radius:12px;padding:12px 16px;font-size:12.5px;line-height:1.8">⚠ Declaração-modelo da versão demo. Antes do lançamento comercial, este texto e o acordo serão revistos juridicamente por país.</div>
   </section>
 </div>
 <div class="pagina verborgen" id="pg-de-faq">
@@ -1077,7 +1073,7 @@
       </div>
     </div>
   </section>
-  <section class="wrap" style="padding-top:0">
+  <section class="wrap ai-only" style="padding-top:0">
     <div class="kaart" style="background:linear-gradient(135deg,#0B1220 0%,#152A52 100%);color:#fff;border:none;padding:36px 26px">
       <div style="max-width:680px;margin:0 auto;text-align:center">
         <div style="font-size:12px;font-weight:800;color:#FFC93C;letter-spacing:2px;margin-bottom:8px">NOVO · O SEU COLEGA JURÍDICO</div>
@@ -1127,11 +1123,11 @@
     </div>
   </section>
   <section class="wrap" style="padding-top:0">
-    <div class="sec-kop"><h2>NOVO: Recibos, Caixa de entrada & Assistente IA</h2><p>Do horário ao salário líquido — sem sistemas separados</p></div>
+    <div class="sec-kop"><h2>NOVO: Recibos & Caixa de entrada</h2><p>Do horário ao salário líquido — sem sistemas separados</p></div>
     <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr))">
       <div class="kaart functie"><div class="functie-icoon">💰</div><h3>Recibos automáticos</h3><p>Um clique por mês: horas normais, todos os subsídios e horas extra calculados automaticamente, líquido em baixo — com os dados legalmente obrigatórios.</p></div>
       <div class="kaart functie"><div class="functie-icoon">📬</div><h3>Caixa de entrada para a equipa</h3><p>Envie todos os recibos de uma vez — cada funcionário encontra o seu na própria caixa na app. Sem emails soltos, sem papel.</p></div>
-      <div class="kaart functie"><div class="functie-icoon">🤖</div><h3>Assistente IA — só no Enterprise</h3><p>Pergunte tudo sobre convenções, tempo de trabalho, baixas e contratos — resposta imediata, dentro do seu planeamento.</p></div>
+      <div class="kaart functie ai-only"><div class="functie-icoon">🤖</div><h3>Assistente IA — só no Enterprise</h3><p>Pergunte tudo sobre convenções, tempo de trabalho, baixas e contratos — resposta imediata, dentro do seu planeamento.</p></div>
     </div>
   </section>
   <section class="wrap" style="padding-top:0">
@@ -1277,7 +1273,7 @@
       </div>
     </div>
   </section>
-  <section class="wrap" style="padding-top:0">
+  <section class="wrap ai-only" style="padding-top:0">
     <div class="kaart" style="background:linear-gradient(135deg,#0B1220 0%,#152A52 100%);color:#fff;border:none;padding:36px 26px">
       <div style="max-width:680px;margin:0 auto;text-align:center">
         <div style="font-size:12px;font-weight:800;color:#FFC93C;letter-spacing:2px;margin-bottom:8px">NEU · DEIN JURISTISCHER KOLLEGE</div>
@@ -1327,11 +1323,11 @@
     </div>
   </section>
   <section class="wrap" style="padding-top:0">
-    <div class="sec-kop"><h2>NEU: Lohnabrechnungen, Postfach & KI-Assistent</h2><p>Vom Dienstplan zum Nettolohn — ohne getrennte Systeme</p></div>
+    <div class="sec-kop"><h2>NEU: Lohnabrechnungen & Postfach</h2><p>Vom Dienstplan zum Nettolohn — ohne getrennte Systeme</p></div>
     <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr))">
       <div class="kaart functie"><div class="functie-icoon">💰</div><h3>Automatische Lohnabrechnungen</h3><p>Ein Klick pro Monat: normale Stunden, alle Zuschläge und Überstunden automatisch berechnet, netto unten — mit den gesetzlich vorgeschriebenen Angaben.</p></div>
       <div class="kaart functie"><div class="functie-icoon">📬</div><h3>Postfach für dein Team</h3><p>Alle Abrechnungen auf einmal versenden — jeder Mitarbeiter findet seine im eigenen Postfach in der App. Keine losen Mails, kein Papier.</p></div>
-      <div class="kaart functie"><div class="functie-icoon">🤖</div><h3>KI-Assistent — nur in Enterprise</h3><p>Frag alles zu Tarifverträgen, Arbeitszeitregeln, Krankheit und Verträgen — sofort beantwortet, mitten in deiner Planung.</p></div>
+      <div class="kaart functie ai-only"><div class="functie-icoon">🤖</div><h3>KI-Assistent — nur in Enterprise</h3><p>Frag alles zu Tarifverträgen, Arbeitszeitregeln, Krankheit und Verträgen — sofort beantwortet, mitten in deiner Planung.</p></div>
     </div>
   </section>
   <section class="wrap" style="padding-top:0">
@@ -1476,7 +1472,7 @@
       </div>
     </div>
   </section>
-  <section class="wrap" style="padding-top:0">
+  <section class="wrap ai-only" style="padding-top:0">
     <div class="kaart" style="background:linear-gradient(135deg,#0B1220 0%,#152A52 100%);color:#fff;border:none;padding:36px 26px">
       <div style="max-width:680px;margin:0 auto;text-align:center">
         <div style="font-size:12px;font-weight:800;color:#FFC93C;letter-spacing:2px;margin-bottom:8px">NOUVEAU · VOTRE COLLÈGUE JURIDIQUE</div>
@@ -1526,11 +1522,11 @@
     </div>
   </section>
   <section class="wrap" style="padding-top:0">
-    <div class="sec-kop"><h2>NOUVEAU : Paie, Boîte de réception & Assistant IA</h2><p>Du planning au salaire net — sans systèmes séparés</p></div>
+    <div class="sec-kop"><h2>NOUVEAU : Paie & Boîte de réception</h2><p>Du planning au salaire net — sans systèmes séparés</p></div>
     <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr))">
       <div class="kaart functie"><div class="functie-icoon">💰</div><h3>Bulletins de paie automatiques</h3><p>Un clic par mois : heures normales, majorations et heures sup calculées automatiquement, net en bas — avec les mentions légales obligatoires.</p></div>
       <div class="kaart functie"><div class="functie-icoon">📬</div><h3>Boîte de réception pour l'équipe</h3><p>Envoyez tous les bulletins en une fois — chaque employé retrouve le sien dans sa boîte dans l'appli. Ni mails éparpillés, ni papier.</p></div>
-      <div class="kaart functie"><div class="functie-icoon">🤖</div><h3>Assistant IA — uniquement en Enterprise</h3><p>Posez toutes vos questions sur les conventions, le temps de travail, la maladie et les contrats — réponse immédiate, au cœur de votre planning.</p></div>
+      <div class="kaart functie ai-only"><div class="functie-icoon">🤖</div><h3>Assistant IA — uniquement en Enterprise</h3><p>Posez toutes vos questions sur les conventions, le temps de travail, la maladie et les contrats — réponse immédiate, au cœur de votre planning.</p></div>
     </div>
   </section>
   <section class="wrap" style="padding-top:0">
@@ -1675,7 +1671,7 @@
       </div>
     </div>
   </section>
-  <section class="wrap" style="padding-top:0">
+  <section class="wrap ai-only" style="padding-top:0">
     <div class="kaart" style="background:linear-gradient(135deg,#0B1220 0%,#152A52 100%);color:#fff;border:none;padding:36px 26px">
       <div style="max-width:680px;margin:0 auto;text-align:center">
         <div style="font-size:12px;font-weight:800;color:#FFC93C;letter-spacing:2px;margin-bottom:8px">NUEVO · TU COLEGA JURÍDICO</div>
@@ -1725,11 +1721,11 @@
     </div>
   </section>
   <section class="wrap" style="padding-top:0">
-    <div class="sec-kop"><h2>NUEVO: Nóminas, Buzón & Asistente IA</h2><p>Del horario al salario neto — sin sistemas separados</p></div>
+    <div class="sec-kop"><h2>NUEVO: Nóminas & Buzón</h2><p>Del horario al salario neto — sin sistemas separados</p></div>
     <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr))">
       <div class="kaart functie"><div class="functie-icoon">💰</div><h3>Nóminas automáticas</h3><p>Un clic al mes: horas normales, todos los pluses y horas extra calculados automáticamente, neto abajo — con los datos legalmente obligatorios.</p></div>
       <div class="kaart functie"><div class="functie-icoon">📬</div><h3>Buzón para tu equipo</h3><p>Envía todas las nóminas de una vez — cada empleado encuentra la suya en su buzón de la app. Sin correos sueltos, sin papel.</p></div>
-      <div class="kaart functie"><div class="functie-icoon">🤖</div><h3>Asistente IA — solo en Enterprise</h3><p>Pregunta lo que quieras sobre convenios, tiempo de trabajo, bajas y contratos — respuesta al instante, dentro de tu planificación.</p></div>
+      <div class="kaart functie ai-only"><div class="functie-icoon">🤖</div><h3>Asistente IA — solo en Enterprise</h3><p>Pregunta lo que quieras sobre convenios, tiempo de trabajo, bajas y contratos — respuesta al instante, dentro de tu planificación.</p></div>
     </div>
   </section>
   <section class="wrap" style="padding-top:0">
@@ -1880,62 +1876,23 @@
 <div id="handmatig-modal" class="modal-achter verborgen" onclick="if(event.target===this)sluitHandmatigModal()">
   <div class="modal">
     <h2 style="margin:0 0 16px">Voeg opdrachtgever handmatig toe</h2>
-    <div style="margin-bottom:14px">
-      <label style="font-weight:700;font-size:12px;color:var(--soft);display:block;margin-bottom:4px">Bedrijfsnaam *</label>
-      <input id="hm-naam" placeholder="Bijv. Hotel Amsterdam" style="margin-bottom:0">
-    </div>
-    <div style="margin-bottom:14px">
-      <label style="font-weight:700;font-size:12px;color:var(--soft);display:block;margin-bottom:4px">KvK-nummer</label>
-      <input id="hm-kvk" placeholder="Bijv. 12345678" style="margin-bottom:0">
-    </div>
-    <div style="margin-bottom:14px">
-      <label style="font-weight:700;font-size:12px;color:var(--soft);display:block;margin-bottom:4px">Adres</label>
-      <input id="hm-adres" placeholder="Bijv. Hoofdstraat 123" style="margin-bottom:0">
-    </div>
+    <div style="margin-bottom:14px"><label style="font-weight:700;font-size:12px;color:var(--soft);display:block;margin-bottom:4px">Bedrijfsnaam *</label><input id="hm-naam" placeholder="Bijv. Hotel Amsterdam" style="margin-bottom:0"></div>
+    <div style="margin-bottom:14px"><label style="font-weight:700;font-size:12px;color:var(--soft);display:block;margin-bottom:4px">KvK-nummer</label><input id="hm-kvk" placeholder="Bijv. 12345678" style="margin-bottom:0"></div>
+    <div style="margin-bottom:14px"><label style="font-weight:700;font-size:12px;color:var(--soft);display:block;margin-bottom:4px">Adres</label><input id="hm-adres" placeholder="Bijv. Hoofdstraat 123" style="margin-bottom:0"></div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px">
-      <div>
-        <label style="font-weight:700;font-size:12px;color:var(--soft);display:block;margin-bottom:4px">Postcode</label>
-        <input id="hm-postcode" placeholder="1234 AB" style="margin-bottom:0">
-      </div>
-      <div>
-        <label style="font-weight:700;font-size:12px;color:var(--soft);display:block;margin-bottom:4px">Plaats</label>
-        <input id="hm-plaats" placeholder="Amsterdam" style="margin-bottom:0">
-      </div>
+      <div><label style="font-weight:700;font-size:12px;color:var(--soft);display:block;margin-bottom:4px">Postcode</label><input id="hm-postcode" placeholder="1234 AB" style="margin-bottom:0"></div>
+      <div><label style="font-weight:700;font-size:12px;color:var(--soft);display:block;margin-bottom:4px">Plaats</label><input id="hm-plaats" placeholder="Amsterdam" style="margin-bottom:0"></div>
     </div>
-    <div style="margin-bottom:14px">
-      <label style="font-weight:700;font-size:12px;color:var(--soft);display:block;margin-bottom:4px">E-mail administratie</label>
-      <input id="hm-email" type="email" placeholder="admin@bedrijf.nl" style="margin-bottom:0">
-    </div>
-    <div style="margin-bottom:14px">
-      <label style="font-weight:700;font-size:12px;color:var(--soft);display:block;margin-bottom:4px">Betalingstermijn (dagen)</label>
-      <select id="hm-termijn" style="margin-bottom:0">
-        <option value="7">7 dagen</option>
-        <option value="14" selected>14 dagen</option>
-        <option value="30">30 dagen</option>
-        <option value="60">60 dagen</option>
-      </select>
-    </div>
-    <div style="margin-bottom:14px">
-      <label style="font-weight:700;font-size:12px;color:var(--soft);display:block;margin-bottom:8px">Uurtarieven</label>
+    <div style="margin-bottom:14px"><label style="font-weight:700;font-size:12px;color:var(--soft);display:block;margin-bottom:4px">E-mail administratie</label><input id="hm-email" type="email" placeholder="admin@bedrijf.nl" style="margin-bottom:0"></div>
+    <div style="margin-bottom:14px"><label style="font-weight:700;font-size:12px;color:var(--soft);display:block;margin-bottom:4px">Betalingstermijn (dagen)</label>
+      <select id="hm-termijn" style="margin-bottom:0"><option value="7">7 dagen</option><option value="14" selected>14 dagen</option><option value="30">30 dagen</option><option value="60">60 dagen</option></select></div>
+    <div style="margin-bottom:14px"><label style="font-weight:700;font-size:12px;color:var(--soft);display:block;margin-bottom:8px">Uurtarieven</label>
       <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px">
-        <div>
-          <label style="font-size:11px;color:var(--soft)">☀️ Dag</label>
-          <input id="hm-tarief-dag" type="number" step="0.50" min="0" placeholder="0,00" style="margin-bottom:0">
-        </div>
-        <div>
-          <label style="font-size:11px;color:var(--soft)">🌆 Avond</label>
-          <input id="hm-tarief-avond" type="number" step="0.50" min="0" placeholder="0,00" style="margin-bottom:0">
-        </div>
-        <div>
-          <label style="font-size:11px;color:var(--soft)">🌙 Nacht</label>
-          <input id="hm-tarief-nacht" type="number" step="0.50" min="0" placeholder="0,00" style="margin-bottom:0">
-        </div>
-        <div>
-          <label style="font-size:11px;color:var(--soft)">📅 Weekend</label>
-          <input id="hm-tarief-weekend" type="number" step="0.50" min="0" placeholder="0,00" style="margin-bottom:0">
-        </div>
-      </div>
-    </div>
+        <div><label style="font-size:11px;color:var(--soft)">☀️ Dag</label><input id="hm-tarief-dag" type="number" step="0.50" min="0" placeholder="0,00" style="margin-bottom:0"></div>
+        <div><label style="font-size:11px;color:var(--soft)">🌆 Avond</label><input id="hm-tarief-avond" type="number" step="0.50" min="0" placeholder="0,00" style="margin-bottom:0"></div>
+        <div><label style="font-size:11px;color:var(--soft)">🌙 Nacht</label><input id="hm-tarief-nacht" type="number" step="0.50" min="0" placeholder="0,00" style="margin-bottom:0"></div>
+        <div><label style="font-size:11px;color:var(--soft)">📅 Weekend</label><input id="hm-tarief-weekend" type="number" step="0.50" min="0" placeholder="0,00" style="margin-bottom:0"></div>
+      </div></div>
     <div style="display:flex;gap:8px;margin-top:20px">
       <button class="btn btn-stil" style="flex:1" onclick="sluitHandmatigModal()">Annuleren</button>
       <button class="btn btn-p" style="flex:1" onclick="slaHandmatigOpdrachtgeverOp()">Toevoegen</button>
@@ -2071,7 +2028,7 @@ function tekenPlannen(){
       <div style="font-size:13px;font-weight:800;margin-bottom:6px">${T("of","or","oder","ou","o","ou")} ${geldToon(basisJrN)} ${T("per jaar (−10% bij jaarlijks betalen)","per year (−10% paying yearly)","pro Jahr (−10% bei Jahreszahlung)","par an (−10% en paiement annuel)","al año (−10% pagando anual)","por ano (−10% no pagamento anual)")}<\/div>
       <div style="font-size:14px;color:var(--brand);font-weight:800;margin-bottom:4px">+ ${geldToon(perN)} ${T("per actieve medewerker p/mnd","per active employee /mo","pro aktivem Mitarbeiter /Mon.","par employé actif /mois","por empleado activo /mes","por funcionário ativo /mês")}<\/div>
       <div style="font-size:11.5px;color:var(--soft);margin-bottom:14px">${T("Medewerkers worden aan het einde van elke maand automatisch afgeschreven (automatische incasso) op basis van je actieve team.","Employees are charged automatically at the end of each month (direct debit) based on your active team.","Mitarbeiter werden am Monatsende automatisch abgebucht (Lastschrift) — basierend auf deinem aktiven Team.","Les employés sont prélevés automatiquement en fin de mois (prélèvement) selon votre équipe active.","Los empleados se cargan automáticamente a fin de mes (domiciliación) según tu equipo activo.","Os funcionários são debitados automaticamente no fim de cada mês (débito direto) com base na equipa ativa.")}<\/div>
-      <ul>${(p.fnL[taal]||p.fnL.en).map(f=>`<li>${f.replace("{LS}",geldToon(geldLandNum(LOONSTROOK_PRIJS)))}<\/li>`).join("")}<\/ul>
+      <ul>${(p.fnL[taal]||p.fnL.en).filter(f=>AI_BESCHIKBAAR||!f.startsWith("🤖")).map(f=>`<li>${f.replace("{LS}",geldToon(geldLandNum(LOONSTROOK_PRIJS)))}<\/li>`).join("")}<\/ul>
       <button class="btn ${p.populair?"btn-p":"btn-s"}" onclick="openBetaal(${i})">${T("Probeer 14 dagen gratis","Try 14 days free","14 Tage gratis testen","Essai gratuit de 14 jours","Prueba 14 días gratis","Experimente 14 dias grátis")}<\/button>
     <\/div>`;
   }).join("");
@@ -2185,81 +2142,6 @@ function updateTaal(){
 let betaalPlan=null, betaalKeuze=0;
 function openBetaal(i){betaalPlan=plannen[i];betaalKeuze=0;tekenBetaal();$("betaal-modal").classList.remove("verborgen")}
 function sluitBetaal(){$("betaal-modal").classList.add("verborgen")}
-
-// ═══════════ HANDMATIG OPDRACHTGEVER ═══════════
-function toonHandmatigModal(){
-  $("hm-naam").value="";
-  $("hm-kvk").value="";
-  $("hm-adres").value="";
-  $("hm-postcode").value="";
-  $("hm-plaats").value="";
-  $("hm-email").value="";
-  $("hm-termijn").value="14";
-  $("hm-tarief-dag").value="";
-  $("hm-tarief-avond").value="";
-  $("hm-tarief-nacht").value="";
-  $("hm-tarief-weekend").value="";
-  $("hm-fout").textContent="";
-  $("handmatig-modal").classList.remove("verborgen");
-  $("hm-naam").focus();
-}
-function sluitHandmatigModal(){
-  $("handmatig-modal").classList.add("verborgen");
-}
-async function slaHandmatigOpdrachtgeverOp(){
-  const fout=$("hm-fout");
-  const naam=($("hm-naam").value||"").trim();
-  const kvk=($("hm-kvk").value||"").trim();
-  const adres=($("hm-adres").value||"").trim();
-  const postcode=($("hm-postcode").value||"").trim();
-  const plaats=($("hm-plaats").value||"").trim();
-  const email=($("hm-email").value||"").trim();
-  const termijn=Number($("hm-termijn").value)||14;
-  const dag=Number($("hm-tarief-dag").value)||0;
-  const avond=Number($("hm-tarief-avond").value)||0;
-  const nacht=Number($("hm-tarief-nacht").value)||0;
-  const weekend=Number($("hm-tarief-weekend").value)||0;
-  
-  if(!naam){fout.textContent="Bedrijfsnaam is verplicht.";return}
-  if(klanten.some(k=>k.naam===naam)){fout.textContent="Dit bedrijf staat er al in.";return}
-  
-  const nieuweKlant={
-    id:Date.now(),
-    naam:naam,
-    kvk:kvk,
-    adres:adres,
-    postcode:postcode,
-    plaats:plaats,
-    email:email,
-    termijn:termijn,
-    tarieven:{dag:dag,avond:avond,nacht:nacht,weekend:weekend}
-  };
-  
-  klanten.push(nieuweKlant);
-  fSel.klantId=nieuweKlant.id;
-  
-  try{
-    if(sb&&oibaseBedrijfId){
-      await sb.from("opdrachtgevers").insert({
-        bedrijf_id:oibaseBedrijfId,
-        naam:naam,
-        kvk:kvk,
-        adres:adres,
-        postcode:postcode,
-        plaats:plaats,
-        email:email,
-        termijn:termijn,
-        tarief_dag:dag,
-        tarief_avond:avond,
-        tarief_nacht:nacht,
-        tarief_weekend:weekend
-      });
-    }
-  }catch(e){console.error("Opslaan naar Supabase mislukt:",e);}
-  
-  sluitHandmatigModal();
-  tekenApp();
-}
 let factuurGegevens=null;
 function tekenBetaal(klaar){
   const p=betaalPlan,l=L();
@@ -2456,13 +2338,13 @@ let opdrachten=[
   {id:1,naam:"Object Hengelo",klant:"Retail Groep BV",klantId:1,plaats:"Hengelo",adres:"Marktstraat 1"},
   {id:2,naam:"Object Almelo",klant:"Logistiek Nederland",klantId:2,plaats:"Almelo",adres:"Haven Noordzijde 8"},
 ];
-let huidigeWeek=0;
+let huidigeWeek=null; // wordt bij start op WEEK_NU gezet (na definitie van START28)
 let roosterWeergave="week"; // "week" of "maand"
 let diensten=[
-  {id:1,medId:1,dag:0,type:"Ochtend",week:0,opdrachtId:1},{id:2,medId:1,dag:1,type:"Ochtend",week:0,opdrachtId:1},{id:3,medId:1,dag:3,type:"Avond",week:0,opdrachtId:1},
-  {id:4,medId:2,dag:0,type:"Avond",week:0,opdrachtId:1},{id:5,medId:2,dag:2,type:"Tussendienst",week:0,opdrachtId:1},{id:6,medId:2,dag:4,type:"Ochtend",week:0,opdrachtId:1},
-  {id:7,medId:3,dag:1,type:"Tussendienst",week:0,opdrachtId:1},{id:8,medId:3,dag:5,type:"Ochtend",week:0,opdrachtId:1},
-  {id:9,medId:4,dag:2,type:"Ochtend",week:0,opdrachtId:2},{id:10,medId:4,dag:VANDAAG,type:"Avond",week:0,opdrachtId:2},{id:11,medId:4,dag:6,type:"Nacht",week:0,opdrachtId:2},
+  {id:1,medId:1,dag:0,type:"Ochtend",week:WEEK_NU,opdrachtId:1},{id:2,medId:1,dag:1,type:"Ochtend",week:WEEK_NU,opdrachtId:1},{id:3,medId:1,dag:3,type:"Avond",week:WEEK_NU,opdrachtId:1},
+  {id:4,medId:2,dag:0,type:"Avond",week:WEEK_NU,opdrachtId:1},{id:5,medId:2,dag:2,type:"Tussendienst",week:WEEK_NU,opdrachtId:1},{id:6,medId:2,dag:4,type:"Ochtend",week:WEEK_NU,opdrachtId:1},
+  {id:7,medId:3,dag:1,type:"Tussendienst",week:WEEK_NU,opdrachtId:1},{id:8,medId:3,dag:5,type:"Ochtend",week:WEEK_NU,opdrachtId:1},
+  {id:9,medId:4,dag:2,type:"Ochtend",week:WEEK_NU,opdrachtId:2},{id:10,medId:4,dag:VANDAAG,type:"Avond",week:WEEK_NU,opdrachtId:2},{id:11,medId:4,dag:6,type:"Nacht",week:WEEK_NU,opdrachtId:2},
 ];
 let verlof=[
   {id:1,medId:3,van:"2026-07-13",tot:"2026-07-17",reden:"Vakantie",status:"In behandeling"},
@@ -2476,8 +2358,7 @@ let klanten=[
 const klantVan=id=>klanten.find(k=>k.id===id);
 const klantTarief=(k,d)=>d.dag>=5?k.tarieven.weekend:d.type==="Nacht"?k.tarieven.nacht:d.type==="Avond"?k.tarieven.avond:k.tarieven.dag;
 const tariefCat=d=>d.dag>=5?"Weekend":d.type==="Nacht"?"Nacht":d.type==="Avond"?"Avond":"Dag";
-// Demo-KvK-register: zoeken op naam en gegevens overnemen.
-// De echte koppeling met de KvK-API (Handelsregister) bouwen we in de backend — die vereist een API-sleutel.
+// Opdrachtgevers worden handmatig toegevoegd (modal) en opgeslagen in Supabase.
 let bedrijfsProfiel={naam:"",adres:"",postcode:"",plaats:"",kvk:"",btwNr:"",iban:"",email:""};
 const bp=()=>Object.assign({},bedrijfsProfiel,{naam:bedrijfsProfiel.naam||(eigenAccount?eigenAccount.bedrijf:"Jouw Bedrijf B.V.")});
 function bpVeld(veld,w){bedrijfsProfiel[veld]=w;}
@@ -2563,7 +2444,7 @@ function reisData(medId,weeks){
   let km=0;rows.forEach(d=>{km+=afstandKm(medId,d.opdrachtId)*(reisInst.retour?2:1)});
   return{ritten:rows.length,km,bedrag:rond2(km*reisInst.perKm)};
 }
-let loonSel={medId:null,periode:"maand",week:0,bekijk:null};
+let loonSel={medId:null,periode:"maand",week:null,bekijk:null};
 let facturen=[]; let factuurNr=2026001;
 (function(){
   const rg=[{datum:"29-06-2026",dag:"Ma",mw:"Sanne de Vries",dienst:"Ochtend",tijd:"08:00–16:00",uren:7.5,cat:"Dag",tarief:28.5,bedrag:213.75},
@@ -2572,9 +2453,24 @@ let facturen=[]; let factuurNr=2026001;
   facturen.push({nr:factuurNr++,klantId:1,label:"Week 27",regels:rg,sub,btw:sub*0.21,tot:sub*1.21,
     datum:new Date(2026,5,8),verval:new Date(2026,5,22),termijn:14,status:"Verstuurd",verstuurdOp:"08-06-2026",herinneringen:0});
 })();
-let fSel={klantId:1,periode:"week",week:0,bekijk:null};
-const START28=new Date(2026,6,6); // maandag van week 28
+let fSel={klantId:1,periode:"week",week:null,bekijk:null};
+const START28=new Date(2026,6,6); // vast referentiepunt (maandag) — weeknummers in de opslag zijn hierop gebaseerd
 const dagDatum=(week,dag)=>{const d=new Date(START28);d.setDate(d.getDate()+week*7+dag);return d};
+// Weekoffset van vandaag t.o.v. het referentiepunt → "deze week"
+function weekOffsetVan(dt){const d=new Date(dt);d.setHours(0,0,0,0);const dow=(d.getDay()+6)%7;d.setDate(d.getDate()-dow);return Math.round((d-START28)/604800000)}
+const WEEK_NU=weekOffsetVan(new Date());
+huidigeWeek=WEEK_NU;
+// ISO-weeknummer en jaar van een weekoffset
+function isoWeek(dt){const d=new Date(Date.UTC(dt.getFullYear(),dt.getMonth(),dt.getDate()));const day=d.getUTCDay()||7;d.setUTCDate(d.getUTCDate()+4-day);const y0=new Date(Date.UTC(d.getUTCFullYear(),0,1));return {wk:Math.ceil(((d-y0)/86400000+1)/7),jaar:d.getUTCFullYear()}}
+const wkNr=w=>isoWeek(dagDatum(w,0)).wk;
+const wkJaar=w=>isoWeek(dagDatum(w,0)).jaar;
+const MAANDEN_NL=["januari","februari","maart","april","mei","juni","juli","augustus","september","oktober","november","december"];
+// Weken (offsets) waarvan de maandag in de gekozen maand valt; off=0 huidige maand, -1 vorige, enz.
+function maandWeken(off){const nu=new Date();const m=new Date(nu.getFullYear(),nu.getMonth()+(off||0),1);const eind=new Date(m.getFullYear(),m.getMonth()+1,0);const r=[];for(let w=weekOffsetVan(m);dagDatum(w,0)<=eind;w++){if(dagDatum(w,0)>=m||w===weekOffsetVan(m))r.push(w)}return r}
+function maandLabel(off){const nu=new Date();const m=new Date(nu.getFullYear(),nu.getMonth()+(off||0),1);return MAANDEN_NL[m.getMonth()]+" "+m.getFullYear()}
+function maandLabelKort(off){const l=maandLabel(off);return l.charAt(0).toUpperCase()+l.slice(1)}
+let maandSel=0; // gekozen maand voor loonstroken en facturen (0 = huidige)
+function maandOpties(sel,fn){return [1,0,-1,-2].map(o=>`<option value="${o}" ${o===sel?"selected":""}>${maandLabelKort(o)}${o===0?" (huidige)":""}<\/option>`).join("")}
 const dNL=d=>d.toLocaleDateString("nl-NL",{day:"2-digit",month:"2-digit",year:"numeric"});
 let ruilAanbod=[], ruilLog=[];
 let beschikbaar={}; // medId -> [dagIndices NIET beschikbaar]
@@ -2717,7 +2613,7 @@ function roosterScoreKaart(week){
       <text x="52" y="59" text-anchor="middle" font-size="26" font-weight="800" fill="${scoreKleur(r.totaal)}">${r.totaal}<\/text>
     <\/svg>
     <div style="flex:1;min-width:230px">
-      <div style="font-weight:800;font-size:15px;margin-bottom:8px">📊 Roosterscore™ — week ${28+week}<\/div>
+      <div style="font-weight:800;font-size:15px;margin-bottom:8px">📊 Roosterscore™ — week ${wkNr(week)}<\/div>
       ${r.pijlers.map(([n,v])=>`<div style="display:flex;align-items:center;gap:8px;margin-bottom:5px;font-size:12px">
         <span style="width:76px;color:var(--soft)">${n}<\/span>
         <span style="flex:1;height:7px;background:var(--line);border-radius:4px;overflow:hidden"><span style="display:block;height:100%;width:${v}%;background:${scoreKleur(v)};border-radius:4px"><\/span><\/span>
@@ -2790,7 +2686,7 @@ function naApp(){
   const naam=sessie.rol==="admin"?"🔐 Beheer · Hendrik":sessie.rol==="hr"?"👥 HR · "+sessie.hr.naam:sessie.rol==="werkgever"?(sessie.planner?sessie.planner.naam.split(" ")[0]:"Werkgever"):med(sessie.medId).naam.split(" ")[0];
   $("ingelogd-als").textContent=(sessie.rol==="admin"?"":"👋 ")+naam;$("ingelogd-als").classList.remove("verborgen");
   huidigTab=sessie.rol==="admin"?"Beheer":sessie.rol==="hr"?"Overzicht":sessie.rol==="werkgever"?"Dashboard":"Mijn rooster";
-  huidigeWeek=0;tekenApp();
+  huidigeWeek=WEEK_NU;tekenApp();
 }
 function uitloggen(){
   clearTimeout(oibaseBewaarTimer);
@@ -2815,6 +2711,7 @@ function tekenApp(){
   $("prikbord-banner").innerHTML=(sessie.rol!=="admin"&&prikbord.length)?`<div style="background:#FEF3C7;border:1px solid #FDE68A;border-radius:10px;padding:10px 14px;margin-bottom:10px;font-size:13px">
     📌 <strong>${esc(prikbord[0].tekst)}<\/strong> <span style="color:var(--soft)">· ${esc(prikbord[0].datum)}${prikbord.length>1?` · +${prikbord.length-1} meer op het prikbord`:""}<\/span><\/div>`:"";
   const tabs=sessie.rol==="admin"?["Beheer"]:sessie.rol==="hr"?["Overzicht","Dashboard","Rooster","Medewerkers","Verlof","Ruilen","Klok","Urenstaten","Loonstroken","Facturen","Contracten","Dossiers","Kleding","Assistent"]:wg?(sessie.planner&&sessie.planner.hoofd?["Dashboard","Rooster","Medewerkers","Verlof","Ruilen","Klok","Urenstaten","Loonstroken","Facturen","Contracten","Assistent","Instellingen"]:["Dashboard","Rooster","Medewerkers","Verlof","Ruilen","Klok","Urenstaten","Assistent","Instellingen"]):["Mijn rooster","Team","Verlof","Ruilen","Klok","Postvak","Documenten"];
+  if(!AI_BESCHIKBAAR){const i=tabs.indexOf("Assistent");if(i>-1)tabs.splice(i,1);if(huidigTab==="Assistent")huidigTab=tabs[0];}
   const openV=verlof.filter(v=>v.status==="In behandeling").length;
   const openR=ruilAanbod.filter(r=>r.status==="Wacht op goedkeuring").length;
   $("app-tabs").classList.remove("open");
@@ -2832,7 +2729,7 @@ function tekenApp(){
 // ── Dashboard ──
 function tDashboard(){
   const snelstart=snelstartKaart();
-  const ds=diensten.filter(x=>x.week===0&&x.medId);
+  const ds=diensten.filter(x=>x.week===WEEK_NU&&x.medId);
   const totUren=ds.reduce((s,d)=>s+uren(d.type),0);
   const loonkosten=ds.reduce((s,d)=>s+dienstKosten(d),0);
   const vandaagD=ds.filter(d=>d.dag===VANDAAG);
@@ -2848,9 +2745,9 @@ function tDashboard(){
     <div class="kaart stat"><div class="label">Open verlofaanvragen<\/div><div class="waarde" style="color:${openV?"var(--oranje)":"var(--groen)"}">${openV}<\/div><\/div>
     <div class="kaart stat"><div class="label">Ziek vandaag<\/div><div class="waarde" style="color:${ziek.length?"var(--rood)":"var(--groen)"}">${ziek.length}<\/div><\/div>
   <\/div>
-  ${roosterScoreKaart(0)}
-  ${atwBanner(0)}
-  ${(function(){const rows=klanten.map(k=>{const tot=diensten.filter(d=>d.medId&&d.week===0&&opd(d.opdrachtId)&&opd(d.opdrachtId).klantId===k.id).reduce((t,d)=>t+uren(d.type)*klantTarief(k,d),0);
+  ${roosterScoreKaart(WEEK_NU)}
+  ${atwBanner(WEEK_NU)}
+  ${(function(){const rows=klanten.map(k=>{const tot=diensten.filter(d=>d.medId&&d.week===WEEK_NU&&opd(d.opdrachtId)&&opd(d.opdrachtId).klantId===k.id).reduce((t,d)=>t+uren(d.type)*klantTarief(k,d),0);
     return tot?`<div style="display:flex;justify-content:space-between;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid var(--line);font-size:13px;flex-wrap:wrap"><span>${esc(k.naam)} — week 28<\/span><span><strong style="color:var(--brand)">${geld(tot*1.21)}<\/strong> <span style="font-size:11px;color:var(--soft)">incl. btw<\/span> <button class="btn btn-p btn-klein" onclick="fSel.klantId=${k.id};huidigTab='Facturen';tekenApp()">Maak factuur →<\/button><\/span><\/div>`:""}).join("");
     if(!heeftFacturatie())return `<div class="kaart" style="margin-bottom:16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap"><span style="font-size:22px">🔒<\/span><span style="flex:1;font-size:13px;min-width:200px"><strong>Facturatie<\/strong> — beschikbaar vanaf Premium: facturen met tarieven per dagdeel, herinneringen en creditnota's.<\/span><button class="btn btn-s btn-klein" onclick="huidigTab='Instellingen';tekenApp()">Upgrade →<\/button><\/div>`;
     return rows?`<div class="kaart" style="margin-bottom:16px"><div style="font-weight:800;font-size:15px;margin-bottom:4px">💶 Facturatie — klaar om te versturen<\/div><div style="font-size:12px;color:var(--soft);margin-bottom:6px">Op basis van het rooster van deze week, incl. toeslagen en het uurtarief per opdrachtgever.<\/div>${rows}<\/div>`:""})()}
@@ -2884,7 +2781,7 @@ function tDashboard(){
 // ── Rooster ──
 let roosterKies=null;
 function tMaandRooster(magBewerken,alleenMedId){
-  const weken=[0,1,2,3]; // week 28 t/m 31 — juli 2026
+  const weken=maandWeken(maandSel);
   const chips=(w,dag)=>{
     const ds=diensten.filter(d=>d.week===w&&d.dag===dag&&(!alleenMedId||d.medId===alleenMedId||!d.medId));
     return ds.map(d=>{
@@ -2898,7 +2795,9 @@ function tMaandRooster(magBewerken,alleenMedId){
     }).join("");
   };
   let html=`<div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;flex-wrap:wrap">
-    <strong style="font-size:14px">Maandoverzicht — juli 2026 (week 28–31)<\/strong>
+    <button class="btn btn-stil btn-klein" onclick="maandSel--;tekenApp()">←<\/button>
+    <strong style="font-size:14px">Maandoverzicht — ${maandLabel(maandSel)} (week ${wkNr(weken[0])}–${wkNr(weken[weken.length-1])})<\/strong>
+    <button class="btn btn-stil btn-klein" onclick="maandSel++;tekenApp()">→<\/button>
     <span class="spacer"><\/span>
     <span style="display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden">
       <button class="btn btn-klein btn-stil" style="border:none;border-radius:0" onclick="roosterWeergave='week';tekenApp()">Week<\/button>
@@ -2917,7 +2816,7 @@ function tMaandRooster(magBewerken,alleenMedId){
           <div style="font-size:11px;font-weight:800;color:${vandaag?"var(--brand)":"var(--soft)"}">${dt.getDate()}${vandaag?" · vandaag":""}<\/div>
           ${chips(w,dag)}<\/td>`;
       }).join("")}
-      <td style="text-align:right;font-size:11px;color:var(--soft);padding:4px 6px;vertical-align:top">wk ${28+w}<\/td>
+      <td style="text-align:right;font-size:11px;color:var(--soft);padding:4px 6px;vertical-align:top">wk ${wkNr(w)}<\/td>
     <\/tr>`).join("")}
   <\/table>
   <div style="font-size:11px;color:var(--soft);margin-top:8px">💡 Klik op een dag om die week te openen${magBewerken?" en te bewerken":""}. Kleuren: 🟡 Ochtend · 🟣 Avond · ⬛ Nacht · 🟢 Tussendienst · 📢 open dienst · 🔁 aangeboden voor ruil. Houd je vinger op een blokje voor de volledige naam en tijden.<\/div>
@@ -2935,10 +2834,11 @@ function tRoosterGrid(magBewerken,alleenMedId){
   const wk=diensten.filter(d=>d.week===huidigeWeek&&d.medId);
   const openD=diensten.filter(d=>d.week===huidigeWeek&&!d.medId);
   const dienstVan=(mid,dag)=>wk.find(d=>d.medId===mid&&d.dag===dag);
-  const isNu=huidigeWeek===0;
+  if(huidigeWeek===null)huidigeWeek=WEEK_NU;
+  const isNu=huidigeWeek===WEEK_NU;
   let html=`<div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;flex-wrap:wrap">
     <button class="btn btn-stil btn-klein" onclick="huidigeWeek--;roosterKies=null;tekenApp()">←<\/button>
-    <strong style="font-size:14px">Week ${28+huidigeWeek}${isNu?" · deze week":""}<\/strong>
+    <strong style="font-size:14px">Week ${wkNr(huidigeWeek)} · ${wkJaar(huidigeWeek)}${isNu?" · deze week":""}<\/strong>
     <button class="btn btn-stil btn-klein" onclick="huidigeWeek++;roosterKies=null;tekenApp()">→<\/button>
     ${magBewerken?`<button class="btn btn-s btn-klein" onclick="kopieerWeek()">📋 Kopieer vorige week<\/button>`:""}
     <span class="spacer"><\/span>
@@ -2994,7 +2894,7 @@ function tRoosterGrid(magBewerken,alleenMedId){
     const m=med(roosterKies.medId),heeft=dienstVan(roosterKies.medId,roosterKies.dag);
     const nb=nietBeschikbaar(roosterKies.medId,roosterKies.dag);
     html+=`<div class="kaart" style="border:2px solid var(--brand);margin-top:14px">
-      <div style="font-weight:700;font-size:14px;margin-bottom:6px">Dienst voor ${esc(m.naam)} op ${dagen[roosterKies.dag]} (week ${28+huidigeWeek})<\/div>
+      <div style="font-weight:700;font-size:14px;margin-bottom:6px">Dienst voor ${esc(m.naam)} op ${dagen[roosterKies.dag]} (week ${wkNr(huidigeWeek)})<\/div>
       ${nb?`<div style="font-size:12px;color:var(--rood);font-weight:600;margin-bottom:8px">⚠ ${esc(m.naam)} heeft zich op ${dagen[roosterKies.dag]} niet beschikbaar gemeld.<\/div>`:""}
       <div style="margin-bottom:10px;max-width:300px"><select id="kies-opdracht" style="margin:0">
         <option value="">Geen opdracht<\/option>
@@ -3005,7 +2905,7 @@ function tRoosterGrid(magBewerken,alleenMedId){
       ${heeft?'<button class="btn btn-rood" onclick="zetDienst(null)">Verwijderen<\/button>':""}
       <button class="btn btn-stil" onclick="roosterKies=null;tekenApp()">Sluiten<\/button><\/div><\/div>`;
   }
-  html+=`<div class="kaart" style="margin-top:16px"><div style="font-weight:700;margin-bottom:4px">📢 Open diensten — wie het eerst komt (week ${28+huidigeWeek})<\/div>
+  html+=`<div class="kaart" style="margin-top:16px"><div style="font-weight:700;margin-bottom:4px">📢 Open diensten — wie het eerst komt (week ${wkNr(huidigeWeek)})<\/div>
     <div style="font-size:11px;color:var(--soft);margin-bottom:8px">Een opgepakte open dienst is verplicht te werken en kan niet geruild worden.<\/div>
     ${openD.map(d=>{const t=dienstTypes[d.type];const o=d.opdrachtId?opd(d.opdrachtId):null;
       return `<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--line);flex-wrap:wrap">
@@ -3203,7 +3103,7 @@ function keurVerlof(id,ok){
   tekenApp();
 }
 function magZiekmelden(medId){
-  const d=diensten.find(x=>x.medId===medId&&x.dag===VANDAAG&&x.week===0);
+  const d=diensten.find(x=>x.medId===medId&&x.dag===VANDAAG&&x.week===WEEK_NU);
   if(!d)return{ok:true};
   const t=dienstTypes[d.type];
   const[h,m]=t.start.split(":").map(Number);
@@ -3233,7 +3133,7 @@ function tRuilen(){
     html+=`<div class="kaart" style="margin-bottom:16px"><div style="font-weight:700;margin-bottom:10px">Bied een dienst aan om te ruilen<\/div>
       ${mijn.length?mijn.map(d=>{const t=dienstTypes[d.type];const dicht=binnenUur(d);
         return `<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--line);flex-wrap:wrap">
-        <span style="background:${t.kleur};color:${t.tekst};font-size:11px;font-weight:700;padding:3px 9px;border-radius:6px">Wk ${28+d.week} ${dagen[d.dag]} ${d.type}<\/span>
+        <span style="background:${t.kleur};color:${t.tekst};font-size:11px;font-weight:700;padding:3px 9px;border-radius:6px">Wk ${wkNr(d.week)} ${dagen[d.dag]} ${d.type}<\/span>
         <span style="flex:1;font-size:12px;color:var(--soft)">${t.start}–${t.eind}<\/span>
         ${d.geclaimd?`<span style="font-size:11px;color:var(--rood);font-weight:600">Opgepakte open dienst — niet ruilbaar<\/span>`
           :dicht?`<span style="font-size:11px;color:var(--rood);font-weight:600">Begint binnen 1 uur — zelf werken<\/span>`
@@ -3252,7 +3152,7 @@ function tRuilen(){
     const t=dienstTypes[d.type],van=med(r.vanMedId),naar=r.naarMedId?med(r.naarMedId):null;
     html+=`<div style="padding:10px 0;border-bottom:1px solid var(--line);font-size:13px">
       <div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px">
-        <span style="background:${t.kleur};color:${t.tekst};font-size:11px;font-weight:700;padding:3px 9px;border-radius:6px">Wk ${28+d.week} ${dagen[d.dag]} ${d.type} ${t.start}–${t.eind}<\/span>
+        <span style="background:${t.kleur};color:${t.tekst};font-size:11px;font-weight:700;padding:3px 9px;border-radius:6px">Wk ${wkNr(d.week)} ${dagen[d.dag]} ${d.type} ${t.start}–${t.eind}<\/span>
         <span>aangeboden door <strong>${van?esc(van.naam):"?"}<\/strong>${naar?` → <strong>${esc(naar.naam)}<\/strong>`:""}<\/span>
         ${r.status==="Wacht op goedkeuring"?'<span style="color:var(--oranje);font-size:11px;font-weight:700">Wacht op goedkeuring<\/span>':""}<\/div>
       <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap">`;
@@ -3281,7 +3181,7 @@ function voerRuilDoor(r){
   if(d&&r.naarMedId){
     const van=med(r.vanMedId),naar=med(r.naarMedId),t=dienstTypes[d.type];
     d.medId=r.naarMedId;
-    ruilLog.unshift(`Wk ${28+d.week} ${dagen[d.dag]} ${d.type} (${t.start}–${t.eind}): ${van?van.naam:"?"} → ${naar?naar.naam:"?"}`);
+    ruilLog.unshift(`Wk ${wkNr(d.week)} ${dagen[d.dag]} ${d.type} (${t.start}–${t.eind}): ${van?van.naam:"?"} → ${naar?naar.naam:"?"}`);
   }
   ruilAanbod=ruilAanbod.filter(x=>x.id!==r.id);
 }
@@ -3333,7 +3233,7 @@ function tRoosterMobiel(alleenMedId){
     return `${rmSeg()}
     <div class="rm-nav">
       <button class="pijl" onclick="rmWissel(-1)" ${huidigeWeek===0?"disabled style='opacity:.35'":""}>‹<\/button>
-      <div style="text-align:center"><div style="font-weight:800;font-size:16px">Week ${28+huidigeWeek}<\/div>
+      <div style="text-align:center"><div style="font-weight:800;font-size:16px">Week ${wkNr(huidigeWeek)}<\/div>
       <div style="font-size:12.5px;color:var(--soft)">${rmKort(start)} - ${rmKort(eind)}<\/div><\/div>
       <button class="pijl" onclick="rmWissel(1)" ${huidigeWeek===1?"disabled style='opacity:.35'":""}>›<\/button>
     <\/div>
@@ -3399,8 +3299,9 @@ const HULP={
   ["👕","Bedrijfskleding","Stel de kledinglijst samen en stuur hem naar het postvak — de medewerker vult alleen de maten in. Niet ingeleverd bij vertrek? Eén klik en de borg wordt ingehouden op het loon."],
   ["🤖","Assistent","Al je cao- en arbeidsrechtvragen, afgestemd op de branche."]]};
 function hulpRol(){return sessie.rol==="hr"?"hr":sessie.rol==="werknemer"?"werknemer":"werkgever"}
+function hulpItems(rol){return (HULP[rol]||[]).filter(h=>AI_BESCHIKBAAR||h[0]!=="🤖")}
 function hulpLijst(rol,compact){
-  return HULP[rol].map(([ic,kop,tekst])=>`<div style="display:flex;gap:12px;margin-bottom:${compact?"10px":"14px"}">
+  return hulpItems(rol).map(([ic,kop,tekst])=>`<div style="display:flex;gap:12px;margin-bottom:${compact?"10px":"14px"}">
     <div style="font-size:${compact?"18px":"22px"}">${ic}<\/div>
     <div><strong style="font-size:13.5px">${kop}<\/strong><div style="font-size:12.5px;color:var(--soft);line-height:1.7">${tekst}<\/div><\/div><\/div>`).join("");
 }
@@ -3419,7 +3320,7 @@ function snelstartKaart(){
   if(hulpWeg[rol])return "";
   return `<div class="kaart" style="margin-bottom:14px;border:2px solid var(--brand)">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;gap:8px">
-      <div style="font-weight:800;font-size:15px">👋 Welkom! Zo werkt het — in ${HULP[rol].length} stappen<\/div>
+      <div style="font-weight:800;font-size:15px">👋 Welkom! Zo werkt het — in ${hulpItems(rol).length} stappen<\/div>
       <button class="btn btn-stil btn-klein" onclick="hulpWeg['${rol}']=true;tekenApp()">Begrepen ✕<\/button>
     <\/div>
     ${hulpLijst(rol,true)}
@@ -3572,7 +3473,7 @@ function tDocumenten(){
     <input id="doc-geldig" type="date">
     <label class="btn btn-p" style="width:100%;display:block;text-align:center;cursor:pointer">📤 ${T("Kies bestand (foto of PDF, max 4 MB)","Choose file (photo or PDF, max 4 MB)","Datei wählen (Foto oder PDF, max. 4 MB)","Choisir un fichier (photo ou PDF, max 4 Mo)","Elegir archivo (foto o PDF, máx 4 MB)","Escolher ficheiro (foto ou PDF, máx 4 MB)")}
       <input type="file" accept="image/*,.pdf" style="display:none" onchange="uploadDocument(this)"><\/label>
-    <div style="font-size:11px;color:var(--soft);margin-top:8px">🔒 ${T("Demo: bestanden blijven in je browser. In de echte versie worden ze AVG-veilig op EU-servers opgeslagen.","Demo: files stay in your browser. The real version stores them GDPR-safe on EU servers.","Demo: Dateien bleiben im Browser. Die echte Version speichert sie DSGVO-sicher auf EU-Servern.","Démo : les fichiers restent dans le navigateur. La vraie version les stocke (RGPD) sur des serveurs UE.","Demo: los archivos quedan en el navegador. La versión real los guarda (RGPD) en servidores UE.","Demo: os ficheiros ficam no navegador. A versão real guarda-os (RGPD) em servidores da UE.")}<\/div>
+    <div style="font-size:11px;color:var(--soft);margin-top:8px">🔒 ${T("Bestanden worden versleuteld en AVG-conform opgeslagen op EU-servers.","Files are stored encrypted and GDPR-compliant on EU servers.","Dateien werden verschlüsselt und DSGVO-konform auf EU-Servern gespeichert.","Les fichiers sont stockés chiffrés (RGPD) sur des serveurs UE.","Los archivos se guardan cifrados (RGPD) en servidores UE.","Os ficheiros são guardados encriptados (RGPD) em servidores da UE.")}<\/div>
   <\/div>
   <div class="kaart">
     <div style="font-weight:800;font-size:15px;margin-bottom:8px">🗂 ${T("Mijn documenten","My documents","Meine Dokumente","Mes documents","Mis documentos","Os meus documentos")} (${eigen.length})<\/div>
@@ -3669,14 +3570,14 @@ function tHrDashboard(){
   <div class="grid g3">
     <div class="kaart" style="cursor:pointer" onclick="huidigTab='Contracten';tekenApp()"><div style="font-size:22px">✍️<\/div><strong style="font-size:14px">${T("Nieuw contract","New contract","Neuer Vertrag","Nouveau contrat","Nuevo contrato","Novo contrato")}<\/strong><div style="font-size:12px;color:var(--soft)">${T("Maken, ondertekenen, versturen","Create, sign, send","Erstellen, signieren, senden","Créer, signer, envoyer","Crear, firmar, enviar","Criar, assinar, enviar")}<\/div><\/div>
     <div class="kaart" style="cursor:pointer" onclick="huidigTab='Loonstroken';tekenApp()"><div style="font-size:22px">💰<\/div><strong style="font-size:14px">${T("Loonstroken","Payslips","Abrechnungen","Bulletins","Nóminas","Recibos")}<\/strong><div style="font-size:12px;color:var(--soft)">${T("Genereren en bezorgen","Generate and deliver","Erstellen und zustellen","Générer et distribuer","Generar y entregar","Gerar e entregar")}<\/div><\/div>
-    <div class="kaart" style="cursor:pointer" onclick="huidigTab='Assistent';tekenApp()"><div style="font-size:22px">🤖<\/div><strong style="font-size:14px">${T("Vraag de assistent","Ask the assistant","Frag den Assistenten","Demandez à l’assistant","Pregunta al asistente","Pergunte ao assistente")}<\/strong><div style="font-size:12px;color:var(--soft)">${T("Cao’s & arbeidsrecht","CBAs & labour law","Tarifvertrag & Arbeitsrecht","Conventions & droit du travail","Convenios y derecho laboral","Convenções e direito laboral")}<\/div><\/div>
+    ${AI_BESCHIKBAAR?`<div class="kaart" style="cursor:pointer" onclick="huidigTab='Assistent';tekenApp()"><div style="font-size:22px">🤖<\/div><strong style="font-size:14px">${T("Vraag de assistent","Ask the assistant","Frag den Assistenten","Demandez à l’assistant","Pregunta al asistente","Pergunte ao assistente")}<\/strong><div style="font-size:12px;color:var(--soft)">${T("Cao’s & arbeidsrecht","CBAs & labour law","Tarifvertrag & Arbeitsrecht","Conventions & droit du travail","Convenios y derecho laboral","Convenções e direito laboral")}<\/div><\/div>`:""}
   <\/div>`;
 }
 // ═══════════ ARBEIDSCONTRACTEN ═══════════
 let contracten=[]; let conSel={bekijk:null};
 const conVan=id=>contracten.find(c=>c.id===id);
 function proeftijdMax(onbepaald,maanden){return onbepaald||maanden>=24?2:maanden>6?1:0}
-function conEinde(c){if(c.onbepaald)return null;const d=new Date(c.vanaf);d.setMonth(d.getMonth()+c.maanden);return d}
+function conEinde(c){if(c.onbepaald)return null;const d=new Date(c.vanaf);d.setMonth(d.getMonth()+Number(c.maanden));d.setDate(d.getDate()-1);return d}
 function conStatusLabel(c){
   if(c.status==="compleet")return '<span style="background:#DCFCE7;color:#166534;border-radius:10px;padding:2px 9px;font-size:11px;font-weight:800">✅ ONDERTEKEND<\/span>';
   if(c.status==="verstuurd")return '<span style="background:#FEF3C7;color:#92400E;border-radius:10px;padding:2px 9px;font-size:11px;font-weight:800">📤 WACHT OP MEDEWERKER<\/span>';
@@ -3714,13 +3615,14 @@ function contractHTML(c){
       ${handtek("Werknemer",m.naam,c.mwOnd)}
     <\/div>
     <div style="background:#F8FAFC;border:1px solid var(--line);border-radius:10px;padding:8px 12px;font-size:11px;color:var(--soft);line-height:1.7">
-      ⚠ Model-arbeidsovereenkomst — geen juridisch advies; laat je contracten toetsen en verwerk je cao-bepalingen. De handtekening is in deze demo een simulatie; de echte versie gebruikt een rechtsgeldige elektronische handtekening (eIDAS).
+      ⚠ Model-arbeidsovereenkomst op basis van het Nederlandse arbeidsrecht — geen juridisch advies; laat afwijkende bepalingen toetsen en verwerk je cao-afspraken. Ondertekening vindt digitaal plaats via Oibase (naam, datum en tijdstip worden vastgelegd).
     <\/div><\/div>`;
 }
 function maakContract(){
   const medId=Number($("c-med").value),functie=$("c-functie").value.trim();
+  if(!med(medId)){$("c-fout").textContent="Kies eerst een medewerker.";return}
   const onbepaald=$("c-type").value==="onbepaald";
-  const vanaf=$("c-vanaf").value||"2026-08-01";
+  const vanaf=$("c-vanaf").value||new Date().toISOString().slice(0,10);
   const maanden=Number($("c-maanden").value)||12;
   const uren=Number($("c-uren").value)||med(medId).contract;
   const uurloon=Number($("c-uurloon").value)||med(medId).uurloon;
@@ -3744,7 +3646,7 @@ function ondertekenEnVerstuur(id){
 function ondertekenAlsMedewerker(contractId){
   const c=conVan(contractId);if(!c)return;
   const m=med(c.medId);
-  if(!confirm(`Onderteken je deze arbeidsovereenkomst digitaal als ${m.naam}? Dit geldt in de echte versie als rechtsgeldige handtekening.`))return;
+  if(!confirm(`Onderteken je deze arbeidsovereenkomst digitaal als ${m.naam}? Je naam, de datum en het tijdstip worden bij het contract vastgelegd.`))return;
   c.mwOnd={naam:m.naam,datum:dNL(new Date())};
   c.status="compleet";
   alert("✅ Ondertekend! Jij en je werkgever hebben nu allebei een getekend exemplaar.");
@@ -3764,7 +3666,7 @@ function tContracten(){
     <div style="font-size:40px;margin-bottom:10px">✍️🔒<\/div>
     <div style="font-weight:800;font-size:18px;margin-bottom:8px">Contracten zitten in Enterprise<\/div>
     <div style="font-size:13px;color:var(--soft);line-height:1.8;margin-bottom:16px">Upgrade naar <strong>Enterprise<\/strong> om arbeidscontracten te maken, digitaal te laten ondertekenen en automatisch te bewaken op einddatum en aanzegtermijn.<\/div>
-    <button class="btn btn-p" onclick="huidigTab='Instellingen';tekenApp()">Upgrade je abonnement →<\/button>
+    <a class="btn btn-p" href="mailto:info@oibase.nl?subject=Upgrade%20naar%20Enterprise" style="text-decoration:none;display:inline-block">Upgrade aanvragen →<\/a>
   <\/div>`;
   const actief=medewerkers.filter(m=>!m.geblokkeerd);
   const bekijk=conVan(conSel.bekijk);
@@ -3774,7 +3676,7 @@ function tContracten(){
       <div style="font-weight:800;font-size:16px;margin-bottom:4px">✍️ Nieuw arbeidscontract<\/div>
       <div style="font-size:12px;color:var(--soft);margin-bottom:10px">Kies een medewerker, vul looptijd en loon in — Oibase bouwt het contract, bewaakt de wettelijke proeftijd en stuurt hem ter ondertekening naar het postvak.<\/div>
       <label style="font-size:12px;color:var(--soft)">Medewerker<\/label>
-      <select id="c-med">${actief.map(m=>`<option value="${m.id}">${esc(m.naam)}<\/option>`).join("")}<\/select>
+      <select id="c-med" onchange="const m=med(Number(this.value));if(m){$('c-uren').value=m.contract||'';$('c-uurloon').value=m.uurloon||''}">${actief.map(m=>`<option value="${m.id}">${esc(m.naam)}<\/option>`).join("")}<\/select>
       <input id="c-functie" placeholder="Functie (bijv. ${BRANCHES[branche].functieVb})">
       <div style="display:flex;gap:8px">
         <select id="c-type" style="flex:1" onchange="$('c-maanden').disabled=this.value==='onbepaald'">
@@ -3783,10 +3685,10 @@ function tContracten(){
         <input id="c-maanden" type="number" min="1" max="36" value="12" placeholder="Maanden" style="flex:1;margin-bottom:0">
       <\/div>
       <label style="font-size:12px;color:var(--soft)">Startdatum<\/label>
-      <input id="c-vanaf" type="date" value="2026-08-01">
+      <input id="c-vanaf" type="date" value="${new Date().toISOString().slice(0,10)}">
       <div style="display:flex;gap:8px">
-        <input id="c-uren" type="number" min="1" max="60" value="32" placeholder="Uren p/week" style="flex:1;margin-bottom:0">
-        <input id="c-uurloon" type="number" step="0.25" min="0" value="16.50" placeholder="Bruto uurloon €" style="flex:1;margin-bottom:0">
+        <input id="c-uren" type="number" min="1" max="60" value="${actief[0]?actief[0].contract||"":""}" placeholder="Uren p/week" style="flex:1;margin-bottom:0">
+        <input id="c-uurloon" type="number" step="0.01" min="0" value="${actief[0]?actief[0].uurloon||"":""}" placeholder="Bruto uurloon €" style="flex:1;margin-bottom:0">
       <\/div>
       <label style="font-size:12px;color:var(--soft);margin-top:8px;display:block">Proeftijd (wettelijk max. wordt bewaakt)<\/label>
       <select id="c-proeftijd"><option value="0">Geen<\/option><option value="1" selected>1 maand<\/option><option value="2">2 maanden<\/option><\/select>
@@ -3839,17 +3741,52 @@ function aiAntwoord(vraag){
   let beste=null,score=0;
   AI_KENNIS.forEach(k=>{const n=k.w.filter(w=>v.includes(w)).length;if(n>score){score=n;beste=k}});
   if(beste)return beste.a+(beste.w.includes("cao")?brancheCao:"")+'<div style="font-size:11px;color:var(--soft);margin-top:8px">⚠ Algemene informatie, geen juridisch advies. Cao\'s en wetten wijzigen — controleer de actuele bron.<\/div>';
-  return `Daar heb ik in deze demo nog geen kennis over. Ik kan je nu al helpen met: <strong>cao's, ORT, minimumloon, Arbeidstijdenwet, ziekte, verlof & vakantiegeld, oproepkrachten, contracten & proeftijd, loonheffing, feestdagen en factuureisen<\/strong>.<div style="font-size:11px;color:var(--soft);margin-top:8px">In de echte versie is de assistent aangesloten op een AI die live cao-teksten en actuele wetgeving doorzoekt — dan kun je álles vragen.<\/div>`;
+  return `Daar heb ik nog geen antwoord op. Ik kan je helpen met: <strong>cao's, ORT, minimumloon, Arbeidstijdenwet, ziekte, verlof & vakantiegeld, oproepkrachten, contracten & proeftijd, loonheffing, feestdagen en factuureisen<\/strong>.<div style="font-size:11px;color:var(--soft);margin-top:8px">Staat je vraag er niet bij? Mail naar info@oibase.nl, dan helpen we je persoonlijk.<\/div>`;
 }
-function aiVraag(tekst){
+// Eenvoudige, veilige omzetting van AI-tekst (markdown-light) naar HTML
+function aiNaarHtml(t){
+  let h=esc(t);
+  h=h.replace(/\*\*(.+?)\*\*/g,"<strong>$1<\/strong>");
+  h=h.replace(/^(?:[-•*]\s+)(.*)$/gm,"<li>$1<\/li>").replace(/(<li>.*<\/li>\n?)+/g,m=>"<ul style=\"margin:4px 0 4px 18px;padding:0\">"+m.replace(/\n/g,"")+"<\/ul>");
+  return h.replace(/\n{2,}/g,"<br><br>").replace(/\n/g,"<br>");
+}
+let aiBezig=false;
+let AI_BESCHIKBAAR=false; // wordt bij start gecontroleerd; zonder werkende AI verdwijnt de assistent uit het product
+(async function(){
+  try{
+    const r=await fetch("/api/ai",{method:"GET"});
+    const d=await r.json().catch(()=>({}));
+    AI_BESCHIKBAAR=!!(r.ok&&d.ok);
+  }catch(e){AI_BESCHIKBAAR=false;}
+  if(AI_BESCHIKBAAR)document.body.classList.add("ai-aan");
+  try{if(typeof tekenPlannen==="function")tekenPlannen()}catch(e){}
+  if(typeof sessie!=="undefined"&&sessie&&typeof tekenApp==="function"){try{tekenApp()}catch(e){}}
+})();
+function heeftAssistent(){return AI_BESCHIKBAAR&&abonnement.plan==="Enterprise"}
+async function aiVraag(tekst){
+  if(aiBezig)return;
   const v=(tekst!==undefined?tekst:$("ai-invoer").value).trim();
   if(!v)return;
   aiChat.push({van:"ik",tekst:esc(v)});
-  aiChat.push({van:"ai",tekst:aiAntwoord(v)});
-  tekenApp();
-  setTimeout(()=>{const b=$("ai-berichten");if(b)b.scrollTop=b.scrollHeight;const i=$("ai-invoer");if(i)i.focus();},50);
+  aiChat.push({van:"ai",tekst:'<span style="color:var(--soft)">Even denken…<\/span>',bezig:true});
+  aiBezig=true;tekenApp();
+  const scroll=()=>setTimeout(()=>{const b=$("ai-berichten");if(b)b.scrollTop=b.scrollHeight;const i=$("ai-invoer");if(i)i.focus();},50);
+  scroll();
+  const bubbel=aiChat[aiChat.length-1];
+  try{
+    const geschiedenis=aiChat.filter(b=>!b.bezig).slice(-11,-1).map(b=>({role:b.van==="ik"?"user":"assistant",content:(b.ruw||b.tekst).replace(/<[^>]+>/g,"")}));
+    const r=await fetch("/api/ai",{method:"POST",headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({vraag:v,geschiedenis,branche,cao:(BRANCHES[branche]&&BRANCHES[branche].cao)||"",land})});
+    const data=await r.json();
+    if(!r.ok||!data.antwoord)throw new Error(data.fout||"Geen antwoord");
+    bubbel.tekst=aiNaarHtml(data.antwoord);bubbel.ruw=data.antwoord;
+  }catch(e){
+    // Terugvallen op de ingebouwde kennisbank als de AI-dienst niet bereikbaar is
+    console.warn("AI-dienst niet bereikbaar, kennisbank gebruikt:",e.message);
+    bubbel.tekst=aiAntwoord(v);
+  }
+  delete bubbel.bezig;aiBezig=false;tekenApp();scroll();
 }
-function heeftAssistent(){return abonnement.plan==="Enterprise"}
 function tAssistent(){
   if(!heeftAssistent())return `<div class="kaart" style="max-width:560px;margin:20px auto;text-align:center;padding:36px 24px">
     <div style="font-size:40px;margin-bottom:10px">🤖🔒<\/div>
@@ -3857,13 +3794,13 @@ function tAssistent(){
     <div style="font-size:13px;color:var(--soft);line-height:1.8;margin-bottom:16px">
       Upgrade naar <strong>Enterprise<\/strong> en stel al je vragen over cao's, de Arbeidstijdenwet, ziekte,
       contracten en meer — direct beantwoord, midden in je planning.<\/div>
-    <button class="btn btn-p" onclick="huidigTab='Instellingen';tekenApp()">Upgrade je abonnement →<\/button>
+    <a class="btn btn-p" href="mailto:info@oibase.nl?subject=Upgrade%20naar%20Enterprise" style="text-decoration:none;display:inline-block">Upgrade aanvragen →<\/a>
   <\/div>`;
   const chips=["Wat zegt de cao beveiliging?","Hoeveel ORT is gebruikelijk?","Regels voor nachtdiensten?","Zieke medewerker — wat nu?","Hoeveel vakantiedagen wettelijk?","Regels voor oproepkrachten?","Hoe lang mag een proeftijd zijn?"];
   return `<div class="kaart" style="max-width:760px;margin:0 auto">
     <div style="font-weight:800;font-size:16px;margin-bottom:4px">🤖 Oibase Assistent<\/div>
     <div style="font-size:12px;color:var(--soft);margin-bottom:10px">Stel je vragen over cao's, arbeidsrecht en personeelszaken — net zoals je dat aan een AI-chatbot zou vragen.<\/div>
-    <div style="background:#FEF3C7;border:1px solid #FCD34D;border-radius:10px;padding:8px 12px;font-size:11.5px;margin-bottom:12px">🧪 Demo: deze assistent werkt met een ingebouwde kennisbank over de belangrijkste onderwerpen. In de echte versie is hij aangesloten op een AI die live cao-teksten en actuele wetgeving doorzoekt.<\/div>
+    <div style="background:var(--brand-l);border-radius:10px;padding:8px 12px;font-size:11.5px;margin-bottom:12px">ℹ️ De assistent beantwoordt vragen uit een actuele kennisbank over cao's, ORT, minimumloon, Arbeidstijdenwet, verlof, ziekte, contracten en loonheffing. Algemene informatie — geen juridisch advies.<\/div>
     <div id="ai-berichten" style="max-height:380px;overflow-y:auto;display:flex;flex-direction:column;gap:10px;margin-bottom:12px">
       ${aiChat.length?aiChat.map(b=>b.van==="ik"
         ?`<div style="align-self:flex-end;max-width:85%;background:var(--brand);color:#fff;border-radius:14px 14px 4px 14px;padding:9px 13px;font-size:13px">${b.tekst}<\/div>`
@@ -3910,7 +3847,7 @@ function loonData(medId,weeks){
   const netto=rond2(bruto-heffing);
   const uitbetalen=rond2(netto+reis.bedrag-kledingInh);
   // Cumulatieven (jaartotalen) — indicatief opgebouwd o.b.v. het aantal verstreken maanden
-  const maandNr=7; // juli = 7e maand (demo-periode)
+  const maandNr=(()=>{const nu=new Date();return new Date(nu.getFullYear(),nu.getMonth()+(maandSel||0),1).getMonth()+1})(); // maandnummer van de gekozen periode voor de cumulatieven
   const cum={bruto:rond2(bruto*maandNr),heffing:rond2(heffing*maandNr),netto:rond2(netto*maandNr),
              sv:rond2(svLoon*maandNr),vakGeld:rond2(vakGeld*maandNr),arbeidskorting:rond2(arbeidskorting*maandNr)};
   return {m,normU,ortRegels,basis,ortB,overU,overB,bruto,svLoon,tabelHeffing,arbeidskorting,heffing,
@@ -3993,9 +3930,9 @@ function loonstrookHTML(d,label){
   <\/div>`;
 }
 function printLoonstrook(medId){
-  const weeks=loonSel.periode==="maand"?[0,1,2,3]:[loonSel.week];
+  const weeks=loonSel.periode==="maand"?maandWeken(maandSel):[loonSel.week??WEEK_NU];
   const d=loonData(medId,weeks);if(!d)return;
-  const label=loonSel.periode==="maand"?"Juli 2026":"Week "+(28+loonSel.week);
+  const label=loonSel.periode==="maand"?maandLabelKort(maandSel):"Week "+wkNr(loonSel.week??WEEK_NU);
   const w=window.open("","_blank");
   w.document.write(`<html><head><title>Loonstrook ${esc(d.m.naam)}<\/title><style>
     body{font-family:Arial,sans-serif;padding:30px;color:#1C2333}
@@ -4004,8 +3941,8 @@ function printLoonstrook(medId){
   w.document.close();setTimeout(()=>w.print(),300);
 }
 function verstuurLoonstrook(medId,stil){
-  const weeks=loonSel.periode==="maand"?[0,1,2,3]:[loonSel.week];
-  const label=loonSel.periode==="maand"?"Juli 2026":"Week "+(28+loonSel.week);
+  const weeks=loonSel.periode==="maand"?maandWeken(maandSel):[loonSel.week??WEEK_NU];
+  const label=loonSel.periode==="maand"?maandLabelKort(maandSel):"Week "+wkNr(loonSel.week??WEEK_NU);
   const d=loonData(medId,weeks);if(!d)return;
   const titel=`Loonstrook ${label}`;
   const vervanging=postvak.some(b=>b.medId===medId&&b.titel===titel);
@@ -4094,13 +4031,13 @@ function tLoonstroken(){
     <div style="font-size:13px;color:var(--soft);line-height:1.8;margin-bottom:16px">
       Upgrade naar <strong>Premium<\/strong> voor automatische loonstroken uit het rooster — incl. alle ORT-toeslagen,
       overuren en de wettelijk verplichte onderdelen — met bezorging in het postvak van elke medewerker.<\/div>
-    <button class="btn btn-p" onclick="huidigTab='Instellingen';tekenApp()">Upgrade je abonnement →<\/button>
+    <a class="btn btn-p" href="mailto:info@oibase.nl?subject=Upgrade%20naar%20Enterprise" style="text-decoration:none;display:inline-block">Upgrade aanvragen →<\/a>
   <\/div>`;
   const weeks=[...new Set(diensten.filter(d=>d.medId).map(d=>d.week))].sort((a,b)=>a-b);
   const actief=medewerkers.filter(m=>!m.geblokkeerd);
   if(loonSel.medId===null)loonSel.medId=actief[0]?actief[0].id:null;
-  const wks=loonSel.periode==="maand"?[0,1,2,3]:[loonSel.week];
-  const label=loonSel.periode==="maand"?"Juli 2026":"Week "+(28+loonSel.week);
+  const wks=loonSel.periode==="maand"?maandWeken(maandSel):[loonSel.week??WEEK_NU];
+  const label=loonSel.periode==="maand"?maandLabelKort(maandSel):"Week "+wkNr(loonSel.week??WEEK_NU);
   const bekijkData=loonSel.bekijk?loonData(loonSel.bekijk,wks):null;
   return `<div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(300px,1fr));align-items:start">
   <div style="display:grid;gap:14px">
@@ -4111,10 +4048,11 @@ function tLoonstroken(){
       <div style="font-size:12px;color:var(--soft);margin-bottom:4px">Periode<\/div>
       <div style="display:flex;gap:8px">
         <select style="flex:1" onchange="loonSel.periode=this.value;tekenApp()">
-          <option value="maand" ${loonSel.periode==="maand"?"selected":""}>Maand — juli 2026<\/option>
+          <option value="maand" ${loonSel.periode==="maand"?"selected":""}>Per maand<\/option>
           <option value="week" ${loonSel.periode==="week"?"selected":""}>Per week<\/option>
         <\/select>
-        ${loonSel.periode==="week"?`<select style="flex:1" onchange="loonSel.week=Number(this.value);tekenApp()">${weeks.map(w=>`<option value="${w}" ${loonSel.week===w?"selected":""}>Week ${28+w}<\/option>`).join("")}<\/select>`:""}
+        ${loonSel.periode==="maand"?`<select style="flex:1" onchange="maandSel=Number(this.value);tekenApp()">${maandOpties(maandSel)}<\/select>`:""}
+        ${loonSel.periode==="week"?`<select style="flex:1" onchange="loonSel.week=Number(this.value);tekenApp()">${weeks.map(w=>`<option value="${w}" ${(loonSel.week??WEEK_NU)===w?"selected":""}>Week ${wkNr(w)}<\/option>`).join("")}<\/select>`:""}
       <\/div>
       <button class="btn btn-p" style="width:100%;margin:10px 0 4px" onclick="verstuurAlleLoonstroken()">📬 Verstuur alle loonstroken (${label}) naar de postvakken<\/button>
       ${actief.map(m=>{const d=loonData(m.id,wks);
@@ -4125,7 +4063,7 @@ function tLoonstroken(){
           <button class="btn btn-s btn-klein" onclick="printLoonstrook(${m.id})">🖨<\/button>
           <button class="btn btn-p btn-klein" onclick="verstuurLoonstrook(${m.id})">📬 Verstuur<\/button>
         <\/div><\/div>`;}).join("")}
-      <div style="font-size:11px;color:var(--soft);margin-top:10px">🌍 Dit is het Nederlandse model (verplichte onderdelen volgens art. 7:626 BW). Landspecifieke loonstroken voor de andere 14 landen volgen in de echte versie — elk land stelt eigen eisen.<\/div>
+      <div style="font-size:11px;color:var(--soft);margin-top:10px">🌍 Dit is het Nederlandse model (verplichte onderdelen volgens art. 7:626 BW). Loonstroken voor andere landen zijn op aanvraag beschikbaar — elk land stelt eigen eisen.<\/div>
     <\/div>
   <\/div>
   <div class="kaart" style="align-self:start">
@@ -4139,7 +4077,36 @@ function tLoonstroken(){
 function klantVeld(id,veld,w){const k=klantVan(id);if(!k)return;
   if(veld.startsWith("tarieven.")){k.tarieven[veld.split(".")[1]]=Number(w)||0;return}
   k[veld]=(veld==="termijn")?Number(w)||0:w;}
-
+// ═══════════ HANDMATIG OPDRACHTGEVER ═══════════
+function toonHandmatigModal(){
+  ["hm-naam","hm-kvk","hm-adres","hm-postcode","hm-plaats","hm-email","hm-tarief-dag","hm-tarief-avond","hm-tarief-nacht","hm-tarief-weekend"].forEach(id=>{if($(id))$(id).value=""});
+  $("hm-termijn").value="14";
+  $("hm-fout").textContent="";
+  $("handmatig-modal").classList.remove("verborgen");
+  $("hm-naam").focus();
+}
+function sluitHandmatigModal(){$("handmatig-modal").classList.add("verborgen");}
+async function slaHandmatigOpdrachtgeverOp(){
+  const fout=$("hm-fout");
+  const naam=($("hm-naam").value||"").trim(),kvk=($("hm-kvk").value||"").trim(),adres=($("hm-adres").value||"").trim(),
+        postcode=($("hm-postcode").value||"").trim(),plaats=($("hm-plaats").value||"").trim(),email=($("hm-email").value||"").trim(),
+        termijn=Number($("hm-termijn").value)||14,
+        dag=Number($("hm-tarief-dag").value)||0,avond=Number($("hm-tarief-avond").value)||0,
+        nacht=Number($("hm-tarief-nacht").value)||0,weekend=Number($("hm-tarief-weekend").value)||0;
+  if(!naam){fout.textContent="Bedrijfsnaam is verplicht.";return}
+  if(klanten.some(k=>k.naam===naam)){fout.textContent="Dit bedrijf staat er al in.";return}
+  const nieuweKlant={id:Date.now(),naam,kvk,adres,postcode,plaats,email,termijn,tarieven:{dag,avond,nacht,weekend}};
+  klanten.push(nieuweKlant);
+  fSel.klantId=nieuweKlant.id;
+  try{
+    if(sb&&oibaseBedrijfId){
+      await sb.from("opdrachtgevers").insert({bedrijf_id:oibaseBedrijfId,naam,kvk,adres,postcode,plaats,email,termijn,
+        tarief_dag:dag,tarief_avond:avond,tarief_nacht:nacht,tarief_weekend:weekend});
+    }
+  }catch(e){console.error("Opslaan naar Supabase mislukt:",e);}
+  sluitHandmatigModal();
+  tekenApp();
+}
 function factuurRegels(klantId,weeks){
   const k=klantVan(klantId);
   return diensten
@@ -4156,12 +4123,13 @@ function maakFactuur(){
   fSel.periode=$("f-periode").value;
   fSel.week=Number($("f-week").value);
   const k=klantVan(fSel.klantId);
-  const weeks=fSel.periode==="maand"?[0,1,2,3]:[fSel.week];
+  maandSel=Number(($("f-maand")||{value:maandSel}).value);
+  const weeks=fSel.periode==="maand"?maandWeken(maandSel):[fSel.week??WEEK_NU];
   const regels=factuurRegels(fSel.klantId,weeks);
   if(!regels.length){alert("Geen ingeplande diensten gevonden voor deze opdrachtgever in deze periode.");return}
   const sub=regels.reduce((t,r)=>t+r.bedrag,0),btw=sub*0.21;
   const nu=new Date(),verval=new Date(nu);verval.setDate(verval.getDate()+k.termijn);
-  const fac={nr:factuurNr++,klantId:fSel.klantId,label:fSel.periode==="maand"?"Juli 2026 (week 28–31)":`Week ${28+fSel.week}`,
+  const fac={nr:factuurNr++,klantId:fSel.klantId,label:fSel.periode==="maand"?`${maandLabelKort(maandSel)} (week ${wkNr(weeks[0])}–${wkNr(weeks[weeks.length-1])})`:`Week ${wkNr(fSel.week??WEEK_NU)} (${wkJaar(fSel.week??WEEK_NU)})`,
     regels,sub,btw,tot:sub+btw,datum:nu,verval,termijn:k.termijn,status:"Concept"};
   facturen.unshift(fac);
   fSel.bekijk=fac.nr;
@@ -4233,7 +4201,12 @@ function verstuurFactuur(nr){
   const k=klantVan(fac.klantId);
   if(!k.email){alert("Vul eerst het e-mailadres van de opdrachtgever in bij NAW-gegevens.");return}
   fac.status="Verstuurd";fac.verstuurdOp=dNL(new Date());
-  alert(`${fac.credit?"Creditnota":"Factuur"} ${fac.nr} verstuurd naar ${k.email} (demo — echte e-mailverzending komt met de backend).`);
+  const B=bp(),soort=fac.credit?"Creditnota":"Factuur";
+  const onderwerp=encodeURIComponent(`${soort} ${fac.nr} — ${B.naam||"Oibase"}`);
+  const tekst=encodeURIComponent(`Geachte ${k.naam},\n\nBijgevoegd ontvangt u ${soort.toLowerCase()} ${fac.nr}${fac.credit?"":` met vervaldatum ${dNL(fac.verval)}`}.\n${fac.credit?"":`Wij verzoeken u het bedrag van ${geld(fac.tot||0)} over te maken op ${B.iban||"ons rekeningnummer"} onder vermelding van ${fac.nr}.`}\n\nMet vriendelijke groet,\n${B.naam||""}`);
+  printFactuur(nr);
+  window.open(`mailto:${k.email}?subject=${onderwerp}&body=${tekst}`,"_self");
+  alert(`${soort} ${fac.nr} staat klaar: de PDF wordt geopend om op te slaan en je e-mailprogramma opent met een concept aan ${k.email}. Voeg de PDF als bijlage toe en verzend.`);
   tekenApp();
 }
 function facStatus(f){
@@ -4251,7 +4224,11 @@ function stuurHerinnering(nr){
   const f=facturen.find(x=>x.nr===nr);const k=klantVan(f.klantId);
   if(!k.email){alert("Vul eerst het e-mailadres van de opdrachtgever in.");return}
   f.herinneringen=(f.herinneringen||0)+1;f.herinnerdOp=dNL(new Date());
-  alert(`${f.herinneringen}e betalingsherinnering voor factuur ${f.nr} verstuurd naar ${k.email} (demo — mailen komt met de backend).`);
+  const B=bp();
+  const onderwerp=encodeURIComponent(`${f.herinneringen}e betalingsherinnering factuur ${f.nr} — ${B.naam||"Oibase"}`);
+  const tekst=encodeURIComponent(`Geachte ${k.naam},\n\nVolgens onze administratie is factuur ${f.nr} met vervaldatum ${dNL(f.verval)} nog niet voldaan. Wij verzoeken u het openstaande bedrag binnen 7 dagen over te maken op ${B.iban||"ons rekeningnummer"} onder vermelding van ${f.nr}.\n\nIs de betaling inmiddels gedaan, dan kunt u dit bericht als niet verzonden beschouwen.\n\nMet vriendelijke groet,\n${B.naam||""}`);
+  window.open(`mailto:${k.email}?subject=${onderwerp}&body=${tekst}`,"_self");
+  alert(`${f.herinneringen}e betalingsherinnering voor factuur ${f.nr}: je e-mailprogramma opent met een concept aan ${k.email}.`);
   tekenApp();
 }
 function markeerOninbaar(nr){
@@ -4552,7 +4529,7 @@ function tFacturen(){
       Met je huidige <strong>Basis<\/strong>-abonnement maak je roosters, verlof en kloktijden.
       Upgrade naar <strong>Premium<\/strong> voor urenstaten mét toeslagen, complete facturen naar je opdrachtgevers
       én automatische loonstroken met postvak-bezorging.<\/div>
-    <button class="btn btn-p" onclick="huidigTab='Instellingen';tekenApp()">Upgrade je abonnement →<\/button>
+    <a class="btn btn-p" href="mailto:info@oibase.nl?subject=Upgrade%20naar%20Enterprise" style="text-decoration:none;display:inline-block">Upgrade aanvragen →<\/a>
   <\/div>`;
   const weeks=[...new Set(diensten.filter(d=>d.medId).map(d=>d.week))].sort((a,b)=>a-b);
   const bekijk=facturen.find(f=>f.nr===fSel.bekijk);
@@ -4580,7 +4557,7 @@ function tFacturen(){
         <\/div><\/div>`).join("")}
       <div style="border-top:1px solid var(--line);padding-top:12px;margin-top:4px">
         <div style="font-weight:700;font-size:13px;margin-bottom:6px">➕ Nieuwe opdrachtgever<\/div>
-        <button class="btn btn-p" style="width:100%;" onclick="toonHandmatigModal()">✏️ Voeg toe<\/button>
+        <button class="btn btn-p" style="width:100%" onclick="toonHandmatigModal()">✏️ Voeg toe<\/button>
       <\/div>
     <\/div>
     <div class="kaart">
@@ -4589,12 +4566,14 @@ function tFacturen(){
       <select id="f-klant">${klanten.map(k=>`<option value="${k.id}" ${fSel.klantId===k.id?"selected":""}>${esc(k.naam)}<\/option>`).join("")}<\/select>
       <div style="display:flex;gap:8px">
         <div style="flex:1"><div style="font-size:12px;color:var(--soft);margin-bottom:4px">Periode<\/div>
-        <select id="f-periode" onchange="$('f-week').disabled=this.value==='maand'">
+        <select id="f-periode" onchange="$('f-week').disabled=this.value==='maand';$('f-maand').disabled=this.value!=='maand'">
           <option value="week" ${fSel.periode==="week"?"selected":""}>Per week<\/option>
-          <option value="maand" ${fSel.periode==="maand"?"selected":""}>Per maand (juli)<\/option>
+          <option value="maand" ${fSel.periode==="maand"?"selected":""}>Per maand<\/option>
         <\/select><\/div>
+        <div style="flex:1"><div style="font-size:12px;color:var(--soft);margin-bottom:4px">Maand<\/div>
+        <select id="f-maand" ${fSel.periode==="maand"?"":"disabled"}>${maandOpties(maandSel)}<\/select><\/div>
         <div style="flex:1"><div style="font-size:12px;color:var(--soft);margin-bottom:4px">Week<\/div>
-        <select id="f-week" ${fSel.periode==="maand"?"disabled":""}>${weeks.map(w=>`<option value="${w}" ${fSel.week===w?"selected":""}>Week ${28+w}<\/option>`).join("")}<\/select><\/div>
+        <select id="f-week" ${fSel.periode==="maand"?"disabled":""}>${weeks.map(w=>`<option value="${w}" ${(fSel.week??WEEK_NU)===w?"selected":""}>Week ${wkNr(w)}<\/option>`).join("")}<\/select><\/div>
       <\/div>
       <button class="btn btn-p" style="width:100%" onclick="maakFactuur()">Genereer factuur<\/button>
       <div style="font-size:11px;color:var(--soft);margin-top:8px">🏢 Je eigen bedrijfsgegevens (adres, KvK, btw-nr, IBAN) op de factuur stel je in bij Instellingen → Bedrijfsgegevens.<br>Regels worden opgebouwd uit het rooster: per dienst de medewerker, datum, tijden, uren en toeslag × het uurtarief van de opdrachtgever. Btw 21% wordt automatisch toegevoegd.<\/div>
@@ -4669,7 +4648,7 @@ function tInstellingen(){
       <input value="${esc(o.adres||"")}" placeholder="Straat + nr" style="margin-bottom:0" onchange="opd(${o.id}).adres=this.value">
       <select style="max-width:110px;margin-bottom:0" onchange="opd(${o.id}).plaats=this.value;tekenApp()">${Object.keys(DEMO_KM).map(pl=>`<option ${o.plaats===pl?"selected":""}>${pl}<\/option>`).join("")}<\/select>
     <\/div>`).join("")}
-    <div style="font-size:11px;color:var(--soft)">Huisadressen vul je in bij Medewerkers. 🧪 Demo: afstanden uit een vaste tabel — de echte versie rekent live via een routeplanner-API.<\/div>
+    <div style="font-size:11px;color:var(--soft)">Huisadressen vul je in bij Medewerkers. Reisafstanden worden berekend op basis van de ingestelde plaatsen; ontbreekt een combinatie, dan geldt een standaardafstand van 12 km (aanpasbaar per medewerker).<\/div>
   <\/div>
   <div class="kaart" style="align-self:start">
     <div style="font-weight:800;font-size:16px;margin-bottom:4px">🕐 Diensttijden<\/div>
@@ -4709,18 +4688,13 @@ function tInstellingen(){
     <div style="font-size:13px;line-height:1.7;margin-bottom:12px">
       Status: ${abonnement.status==="actief"?'<strong style="color:var(--groen)">✓ Actief<\/strong>':'<strong style="color:var(--rood)">⛔ Geblokkeerd (betaling gemist)<\/strong>'}<br>
       Plan: <strong>Oibase ${abonnement.plan}<\/strong> · basisbedrag ${geld((plannen.find(x=>x.naamL.nl===abonnement.plan)||plannen[1]).basis)} + ${medewerkers.length} medewerkers × ${geld((plannen.find(x=>x.naamL.nl===abonnement.plan)||plannen[1]).perMw)} = <strong>${geld((q=>q.basis+q.perMw*medewerkers.length)(plannen.find(x=>x.naamL.nl===abonnement.plan)||plannen[1]))}<\/strong> per maand<\/div>
-    <div style="display:flex;gap:8px;align-items:center;font-size:12px;margin-bottom:12px">
-      <span>Wijzig plan (demo):<\/span>
-      <select style="max-width:150px;margin:0" onchange="abonnement.plan=this.value;tekenApp()">
-        ${["Basis","Premium","Enterprise"].map(pl=>`<option ${abonnement.plan===pl?"selected":""}>${pl}<\/option>`).join("")}
-      <\/select>
-    <\/div>
+    <div style="font-size:12px;color:var(--soft);margin-bottom:12px">Wil je van plan wisselen (upgraden of downgraden)? Mail naar <a href="mailto:info@oibase.nl?subject=Planwijziging%20Oibase%20-%20${encodeURIComponent(bedrijfsProfiel.naam||"")}" style="color:var(--brand);font-weight:700">info@oibase.nl<\/a> — de wijziging gaat in per eerstvolgende factuurperiode.<\/div>
     <div style="font-size:11px;color:var(--soft);margin-bottom:8px">${heeftFacturatie()?`✓ Facturatie én loonstroken inbegrepen · loonstroken ${geld(LOONSTROOK_PRIJS)} per verstuurde strook${loonVerstuurd?` — deze maand ${loonVerstuurd} × ${geld(LOONSTROOK_PRIJS)} = <strong>${geld(loonVerstuurd*LOONSTROOK_PRIJS)}<\/strong> op je volgende factuur`:""}`:"🔒 Facturatie en loonstroken zitten in Premium en Enterprise"}<\/div>
     <div style="font-size:12px;color:var(--soft);line-height:1.7;margin-bottom:12px">
       Wordt een maandbetaling gemist, dan wordt de toegang voor jou en al je medewerkers
       <strong style="color:var(--ink)">tijdelijk geblokkeerd<\/strong>. Gegevens en roosters blijven bewaard.
       Na betaling van de openstaande factuur werkt inloggen direct weer.<\/div>
-    <button class="btn btn-rood btn-klein" onclick="if(confirm('Demo: gemiste maandbetaling simuleren? Je wordt uitgelogd en de toegang wordt geblokkeerd tot de factuur (demo) is betaald.')){abonnement.status='geblokkeerd';uitloggen()}">Simuleer gemiste betaling (demo)<\/button><\/div>
+  <\/div>
   <div class="kaart" style="align-self:start">
     <div style="font-weight:800;font-size:16px;margin-bottom:4px">🏢 Bedrijfsgegevens<\/div>
     <div style="font-size:12px;color:var(--soft);margin-bottom:12px">Jouw eigen gegevens — komen automatisch op elke factuur en loonstrook die je verstuurt. Nieuwe klanten vullen dit één keer in.<\/div>
@@ -4737,7 +4711,7 @@ function tInstellingen(){
   <\/div>
   <div class="kaart" style="align-self:start">
     <div style="font-weight:800;font-size:16px;margin-bottom:4px">💶 Facturatie per opdrachtgever ${heeftFacturatie()?"":"🔒"}<\/div>
-    ${heeftFacturatie()?"":`<div style="font-size:13px;color:var(--soft);line-height:1.7">Facturatie zit in <strong>Premium<\/strong> en <strong>Enterprise<\/strong>. Wijzig je plan hieronder bij Abonnement om tarieven per opdrachtgever in te stellen en facturen te versturen.<\/div><\/div>`}
+    ${heeftFacturatie()?"":`<div style="font-size:13px;color:var(--soft);line-height:1.7">Facturatie zit in <strong>Premium<\/strong> en <strong>Enterprise<\/strong>. Mail naar info@oibase.nl om te upgraden en tarieven per opdrachtgever in te stellen en facturen te versturen.<\/div><\/div>`}
     ${heeftFacturatie()?`
     <div style="font-size:12px;color:var(--soft);margin-bottom:12px">Betalingstermijn en uurtarief per opdrachtgever — direct doorgevoerd op nieuwe facturen (net als de toeslagen hiernaast).<\/div>
     ${klanten.map(k=>`<div style="border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin-bottom:8px">
@@ -4839,7 +4813,7 @@ function plaatsPrikbord(){
 }
 
 // ── Urenstaten ──
-let usFilter={opdracht:"",med:"",week:0};
+let usFilter={opdracht:"",med:"",week:WEEK_NU};
 function leesUsFilters(){
   if($("us-opdracht")){usFilter={opdracht:$("us-opdracht").value,med:$("us-med").value,week:Number($("us-week").value)};}
 }
@@ -4906,7 +4880,7 @@ function tUrenstaten(){
         ${medewerkers.map(m=>`<option value="${m.id}" ${usFilter.med==String(m.id)?"selected":""}>${esc(m.naam)}<\/option>`).join("")}
       <\/select>
       <select id="us-week" style="flex:1;min-width:130px">
-        ${[-1,0,1,2].map(w=>`<option value="${w}" ${w===usFilter.week?"selected":""}>Week ${28+w}${w===0?" (nu)":""}<\/option>`).join("")}
+        ${[WEEK_NU-1,WEEK_NU,WEEK_NU+1,WEEK_NU+2].map(w=>`<option value="${w}" ${w===usFilter.week?"selected":""}>Week ${wkNr(w)}${w===WEEK_NU?" (nu)":""}<\/option>`).join("")}
       <\/select>
     <\/div>
     <div style="display:flex;gap:8px;flex-wrap:wrap">
@@ -4924,7 +4898,7 @@ function downloadUrenstaatCSV(){
   regels.forEach(r=>{csv+=[r.m.naam,dagen[r.d.dag],r.d.type,r.t.start,r.t.eind,r.o?r.o.naam:"",r.o?r.o.klant:"",r.u.toFixed(1).replace(".",","),r.pct,String(r.m.uurloon).replace(".",","),r.bedrag.toFixed(2).replace(".",",")].join(";")+"\n";});
   const a=document.createElement("a");
   a.href=URL.createObjectURL(new Blob(["\ufeff"+csv],{type:"text/csv;charset=utf-8"}));
-  a.download="urenstaat-week"+(28+usFilter.week)+".csv";a.click();
+  a.download="urenstaat-week"+wkNr(usFilter.week)+".csv";a.click();
 }
 function printUrenstaat(){
   leesUsFilters();
@@ -5110,7 +5084,7 @@ async function oibaseLogin(email,ww){
     // Beheerdersaccount? Direct naar de beheeromgeving (met echte databasetoegang).
     if(email.toLowerCase()===OIBASE_BEHEER_EMAIL.toLowerCase()){
       fout.textContent="";fout.style.color="var(--rood)";
-      sessie={rol:"admin",naam:"Hendrik"};naApp();return;
+      sessie={rol:"admin",naam:"Beheerder"};naApp();return;
     }
     const {data:row,error:e2}=await sb.from("bedrijven").select("*").eq("eigenaar",data.user.id).single();
     if(e2||!row){fout.style.color="var(--rood)";fout.textContent="Geen bedrijf gevonden bij dit account.";return;}
