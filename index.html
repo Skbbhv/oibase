@@ -3724,13 +3724,37 @@ function aiAntwoord(vraag){
   if(beste)return beste.a+(beste.w.includes("cao")?brancheCao:"")+'<div style="font-size:11px;color:var(--soft);margin-top:8px">⚠ Algemene informatie, geen juridisch advies. Cao\'s en wetten wijzigen — controleer de actuele bron.<\/div>';
   return `Daar heb ik nog geen antwoord op. Ik kan je helpen met: <strong>cao's, ORT, minimumloon, Arbeidstijdenwet, ziekte, verlof & vakantiegeld, oproepkrachten, contracten & proeftijd, loonheffing, feestdagen en factuureisen<\/strong>.<div style="font-size:11px;color:var(--soft);margin-top:8px">Staat je vraag er niet bij? Mail naar info@oibase.nl, dan helpen we je persoonlijk.<\/div>`;
 }
-function aiVraag(tekst){
+// Eenvoudige, veilige omzetting van AI-tekst (markdown-light) naar HTML
+function aiNaarHtml(t){
+  let h=esc(t);
+  h=h.replace(/\*\*(.+?)\*\*/g,"<strong>$1<\/strong>");
+  h=h.replace(/^(?:[-•*]\s+)(.*)$/gm,"<li>$1<\/li>").replace(/(<li>.*<\/li>\n?)+/g,m=>"<ul style=\"margin:4px 0 4px 18px;padding:0\">"+m.replace(/\n/g,"")+"<\/ul>");
+  return h.replace(/\n{2,}/g,"<br><br>").replace(/\n/g,"<br>");
+}
+let aiBezig=false;
+async function aiVraag(tekst){
+  if(aiBezig)return;
   const v=(tekst!==undefined?tekst:$("ai-invoer").value).trim();
   if(!v)return;
   aiChat.push({van:"ik",tekst:esc(v)});
-  aiChat.push({van:"ai",tekst:aiAntwoord(v)});
-  tekenApp();
-  setTimeout(()=>{const b=$("ai-berichten");if(b)b.scrollTop=b.scrollHeight;const i=$("ai-invoer");if(i)i.focus();},50);
+  aiChat.push({van:"ai",tekst:'<span style="color:var(--soft)">Even denken…<\/span>',bezig:true});
+  aiBezig=true;tekenApp();
+  const scroll=()=>setTimeout(()=>{const b=$("ai-berichten");if(b)b.scrollTop=b.scrollHeight;const i=$("ai-invoer");if(i)i.focus();},50);
+  scroll();
+  const bubbel=aiChat[aiChat.length-1];
+  try{
+    const geschiedenis=aiChat.filter(b=>!b.bezig).slice(-11,-1).map(b=>({role:b.van==="ik"?"user":"assistant",content:(b.ruw||b.tekst).replace(/<[^>]+>/g,"")}));
+    const r=await fetch("/api/ai",{method:"POST",headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({vraag:v,geschiedenis,branche,cao:(BRANCHES[branche]&&BRANCHES[branche].cao)||"",land})});
+    const data=await r.json();
+    if(!r.ok||!data.antwoord)throw new Error(data.fout||"Geen antwoord");
+    bubbel.tekst=aiNaarHtml(data.antwoord);bubbel.ruw=data.antwoord;
+  }catch(e){
+    // Terugvallen op de ingebouwde kennisbank als de AI-dienst niet bereikbaar is
+    console.warn("AI-dienst niet bereikbaar, kennisbank gebruikt:",e.message);
+    bubbel.tekst=aiAntwoord(v);
+  }
+  delete bubbel.bezig;aiBezig=false;tekenApp();scroll();
 }
 function heeftAssistent(){return abonnement.plan==="Enterprise"}
 function tAssistent(){
