@@ -2327,6 +2327,22 @@ const dienstTypes={
 };
 const dagen=["Ma","Di","Wo","Do","Vr","Za","Zo"];
 const VANDAAG=new Date().getDay()===0?6:new Date().getDay()-1;
+const START28=new Date(2026,6,6); // vast referentiepunt (maandag) — weeknummers in de opslag zijn hierop gebaseerd
+const dagDatum=(week,dag)=>{const d=new Date(START28);d.setDate(d.getDate()+week*7+dag);return d};
+// Weekoffset van vandaag t.o.v. het referentiepunt → "deze week"
+function weekOffsetVan(dt){const d=new Date(dt);d.setHours(0,0,0,0);const dow=(d.getDay()+6)%7;d.setDate(d.getDate()-dow);return Math.round((d-START28)/604800000)}
+const WEEK_NU=weekOffsetVan(new Date());
+// ISO-weeknummer en jaar van een weekoffset
+function isoWeek(dt){const d=new Date(Date.UTC(dt.getFullYear(),dt.getMonth(),dt.getDate()));const day=d.getUTCDay()||7;d.setUTCDate(d.getUTCDate()+4-day);const y0=new Date(Date.UTC(d.getUTCFullYear(),0,1));return {wk:Math.ceil(((d-y0)/86400000+1)/7),jaar:d.getUTCFullYear()}}
+const wkNr=w=>isoWeek(dagDatum(w,0)).wk;
+const wkJaar=w=>isoWeek(dagDatum(w,0)).jaar;
+const MAANDEN_NL=["januari","februari","maart","april","mei","juni","juli","augustus","september","oktober","november","december"];
+// Weken (offsets) waarvan de maandag in de gekozen maand valt; off=0 huidige maand, -1 vorige, enz.
+function maandWeken(off){const nu=new Date();const m=new Date(nu.getFullYear(),nu.getMonth()+(off||0),1);const eind=new Date(m.getFullYear(),m.getMonth()+1,0);const r=[];for(let w=weekOffsetVan(m);dagDatum(w,0)<=eind;w++){if(dagDatum(w,0)>=m||w===weekOffsetVan(m))r.push(w)}return r}
+function maandLabel(off){const nu=new Date();const m=new Date(nu.getFullYear(),nu.getMonth()+(off||0),1);return MAANDEN_NL[m.getMonth()]+" "+m.getFullYear()}
+function maandLabelKort(off){const l=maandLabel(off);return l.charAt(0).toUpperCase()+l.slice(1)}
+let maandSel=0; // gekozen maand voor loonstroken en facturen (0 = huidige)
+function maandOpties(sel,fn){return [1,0,-1,-2].map(o=>`<option value="${o}" ${o===sel?"selected":""}>${maandLabelKort(o)}${o===0?" (huidige)":""}<\/option>`).join("")}
 
 let medewerkers=[
   {id:1,naam:"Sanne de Vries",pnr:"P-1001",cao:"regulier",functie:"Teamleider beveiliging",contract:36,uurloon:16.5,kleur:"#0E7C7B",gebruiker:"sanne",wachtwoord:"welkom1",saldo:96,einde:null,naw:{adres:"Dorpsstraat 12",postcode:"1234 AB",plaats:"Hengelo",tel:"06-12345678",email:"sanne@voorbeeld.nl",geb:"1994-03-14",iban:"NL00 BANK 0000 0000 01"}},
@@ -2338,7 +2354,7 @@ let opdrachten=[
   {id:1,naam:"Object Hengelo",klant:"Retail Groep BV",klantId:1,plaats:"Hengelo",adres:"Marktstraat 1"},
   {id:2,naam:"Object Almelo",klant:"Logistiek Nederland",klantId:2,plaats:"Almelo",adres:"Haven Noordzijde 8"},
 ];
-let huidigeWeek=null; // wordt bij start op WEEK_NU gezet (na definitie van START28)
+let huidigeWeek=WEEK_NU;
 let roosterWeergave="week"; // "week" of "maand"
 let diensten=[
   {id:1,medId:1,dag:0,type:"Ochtend",week:WEEK_NU,opdrachtId:1},{id:2,medId:1,dag:1,type:"Ochtend",week:WEEK_NU,opdrachtId:1},{id:3,medId:1,dag:3,type:"Avond",week:WEEK_NU,opdrachtId:1},
@@ -2454,23 +2470,6 @@ let facturen=[]; let factuurNr=2026001;
     datum:new Date(2026,5,8),verval:new Date(2026,5,22),termijn:14,status:"Verstuurd",verstuurdOp:"08-06-2026",herinneringen:0});
 })();
 let fSel={klantId:1,periode:"week",week:null,bekijk:null};
-const START28=new Date(2026,6,6); // vast referentiepunt (maandag) — weeknummers in de opslag zijn hierop gebaseerd
-const dagDatum=(week,dag)=>{const d=new Date(START28);d.setDate(d.getDate()+week*7+dag);return d};
-// Weekoffset van vandaag t.o.v. het referentiepunt → "deze week"
-function weekOffsetVan(dt){const d=new Date(dt);d.setHours(0,0,0,0);const dow=(d.getDay()+6)%7;d.setDate(d.getDate()-dow);return Math.round((d-START28)/604800000)}
-const WEEK_NU=weekOffsetVan(new Date());
-huidigeWeek=WEEK_NU;
-// ISO-weeknummer en jaar van een weekoffset
-function isoWeek(dt){const d=new Date(Date.UTC(dt.getFullYear(),dt.getMonth(),dt.getDate()));const day=d.getUTCDay()||7;d.setUTCDate(d.getUTCDate()+4-day);const y0=new Date(Date.UTC(d.getUTCFullYear(),0,1));return {wk:Math.ceil(((d-y0)/86400000+1)/7),jaar:d.getUTCFullYear()}}
-const wkNr=w=>isoWeek(dagDatum(w,0)).wk;
-const wkJaar=w=>isoWeek(dagDatum(w,0)).jaar;
-const MAANDEN_NL=["januari","februari","maart","april","mei","juni","juli","augustus","september","oktober","november","december"];
-// Weken (offsets) waarvan de maandag in de gekozen maand valt; off=0 huidige maand, -1 vorige, enz.
-function maandWeken(off){const nu=new Date();const m=new Date(nu.getFullYear(),nu.getMonth()+(off||0),1);const eind=new Date(m.getFullYear(),m.getMonth()+1,0);const r=[];for(let w=weekOffsetVan(m);dagDatum(w,0)<=eind;w++){if(dagDatum(w,0)>=m||w===weekOffsetVan(m))r.push(w)}return r}
-function maandLabel(off){const nu=new Date();const m=new Date(nu.getFullYear(),nu.getMonth()+(off||0),1);return MAANDEN_NL[m.getMonth()]+" "+m.getFullYear()}
-function maandLabelKort(off){const l=maandLabel(off);return l.charAt(0).toUpperCase()+l.slice(1)}
-let maandSel=0; // gekozen maand voor loonstroken en facturen (0 = huidige)
-function maandOpties(sel,fn){return [1,0,-1,-2].map(o=>`<option value="${o}" ${o===sel?"selected":""}>${maandLabelKort(o)}${o===0?" (huidige)":""}<\/option>`).join("")}
 const dNL=d=>d.toLocaleDateString("nl-NL",{day:"2-digit",month:"2-digit",year:"numeric"});
 let ruilAanbod=[], ruilLog=[];
 let beschikbaar={}; // medId -> [dagIndices NIET beschikbaar]
@@ -2834,7 +2833,6 @@ function tRoosterGrid(magBewerken,alleenMedId){
   const wk=diensten.filter(d=>d.week===huidigeWeek&&d.medId);
   const openD=diensten.filter(d=>d.week===huidigeWeek&&!d.medId);
   const dienstVan=(mid,dag)=>wk.find(d=>d.medId===mid&&d.dag===dag);
-  if(huidigeWeek===null)huidigeWeek=WEEK_NU;
   const isNu=huidigeWeek===WEEK_NU;
   let html=`<div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;flex-wrap:wrap">
     <button class="btn btn-stil btn-klein" onclick="huidigeWeek--;roosterKies=null;tekenApp()">←<\/button>
